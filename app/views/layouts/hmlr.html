@@ -1,0 +1,42 @@
+{#
+For guidance on how to use layouts see:
+https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
+#}
+
+{% extends "govuk-prototype-kit/layouts/unbranded.html" %}
+
+{% block headIcons %}
+    <link rel="shortcut icon" href="/public/images/hmlr-favicon.ico" type="image/x-icon" />
+{% endblock %}
+
+{% block header %}
+<header class="govuk-header govuk-header--hmlr " role="banner" data-module="govuk-header">
+    <div class="govuk-header__container govuk-width-container">
+        <div class="govuk-header__content govuk-header__content--hmlr">
+            <span class="govuk-header__service-name">
+                Service name
+            </span>
+            &nbsp;
+            <span class="govuk-header__product-name">
+                Product name
+            </span>
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+{% block content %}
+
+<h1 class="govuk-heading-xl">
+    HM Land Registry page template
+</h1>
+<p class="govuk-body-l">
+    This page uses Arial instead of New Transport and the HM Land Registry header and footer.
+</p>
+
+{% endblock %}
+
+{% block footer %}
+{% from "hmlr/components/footer/macro.njk" import hmlrFooter %}
+{{ hmlrFooter() }}
+{% endblock %}
