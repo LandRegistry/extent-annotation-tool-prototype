@@ -1,4 +1,4 @@
-{% extends "layouts/main.html" %}
+{% extends "layouts/hmlr-index.html" %}
 
 {% set pageName="Home" %}
 
@@ -7,13 +7,62 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    {% include "govuk-prototype-kit/includes/homepage-top.njk" %}
-
-    <h1 class="govuk-heading-xl">
-      {{ serviceName }}
+    <h1 class="govuk-heading-l">
+      Index
     </h1>
 
-    {% include "govuk-prototype-kit/includes/homepage-bottom.njk" %}
+    <ul class="govuk-list">
+      <li>
+        <a class="govuk-link" href="/test">Test page</a>
+      </li>
+      <li>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      Annotators
+    </h2>
+
+    <ul class="govuk-list">
+      <li>
+        <a class="govuk-link" href="/annotators/sign-in">Sign in</a>
+        </li>
+    <li>
+    <a class="govuk-link" href="/annotators/assignments">Assignments</a>
+    </li>
+    <li>
+      <a class="govuk-link" href="/annotators/test-extent-page-2">An extent page</a>
+    </li>
+    <li>
+      <a class="govuk-link" href="#">Blank</a>
+    </li>
+    <li>
+      <a class="govuk-link" href="#">Blank</a>
+    </li>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      Admin
+    </h2>
+  
+    <ul class="govuk-list">
+      <li>
+        <a class="govuk-link" href="admin/sign-in">Sign in</a>
+      </li>
+      <li>
+        <a class="govuk-link" href="admin/assign-titles/select-annotator">Assign titles to annotators</a>
+      </li>
+      <li>
+        <a class="govuk-link" href="#">Blank</a>
+      </li>
+      </ul>
+
+
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+      <p class="govuk-body-s">
+        <a href="/manage-prototype" class="govuk-link">Manage your prototype</a>.
+      </p>
+
   </div>
 </div>
 

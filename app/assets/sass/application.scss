@@ -4,3 +4,21 @@
 // 
 
 // Add extra styles here
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+figure {
+    border: 1px solid #000;
+  }
+
+.govuk-header__account {
+    float: right;
+}
+
+.govuk-table__row--custom {
+    padding:0px;
+}

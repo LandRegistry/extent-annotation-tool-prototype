@@ -12,22 +12,6 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 <link rel="shortcut icon" href="/public/images/hmlr-favicon.ico" type="image/x-icon" />
 {% endblock %}
 
-{% block beforeContent %}
-
-{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-
-{{ govukPhaseBanner({
-  tag: {
-    text: "Prototype"
-  },
-  html: 'This is not a production service.'
-}) }}
-  {{ govukBackLink({
-  text: "Back",
-  href: "javascript:window.history.back()"
-}) }}
-{% endblock %}
-
 {% block header %}
 <header class="govuk-header govuk-header--hmlr " role="banner" data-module="govuk-header">
     <div class="govuk-header__container govuk-header__container--full-width">

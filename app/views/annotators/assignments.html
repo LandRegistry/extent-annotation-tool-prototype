@@ -1,0 +1,138 @@
+{% extends "app/views/layouts/hmlr-signed-in.html" %}
+
+{% block pageTitle %}
+  Assignments – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+<h1 class="govuk-heading-l">Assignments</h1>
+
+<h2 class="govuk-heading-m">Job 1x1x1x1</h2>
+
+{% from "govuk/components/task-list/macro.njk" import govukTaskList %}
+
+{{ govukTaskList({
+  idPrefix: "title-assignments",
+  items: [
+    {
+      title: {
+        text: "Title 1 xxxxx"
+      },
+      href: "#",
+      status: {
+        text: "Completed"
+      }
+    },
+    {
+      title: {
+        text: "Title 2 xxxxx"
+      },
+      href: "/annotators/assignments/title-2/extent-1/entry-1",
+      status: {
+        tag: {
+          text: "Incomplete",
+          classes: "govuk-tag--blue"
+        }
+      }
+    },
+    {
+      title: {
+        text: "Title 3 xxxxx"
+      },
+      href: "#",
+      status: {
+        tag: {
+          text: "In progress",
+          classes: "govuk-tag--yellow"
+        }
+      }
+    },
+    {
+      title: {
+        text: "Title 4 xxxxx"
+      },
+      href: "#",
+      status: {
+        tag: {
+          text: "Incomplete",
+          classes: "govuk-tag--blue"
+        }
+      }
+    },
+    {
+      title: {
+        text: "Title 5 xxxxx"
+      },
+      href: "#",
+      status: {
+        tag: {
+          text: "Incomplete",
+          classes: "govuk-tag--blue"
+        }
+      }
+    },
+    {
+      title: {
+        text: "Title 6 xxxxx"
+      },
+      href: "#",
+      status: {
+        tag: {
+          text: "Incomplete",
+          classes: "govuk-tag--blue"
+        }
+      }
+    },
+    {
+      title: {
+        text: "Title 7 xxxxx"
+      },
+      href: "#",
+      status: {
+        tag: {
+          text: "Incomplete",
+          classes: "govuk-tag--blue"
+        }
+      }
+    },
+    {
+      title: {
+        text: "Title 8 xxxxx"
+      },
+      href: "#",
+      status: {
+        tag: {
+          text: "Incomplete",
+          classes: "govuk-tag--blue"
+        }
+      }
+    },
+    {
+      title: {
+        text: "Title 9 xxxxx"
+      },
+      href: "#",
+      status: {
+        tag: {
+          text: "Incomplete",
+          classes: "govuk-tag--blue"
+        }
+      }
+    },
+    {
+      title: {
+        text: "Title 10 xxxxx"
+      },
+      href: "#",
+      status: {
+        tag: {
+          text: "Incomplete",
+          classes: "govuk-tag--blue"
+        }
+      }
+    }
+  ]
+}) }}
+
+{% endblock %}

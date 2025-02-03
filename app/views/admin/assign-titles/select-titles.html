@@ -1,0 +1,125 @@
+{% extends "app/views/layouts/hmlr.html" %}
+
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% block pageTitle %}
+Unbranded page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-inset-text">
+  Assigning titles to: <strong>{{ data['selectAnnotator'] }}</strong>
+</div>
+
+<form class="form" action="/admin/assign-titles/confirm" method="post">
+
+  <table class="govuk-table" data-module="moj-multi-select" data-multi-select-checkbox="#select-all"
+    data-multi-select-idprefix="titles-">
+    <caption class="govuk-table__caption govuk-table__caption--m">Select titles to assign</caption>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row ">
+        <th class="govuk-table__header" scope="col" id="select-all"></th>
+        <th class="govuk-table__header" scope="col">Title</th>
+        <th class="govuk-table__header" scope="col">Details</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row govuk-table__row--selected">
+        <td class="govuk-table__cell">
+          <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+            <input type="checkbox" class="govuk-checkboxes__input" id="title-111111" value="111111" name="titles">
+            <label class="govuk-label govuk-checkboxes__label" for="title-111111">
+              <span class="govuk-visually-hidden">Select 111111</span>
+            </label>
+          </div>
+        </td>
+        <td class="govuk-table__cell">111111</td>
+        <td class="govuk-table__cell">abcdefgh</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+          <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+            <input type="checkbox" class="govuk-checkboxes__input" id="title-222222" value="222222" name="titles">
+            <label class="govuk-label govuk-checkboxes__label" for="title-222222">
+              <span class="govuk-visually-hidden">Select 222222</span>
+            </label>
+          </div>
+        </td>
+        </td>
+        <td class="govuk-table__cell">222222</td>
+        <td class="govuk-table__cell">abcdefgh</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+          <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+            <input type="checkbox" class="govuk-checkboxes__input" id="title-333333" value="333333" name="titles">
+            <label class="govuk-label govuk-checkboxes__label" for="title-333333">
+              <span class="govuk-visually-hidden">Select 333333</span>
+            </label>
+          </div>
+        </td>
+        <td class="govuk-table__cell">333333</td>
+        <td class="govuk-table__cell">abcdefgh</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+          <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+            <input type="checkbox" class="govuk-checkboxes__input" id="title-444444" value="444444" name="titles">
+            <label class="govuk-label govuk-checkboxes__label" for="title-444444">
+              <span class="govuk-visually-hidden">Select 444444</span>
+            </label>
+          </div>
+        </td>
+        <td class="govuk-table__cell">444444</td>
+        <td class="govuk-table__cell">abcdefgh</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+          <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+            <input type="checkbox" class="govuk-checkboxes__input" id="title-555555" value="555555" name="titles">
+            <label class="govuk-label govuk-checkboxes__label" for="title-555555">
+              <span class="govuk-visually-hidden">Select 555555</span>
+            </label>
+          </div>
+        </td>
+        <td class="govuk-table__cell">555555</td>
+        <td class="govuk-table__cell">abcdefgh</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+          <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+            <input type="checkbox" class="govuk-checkboxes__input" id="title-666666" value="666666" name="titles">
+            <label class="govuk-label govuk-checkboxes__label" for="title-666666">
+              <span class="govuk-visually-hidden">Select 666666</span>
+            </label>
+          </div>
+        </td>
+        <td class="govuk-table__cell">666666</td>
+        <td class="govuk-table__cell">abcdefgh</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+          <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+            <input type="checkbox" class="govuk-checkboxes__input" id="title-777777" value="777777" name="titles">
+            <label class="govuk-label govuk-checkboxes__label" for="title-777777">
+              <span class="govuk-visually-hidden">Select 777777</span>
+            </label>
+          </div>
+        </td>
+        <td class="govuk-table__cell">777777</td>
+        <td class="govuk-table__cell">abcdefgh</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
+  {{ govukButton({
+  text: "Continue"
+  }) }}
+
+</form>
+
+{% endblock %}
