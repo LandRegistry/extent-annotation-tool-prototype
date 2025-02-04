@@ -1,138 +1,299 @@
 {% extends "app/views/layouts/hmlr-signed-in.html" %}
 
 {% block pageTitle %}
-  Assignments – {{ serviceName }} – GOV.UK Prototype Kit
+Assignments – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block content %}
 
-<h1 class="govuk-heading-l">Assignments</h1>
+<h1 class="govuk-heading-l">Your jobs</h1>
 
-<h2 class="govuk-heading-m">Job 1x1x1x1</h2>
+<h2 class="govuk-heading-m">Job 1</h2>
 
-{% from "govuk/components/task-list/macro.njk" import govukTaskList %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <ul class="govuk-task-list">
 
-{{ govukTaskList({
-  idPrefix: "title-assignments",
-  items: [
-    {
-      title: {
-        text: "Title 1 xxxxx"
-      },
-      href: "#",
-      status: {
-        text: "Completed"
-      }
-    },
-    {
-      title: {
-        text: "Title 2 xxxxx"
-      },
-      href: "/annotators/assignments/title-2/extent-1/entry-1",
-      status: {
-        tag: {
-          text: "Incomplete",
-          classes: "govuk-tag--blue"
-        }
-      }
-    },
-    {
-      title: {
-        text: "Title 3 xxxxx"
-      },
-      href: "#",
-      status: {
-        tag: {
-          text: "In progress",
-          classes: "govuk-tag--yellow"
-        }
-      }
-    },
-    {
-      title: {
-        text: "Title 4 xxxxx"
-      },
-      href: "#",
-      status: {
-        tag: {
-          text: "Incomplete",
-          classes: "govuk-tag--blue"
-        }
-      }
-    },
-    {
-      title: {
-        text: "Title 5 xxxxx"
-      },
-      href: "#",
-      status: {
-        tag: {
-          text: "Incomplete",
-          classes: "govuk-tag--blue"
-        }
-      }
-    },
-    {
-      title: {
-        text: "Title 6 xxxxx"
-      },
-      href: "#",
-      status: {
-        tag: {
-          text: "Incomplete",
-          classes: "govuk-tag--blue"
-        }
-      }
-    },
-    {
-      title: {
-        text: "Title 7 xxxxx"
-      },
-      href: "#",
-      status: {
-        tag: {
-          text: "Incomplete",
-          classes: "govuk-tag--blue"
-        }
-      }
-    },
-    {
-      title: {
-        text: "Title 8 xxxxx"
-      },
-      href: "#",
-      status: {
-        tag: {
-          text: "Incomplete",
-          classes: "govuk-tag--blue"
-        }
-      }
-    },
-    {
-      title: {
-        text: "Title 9 xxxxx"
-      },
-      href: "#",
-      status: {
-        tag: {
-          text: "Incomplete",
-          classes: "govuk-tag--blue"
-        }
-      }
-    },
-    {
-      title: {
-        text: "Title 10 xxxxx"
-      },
-      href: "#",
-      status: {
-        tag: {
-          text: "Incomplete",
-          classes: "govuk-tag--blue"
-        }
-      }
-    }
-  ]
-}) }}
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="/annotators/assignments/AV57267/extent-1/entry-1"
+            aria-describedby="task-list-1-status">
+            AV57267
+          </a>
+        </div>
+        {% if data['AV57267Status'] == 'started' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--yellow">
+            In progress
+          </strong>
+        </div>
+        {% elseif data['AV57267Status'] == 'complete' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          Done
+        </div>
+        {% else %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--blue">
+            To do
+          </strong>
+        </div>
+        {% endif %}
+      </li>
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            AV59722
+          </a>
+        </div>
+        {% if data['AV59722Status'] == 'started' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--yellow">
+            In progress
+          </strong>
+        </div>
+        {% elseif data['AV59722Status'] == 'complete' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          Done
+        </div>
+        {% else %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--blue">
+            To do
+          </strong>
+        </div>
+        {% endif %}
+      </li>
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            AV252005
+          </a>
+        </div>
+        {% if data['AV252005Status'] == 'started' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--yellow">
+            In progress
+          </strong>
+        </div>
+        {% elseif data['AV252005Status'] == 'complete' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          Done
+        </div>
+        {% else %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--blue">
+            To do
+          </strong>
+        </div>
+        {% endif %}
+      </li>
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            AV23084
+          </a>
+        </div>
+        {% if data['AV23084Status'] == 'started' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--yellow">
+            In progress
+          </strong>
+        </div>
+        {% elseif data['AV23084Status'] == 'complete' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          Done
+        </div>
+        {% else %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--blue">
+            To do
+          </strong>
+        </div>
+        {% endif %}
+      </li>
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            AV225733
+          </a>
+        </div>
+        {% if data['AV225733Status'] == 'started' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--yellow">
+            In progress
+          </strong>
+        </div>
+        {% elseif data['AV225733Status'] == 'complete' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          Done
+        </div>
+        {% else %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--blue">
+            To do
+          </strong>
+        </div>
+        {% endif %}
+      </li>
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            AV129010
+          </a>
+        </div>
+        {% if data['AV129010Status'] == 'started' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--yellow">
+            In progress
+          </strong>
+        </div>
+        {% elseif data['AV129010Status'] == 'complete' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          Done
+        </div>
+        {% else %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--blue">
+            To do
+          </strong>
+        </div>
+        {% endif %}
+      </li>
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            AV17272
+          </a>
+        </div>
+        {% if data['AV17272Status'] == 'started' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--yellow">
+            In progress
+          </strong>
+        </div>
+        {% elseif data['AV17272Status'] == 'complete' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          Done
+        </div>
+        {% else %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--blue">
+            To do
+          </strong>
+        </div>
+        {% endif %}
+      </li>
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            AV172146
+          </a>
+        </div>
+        {% if data['AV172146Status'] == 'started' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--yellow">
+            In progress
+          </strong>
+        </div>
+        {% elseif data['AV172146Status'] == 'complete' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          Done
+        </div>
+        {% else %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--blue">
+            To do
+          </strong>
+        </div>
+        {% endif %}
+      </li>
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            AV118735
+          </a>
+        </div>
+        {% if data['AV118735Status'] == 'started' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--yellow">
+            In progress
+          </strong>
+        </div>
+        {% elseif data['AV118735Status'] == 'complete' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          Done
+        </div>
+        {% else %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--blue">
+            To do
+          </strong>
+        </div>
+        {% endif %}
+      </li>
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            AV148282
+          </a>
+        </div>
+        {% if data['AV148282Status'] == 'started' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--yellow">
+            In progress
+          </strong>
+        </div>
+        {% elseif data['AV148282Status'] == 'complete' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          Done
+        </div>
+        {% else %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--blue">
+            To do
+          </strong>
+        </div>
+        {% endif %}
+      </li>
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            AV178903
+          </a>
+        </div>
+        {% if data['AV178903Status'] == 'started' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--yellow">
+            In progress
+          </strong>
+        </div>
+        {% elseif data['AV178903Status'] == 'complete' %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          Done
+        </div>
+        {% else %}
+        <div class="govuk-task-list__status" id="task-list-1-status">
+          <strong class="govuk-tag govuk-tag--blue">
+            To do
+          </strong>
+        </div>
+        {% endif %}
+      </li>
+
+    </ul>
+  </div>
+</div>
+
+
 
 {% endblock %}

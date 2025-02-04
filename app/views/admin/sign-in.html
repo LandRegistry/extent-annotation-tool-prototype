@@ -3,12 +3,14 @@
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
 {% block pageTitle %}
-Unbranded page template – {{ serviceName }} – GOV.UK Prototype Kit
+{{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block content %}
 
 <h1 class="govuk-heading-l">Admin sign in</h1>
+
+<form class="form" action="/admin/landing" method="post">
 
 {% from "govuk/components/input/macro.njk" import govukInput %}
 

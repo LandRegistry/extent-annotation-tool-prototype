@@ -1,0 +1,37 @@
+{% extends "app/views/layouts/hmlr.html" %}
+
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% block pageTitle %}
+{{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">Admin tasks</h1>
+
+    <form class="form" action="/admin/assign-titles/upload-csv" method="post">
+
+      <h2 class="govuk-heading-m">Assign a job to an annotator</h2>
+
+      <p class="govuk-body">You'll need to upload a CSV file containing the titles that you want to assign.</p>
+
+      {% from "govuk/components/button/macro.njk" import govukButton %}
+
+      {{ govukButton({
+      text: "Start now",
+      isStartButton: true
+      }) }}
+
+    </form>
+
+    <h2 class="govuk-heading-m">Export annotation results</h2>
+    <p class="govuk-body">Find submitted Titles</p>
+
+  </div>
+</div>
+
+{% endblock %}

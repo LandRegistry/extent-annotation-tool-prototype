@@ -1,0 +1,38 @@
+{% extends "app/views/layouts/hmlr.html" %}
+
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% block pageTitle %}
+{{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+<h1 class="govuk-heading-l">Upload titles</h1>
+
+<form class="form" action="/admin/assign-titles/select-annotator" method="post">
+
+  <p class="govuk-body">Upload a CSV file of titles in the format:</p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <li>x</li>
+    <li>y</li>
+    <li>z</li>
+  </ul>
+
+  {% from "govuk/components/file-upload/macro.njk" import govukFileUpload %}
+
+  {{ govukFileUpload({
+    id: "file-upload-1",
+    name: "fileUpload1"
+  }) }}
+
+  {% from "govuk/components/button/macro.njk" import govukButton %}
+
+{{ govukButton({
+  text: "Continue"
+}) }}
+
+</form>
+
+{% endblock %}
