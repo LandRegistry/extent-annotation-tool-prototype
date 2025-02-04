@@ -8,19 +8,19 @@ Assignments – {{ serviceName }} – GOV.UK Prototype Kit
 
 {% block content %}
 
-<form class="form" action="/annotators/assignments/AV57267/extent-6/entry-4" method="post">
+<form class="form" action="/annotators/assignments/AV57267/entry-3/extent-4" method="post">
 
   <h1 class="govuk-heading-l">AV57267</h1>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
-      <h2 class="govuk-heading-m">Extent 6 of 6</h2>
-      {% include "app/includes/extents/AV57267/inc_AV57267-blue-3.html" %}
+      <h2 class="govuk-heading-m">Extent 3 of 6</h2>
+      {% include "app/includes/extents/AV57267/inc_AV57267-tinted-pink.html" %}
     </div>
     <div class="govuk-grid-column-one-half">
       <h2 class="govuk-heading-m">Entry 3 of 4</h2>
 
-      {% include "app/includes/entries/AV57267/inc_AV57267-entry-2.html" %}
+      {% include "app/includes/entries/AV57267/inc_AV57267-entry-3.html" %}
 
       {% from "govuk/components/radios/macro.njk" import govukRadios %}
       {% from "govuk/components/input/macro.njk" import govukInput %}
@@ -67,8 +67,6 @@ Assignments – {{ serviceName }} – GOV.UK Prototype Kit
       ]
       }) }}
 
-    </div>
-
     {% from "govuk/components/button/macro.njk" import govukButton %}
 
     <div class="govuk-button-group">
@@ -76,11 +74,13 @@ Assignments – {{ serviceName }} – GOV.UK Prototype Kit
       <a class="govuk-link" href="javascript:window.history.back()">Back</a>
 
       {{ govukButton({
-      text: "Next entry",
+      text: "Next extent",
       position: absolute,
       bottom: 0,
       right: 0
       }) }}
+
+    </div>
 
     </div>
 
@@ -89,5 +89,7 @@ Assignments – {{ serviceName }} – GOV.UK Prototype Kit
 </form>
 
 </div>
+
+
 
 {% endblock %}
