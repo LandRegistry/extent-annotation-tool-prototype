@@ -1,0 +1,180 @@
+{% extends "app/views/layouts/hmlr.html" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block pageTitle %}
+{{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+<h1 class="govuk-heading-l">Assigned jobs</h1>
+
+<form class="form" action="#" method="post">
+
+  <table class="govuk-table" data-module="moj-sortable-table">
+
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+
+        <th scope="col" class="govuk-table__header" aria-sort="ascending">Title ID</th>
+
+        <th scope="col" class="govuk-table__header" aria-sort="none">Annotator</th>
+
+        <th scope="col" class="govuk-table__header" aria-sort="none">Status</th>
+
+        <th scope="col" class="govuk-table__header govuk-table__header--numeric" aria-sort="none">Action</th>
+
+      </tr>
+    </thead>
+
+    <tbody class="govuk-table__body">
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">AV59722</td>
+
+        <td class="govuk-table__cell" data-sort-value="1">Annotator 1</td>
+
+        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">
+            In progress</strong></td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X"><p class="govuk-body">
+          <a href="#" class="govuk-link">Reassign</a>
+        </p></td>
+
+      </tr>
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">AV57267</td>
+
+        <td class="govuk-table__cell" data-sort-value="2">Annotator 2</td>
+
+        <td class="govuk-table__cell">X</td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">X</td>
+
+      </tr>
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">AV252005</td>
+
+        <td class="govuk-table__cell" data-sort-value="3">Annotator 3</td>
+
+        <td class="govuk-table__cell">X</td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">X</td>
+
+      </tr>
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">AV23084</td>
+
+        <td class="govuk-table__cell" data-sort-value="4">Annotator 4</td>
+
+        <td class="govuk-table__cell">X</td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">X</td>
+
+      </tr>
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">AV225733</td>
+
+        <td class="govuk-table__cell" data-sort-value="5">Annotator 5</td>
+
+        <td class="govuk-table__cell">X</td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">X</td>
+
+      </tr>
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">AV178903</td>
+
+        <td class="govuk-table__cell" data-sort-value="6">Annotator 6</td>
+
+        <td class="govuk-table__cell">X</td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">X</td>
+
+      </tr>
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">AV17272</td>
+
+        <td class="govuk-table__cell" data-sort-value="1">Annotator 1</td>
+
+        <td class="govuk-table__cell">X</td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">X</td>
+
+      </tr>
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">AV172146</td>
+
+        <td class="govuk-table__cell" data-sort-value="2">Annotator 2</td>
+
+        <td class="govuk-table__cell">X</td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">X</td>
+
+      </tr>
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">C233FNH</td>
+
+        <td class="govuk-table__cell" data-sort-value="3">Annotator 3</td>
+
+        <td class="govuk-table__cell">X</td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">X</td>
+
+      </tr>
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">AV148282</td>
+
+        <td class="govuk-table__cell" data-sort-value="4">Annotator 4</td>
+
+        <td class="govuk-table__cell">X</td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">X</td>
+
+      </tr>
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">AV148282</td>
+
+        <td class="govuk-table__cell" data-sort-value="5">Annotator 5</td>
+
+        <td class="govuk-table__cell">X</td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">X</td>
+
+      </tr>
+
+    </tbody>
+  </table>
+
+
+
+
+  {{ govukButton({
+  text: "Continue"
+  }) }}
+
+</form>
+
+{% endblock %}

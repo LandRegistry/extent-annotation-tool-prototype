@@ -8,7 +8,7 @@
 
 {% block content %}
 
-  <form class="form" action="/admin/assign-titles/select-titles" method="post">
+  <form class="form" action="/admin/landing?assignSuccess=yes" method="post">
   
   {{ govukRadios({
     classes: "govuk-radios--small",
@@ -16,7 +16,7 @@
     value: data['selectAnnotator'],
     fieldset: {
       legend: {
-        text: "Select the Annotator to assign titles to",
+        text: "Select the Annotator to assign job to",
         isPageHeading: true,
         classes: "govuk-fieldset__legend--s"
       }
@@ -24,33 +24,33 @@
     items: [
       {
         value: "user1",
-        text: "User 1"
+        text: "Annotator 1"
       },
       {
         value: "user2",
-        text: "User 2"
+        text: "Annotator 2"
       },
       {
         value: "user3",
-        text: "User 3"
+        text: "Annotator 3"
       },
       {
         value: "user4",
-        text: "User 4"
+        text: "Annotator 4"
       },
       {
         value: "user5",
-        text: "User 5"
+        text: "Annotator 5"
       },
       {
         value: "user6",
-        text: "User 6"
+        text: "Annotator 6"
       }
     ]
   }) }}
 
   {{ govukButton({
-    text: "Continue"
+    text: "Assign job"
   }) }}
 
 </form>
