@@ -8,11 +8,9 @@ This prototype was designed using: 
 
 -   [Hmlr-frontend v2.0.0](https://github.com/LandRegistry/hmlr-frontend/releases) 
 
-V1 also uses a [multi select component from the MoJ design system](https://design-patterns.service.justice.gov.uk/components/multi-select/). 
+V1 also uses a [sortable table component from the MoJ design system](https://design-patterns.service.justice.gov.uk/components/sortable-table/). 
 
 -   [Install MoJ Frontend 3.3.1](https://design-patterns.service.justice.gov.uk/prototyping/setting-up-coded-prototypes/) 
-
-*This may be replaced with a common GOV.UK component in v2*.  
 
 ## Brief 
 
