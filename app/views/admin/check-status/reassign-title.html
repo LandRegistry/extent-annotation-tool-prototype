@@ -1,0 +1,69 @@
+{% extends "app/views/layouts/hmlr.html" %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block pageTitle %}
+{{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">Reassign title {{ data['titleID'] }}</h1>
+        <div class="govuk-inset-text">
+          <h2 class="govuk-heading-s">Current annotator</h2>
+          {{ data['AV59722-user'] or "Annotator 1" }}
+        </div>
+        <form class="form" action="/admin/check-status/jobs-list?reassignType=success" method="post">
+  
+          {{ govukRadios({
+            classes: "govuk-radios--small",
+            name: 'AV59722-user',
+            fieldset: {
+              legend: {
+                text: "Select the Annotator to reassign to",
+                classes: "govuk-fieldset__legend--s"
+              }
+            },
+            items: [
+              {
+                value: "Annotator 1",
+                text: "Annotator 1"
+              },
+              {
+                value: "Annotator 2",
+                text: "Annotator 2"
+              },
+              {
+                value: "Annotator 3",
+                text: "Annotator 3"
+              },
+              {
+                value: "Annotator 4",
+                text: "Annotator 4"
+              },
+              {
+                value: "Annotator 5",
+                text: "Annotator 5"
+              },
+              {
+                value: "Annotator 6",
+                text: "Annotator 6"
+              }
+            ]
+          }) }}
+        
+          {{ govukButton({
+            text: "Reassign"
+          }) }}
+        
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+
+{% endblock %}
