@@ -1,6 +1,7 @@
 {% extends "app/views/layouts/hmlr.html" %}
 
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block pageTitle %}
 {{ serviceName }} – GOV.UK Prototype Kit
@@ -11,25 +12,51 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
+    {% if data['assignSuccess'] == 'yes' %}
+
+    {% include "app/includes/alerts/inc_assign-success.html" %}
+
+    {% endif %}
+
     <h1 class="govuk-heading-l">Admin tasks</h1>
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
     <form class="form" action="/admin/assign-titles/upload-csv" method="post">
 
-      <h2 class="govuk-heading-m">Assign a job to an annotator</h2>
+      <h2 class="govuk-heading-m">Upload and assign a job to an annotator</h2>
 
       <p class="govuk-body">You'll need to upload a CSV file containing the titles that you want to assign.</p>
 
-      {% from "govuk/components/button/macro.njk" import govukButton %}
+      <p class="govuk-body">You can include titles that have already been assigned to another annotator.</p>
 
       {{ govukButton({
-      text: "Start now",
-      isStartButton: true
+      text: "Upload and assign"
       }) }}
 
     </form>
 
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <h2 class="govuk-heading-m">Check the status of tasks</h2>
+    <p class="govuk-body">Check which titles are to do, in progress or complete and reassign titles.</p>
+
+
+    {{ govukButton({
+    text: "Check jobs status",
+    href: "/admin/check-status/jobs-list"
+    }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
     <h2 class="govuk-heading-m">Export annotation results</h2>
-    <p class="govuk-body">Find submitted Titles</p>
+    <p class="govuk-body">To be confirmed - if the tool exports a file manually or writes somewhere</p>
+
+
+    {{ govukButton({
+    text: "Export annotations",
+    disabled: true
+    }) }}
 
   </div>
 </div>
