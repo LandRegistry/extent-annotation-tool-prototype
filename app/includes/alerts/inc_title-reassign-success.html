@@ -1,0 +1,15 @@
+{% if data['titleReassignType'] == 'success' %}
+
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{% set html %}
+
+  <p class="govuk-body">Title <strong>{{ data['titleID'] }}</strong> reassigned to <strong>{{ data['AV59722-user'] }}</strong></p>
+{% endset %}
+
+{{ govukNotificationBanner({
+  html: html,
+  type: "success"
+}) }}
+
+{% endif %}

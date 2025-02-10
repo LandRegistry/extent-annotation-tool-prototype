@@ -12,13 +12,7 @@
 
 <form class="form" action="/admin/assign-titles/select-annotator" method="post">
 
-  <p class="govuk-body">Upload a CSV file of titles in the format:</p>
-
-  <ul class="govuk-list govuk-list--bullet">
-    <li>Title ID</li>
-    <li>y</li>
-    <li>z</li>
-  </ul>
+  <p class="govuk-body">Upload a CSV file with one column containg a list of title IDs.</p>
 
   {% from "govuk/components/file-upload/macro.njk" import govukFileUpload %}
 

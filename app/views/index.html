@@ -1,6 +1,6 @@
 {% extends "layouts/hmlr-index.html" %}
 
-{% set pageName="Index" %}
+{% set pageName="Prototype index" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
@@ -10,8 +10,12 @@
   <div class="govuk-grid-column-two-thirds">
 
     <h1 class="govuk-heading-l">
-      Index
+      {{ pageName }}
     </h1>
+
+    <p class="govuk-body">
+      This page lists the main user journeys that have been prototyped.
+    </p>
 
     <ul class="govuk-list">
       <li>
@@ -44,7 +48,7 @@
         <a class="govuk-link" href="admin/assign-titles/select-annotator">Assign titles to annotators</a>
       </li>
       <li>
-        <a class="govuk-link" href="admin/check-status/jobs-list">Check the status of assigned titles and reassign</a>
+        <a class="govuk-link" href="admin/check-status/jobs-list">Check the status and reassign Jobs and Titles</a>
       </li>
     </ul>
 
