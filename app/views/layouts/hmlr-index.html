@@ -30,6 +30,18 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 </header>
 {% endblock %}
 
+{% block beforeContent %}
+
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+
+{{ govukPhaseBanner({
+tag: {
+text: "Prototype"
+},
+html: 'This is not a production service.'
+}) }}
+{% endblock %}
+
 {% block footer %}
 {{ hmlrFooter() }}
 {% endblock %}

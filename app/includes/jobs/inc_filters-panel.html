@@ -1,0 +1,77 @@
+{%- from "moj/components/filter/macro.njk" import mojFilter -%}
+{%- from "govuk/components/checkboxes/macro.njk" import govukCheckboxes -%}
+
+{%- set filterOptionsHtml %}
+
+{{ govukCheckboxes({
+idPrefix: 'status',
+name: 'status',
+classes: "govuk-checkboxes--small",
+fieldset: {
+legend: {
+text: 'Status',
+classes: 'govuk-fieldset__legend--m'
+}
+},
+items: [
+{
+value: 'done',
+text: 'Done (3)',
+checked: false
+},
+{
+value: 'in-progress',
+text: 'In progress (3)',
+checked: false
+},
+{
+value: 'to-do',
+text: 'To do (10)',
+checked: true
+},
+{
+value: 'archived',
+text: 'Archived (2)',
+checked: false
+}
+]
+}) }}
+{% endset -%}
+
+{{ mojFilter({
+heading: {
+text: 'Filter'
+},
+
+submit: {
+attributes: {
+"data-test-id": "submit-button"
+}
+},
+
+selectedFilters: {
+
+heading: {
+text: 'Selected filters'
+},
+
+clearLink: {
+text: 'Clear filters'
+},
+
+categories: [
+{
+heading: {
+text: 'Status'
+},
+items: [
+{
+href: '/path/to/remove/this',
+text: 'To do'
+}
+]
+}
+]
+},
+optionsHtml: filterOptionsHtml
+}) }}

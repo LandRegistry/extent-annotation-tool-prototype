@@ -11,16 +11,16 @@
 <main class="govuk-main-wrapper">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            {% include "app/includes/alerts/inc_job-reassign-success.html" %}
+            {% include "app/includes/alerts/inc_title-reassign-success.html" %}
+            <h1 class="govuk-heading-l">Assigned titles for {{ data['user'] }}: Job {{ data['jobID'] }}</h1>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Jobs</h1>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-quarter">
             {% include "app/includes/jobs/inc_filters-panel.html" %}
         </div>
         <div class="govuk-grid-column-three-quarters">
-            {% include "app/includes/jobs/inc_jobs-table.html" %}
+            {% include "app/includes/titles/inc_title-table.html" %}
         </div>
     </div>
 </main>

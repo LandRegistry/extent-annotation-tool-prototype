@@ -1,0 +1,218 @@
+<table class="govuk-table" data-module="moj-sortable-table">
+
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+
+        <th scope="col" class="govuk-table__header" aria-sort="ascending">Job ID</th>
+
+        <th scope="col" class="govuk-table__header" aria-sort="none">Annotator</th>
+
+        <th scope="col" class="govuk-table__header" aria-sort="ascending">Assigned on</th>
+
+        <th scope="col" class="govuk-table__header" aria-sort="none">Status</th>
+
+        <th scope="col" class="govuk-table__header govuk-table__header--numeric"></th>
+
+      </tr>
+    </thead>
+
+    <tbody class="govuk-table__body">
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">
+          <p class="govuk-body">
+            <a href="/admin/check-status/titles-list?jobID=1&user=Annotator%201" class="govuk-link">Job 1</a>
+          </p>
+        </td>
+
+        <td class="govuk-table__cell" data-sort-value="1" id="job1-user">
+          {{ data['AV59722-user'] or "Annotator 1" }}
+        </td>
+
+        <td class="govuk-table__cell" data-sort-value="1">
+          10 Febraury at 9:45am
+        </td>
+
+        <td class="govuk-table__cell">
+          {% include "app/includes/status-tags/inc_AV59722-status.html" %}
+        </td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">
+          <p class="govuk-body">
+            <a href="/admin/check-status/reassign-job?jobID=1" class="govuk-link">Reassign</a>
+          </p>
+        </td>
+
+      </tr>
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">Job 9</td>
+
+        <td class="govuk-table__cell" data-sort-value="2">Annotator 2</td>
+
+        <td class="govuk-table__cell" data-sort-value="1">
+          [timestamp]
+        </td>
+
+        <td class="govuk-table__cell">
+          {% include "app/includes/status-tags/inc_AV57267-status.html" %}
+        </td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">
+          <p class="govuk-body">
+            Reassign</p>
+        </td>
+
+      </tr>
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">Job 2</td>
+
+        <td class="govuk-table__cell" data-sort-value="4">Annotator 4</td>
+
+        <td class="govuk-table__cell" data-sort-value="1">
+          [timestamp]
+        </td>
+
+        <td class="govuk-table__cell">
+          {% include "app/includes/status-tags/inc_AV23084-status.html" %}
+        </td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">
+          <p class="govuk-body">
+            Reassign</p>
+        </td>
+
+      </tr>
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">Job 3</td>
+
+        <td class="govuk-table__cell" data-sort-value="5">Annotator 5</td>
+
+        <td class="govuk-table__cell" data-sort-value="1">
+          [timestamp]
+        </td>
+
+        <td class="govuk-table__cell">
+          {% include "app/includes/status-tags/inc_AV225733-status.html" %}
+        </td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">
+          <p class="govuk-body">
+            Reassign</p>
+        </td>
+
+      </tr>
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">Job 4</td>
+
+        <td class="govuk-table__cell" data-sort-value="6">Annotator 6</td>
+
+        <td class="govuk-table__cell" data-sort-value="1">
+          [timestamp]
+        </td>
+
+        <td class="govuk-table__cell">
+          {% include "app/includes/status-tags/inc_AV178903-status.html" %}
+        </td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">
+          <p class="govuk-body">
+            Reassign</p>
+        </td>
+
+      </tr>
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">Job 5</td>
+
+        <td class="govuk-table__cell" data-sort-value="1">Annotator 1</td>
+
+        <td class="govuk-table__cell" data-sort-value="1">
+          [timestamp]
+        </td>
+
+        <td class="govuk-table__cell">
+          {% include "app/includes/status-tags/inc_AV17272-status.html" %}
+        </td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">
+          <p class="govuk-body">
+            Reassign</p>
+        </td>
+
+      </tr>
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">Job 6</td>
+
+        <td class="govuk-table__cell" data-sort-value="2">Annotator 2</td>
+
+        <td class="govuk-table__cell" data-sort-value="1">
+          [timestamp]
+        </td>
+
+        <td class="govuk-table__cell">
+          {% include "app/includes/status-tags/inc_AV172146-status.html" %}
+        </td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">
+          <p class="govuk-body">
+            Reassign</p>
+        </td>
+
+      </tr>
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">Job 7</td>
+
+        <td class="govuk-table__cell" data-sort-value="4">Annotator 4</td>
+
+        <td class="govuk-table__cell" data-sort-value="1">
+          [timestamp]
+        </td>
+
+        <td class="govuk-table__cell">
+          {% include "app/includes/status-tags/inc_AV148282-status.html" %}
+        </td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">
+          <p class="govuk-body">
+            Reassign</p>
+        </td>
+
+      </tr>
+
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">Job 8</td>
+
+        <td class="govuk-table__cell" data-sort-value="5">Annotator 5</td>
+
+        <td class="govuk-table__cell" data-sort-value="1">
+          [timestamp]
+        </td>
+
+        <td class="govuk-table__cell">
+          {% include "app/includes/status-tags/inc_AV148282-status.html" %}
+        </td>
+
+        <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">
+          <p class="govuk-body">
+            Reassign</p>
+        </td>
+
+      </tr>
+
+    </tbody>
+  </table>
