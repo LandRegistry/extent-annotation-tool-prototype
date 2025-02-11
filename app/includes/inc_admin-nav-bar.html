@@ -1,0 +1,78 @@
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+
+{% if currentPage == 'upload' %}
+{{ govukServiceNavigation({
+navigation: [
+{
+href: "/admin/landing",
+text: "Actions"
+},
+{
+href: "/admin/assign-titles/upload-csv",
+text: "Upload and assign",
+active: true
+},
+{
+href: "/admin/check-status/jobs-list",
+text: "Check status",
+active: false
+},
+{
+href: "#",
+text: "Export"
+}
+]
+}) }}
+
+{% elseif currentPage == 'check' %}
+
+{{ govukServiceNavigation({
+navigation: [
+{
+href: "/admin/landing",
+text: "Actions"
+},
+{
+href: "/admin/assign-titles/upload-csv",
+text: "Upload and assign",
+active: false
+},
+{
+href: "#",
+text: "Check status",
+active: true
+},
+{
+href: "#",
+text: "Export"
+}
+]
+}) }}
+
+{% elseif currentPage == 'export' %}
+
+{{ govukServiceNavigation({
+navigation: [
+{
+href: "/admin/landing",
+text: "Actions"
+},
+{
+href: "/admin/assign-titles/upload-csv",
+text: "Upload and assign",
+active: false
+},
+{
+href: "#",
+text: "Check status",
+active: false
+},
+{
+href: "#",
+text: "Export",
+active: true
+}
+]
+}) }}
+
+{% endif %}
