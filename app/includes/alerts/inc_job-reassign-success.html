@@ -4,7 +4,7 @@
 
 {% set html %}
 
-  <p class="govuk-body">Job <strong>{{ data['job'] }}</strong> reassigned to <strong>{{ data['AV59722-user'] }}</strong></p>
+  <p class="govuk-body"><strong>Job {{ data['jobID'] }}</strong> reassigned to <strong>{{ data['AV59722-user'] }}</strong></p>
 {% endset %}
 
 {{ govukNotificationBanner({
