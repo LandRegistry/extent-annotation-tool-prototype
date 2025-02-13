@@ -1,0 +1,15 @@
+{% if data['alertType'] == 'archive-success' %}
+
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{% set html %}
+
+  <p class="govuk-body">Job <strong>{{ data['jobID'] }}</strong> archived.</p>
+{% endset %}
+
+{{ govukNotificationBanner({
+  html: html,
+  type: "success"
+}) }}
+
+{% endif %}

@@ -1,4 +1,6 @@
 {% extends "app/views/layouts/hmlr-success.html" %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block pageTitle %}
 Assignments – {{ serviceName }} – GOV.UK Prototype Kit
@@ -10,17 +12,20 @@ Assignments – {{ serviceName }} – GOV.UK Prototype Kit
 
   <h1 class="govuk-heading-l">Success</h1>
 
-{% from "govuk/components/panel/macro.njk" import govukPanel %}
-
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       {{ govukPanel({
-        titleText: "Success",
-        html: "Title <strong>AV57267</strong> has been submitted"
+      titleText: "Success",
+      html: "Title <strong>AV57267</strong> has been submitted"
+      }) }}
+
+      {{ govukButton({
+      text: "Next title",
+      href: "#"
       }) }}
 
       <p class="govuk-body">
         <a href="/annotators/assignments?AV57267Status=complete" class="govuk-link">Back to your Jobs</a>.
       </p>
 
-  {% endblock %}
+      {% endblock %}
