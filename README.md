@@ -8,9 +8,14 @@ This prototype was designed using: 
 
 -   [Hmlr-frontend v2.0.0](https://github.com/LandRegistry/hmlr-frontend/releases) 
 
-V1 also uses a [sortable table component from the MoJ design system](https://design-patterns.service.justice.gov.uk/components/sortable-table/). 
+Uses [sortable table](https://design-patterns.service.justice.gov.uk/components/sortable-table/) and [filter](https://design-patterns.service.justice.gov.uk/components/filter/) components from the MoJ design system. 
 
--   [Install MoJ Frontend 3.3.1](https://design-patterns.service.justice.gov.uk/prototyping/setting-up-coded-prototypes/) 
+-   [Install MoJ Frontend 3.3.1](https://design-patterns.service.justice.gov.uk/prototyping/setting-up-coded-prototypes/)
+
+Uses [govuk DateTime filter](https://x-govuk.github.io/govuk-prototype-filters/date/#govukdatetime) from [x-govuk](https://x-govuk.github.io/govuk-prototype-filters):
+`npm install @x-govuk/govuk-prototype-filters`
+
+Use `npm run dev` to start, not `npm start`
 
 ## Brief 
 
