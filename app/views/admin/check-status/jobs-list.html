@@ -1,8 +1,9 @@
 {% extends "app/views/layouts/hmlr-admin.html" %}
 {% set currentPage="check" %}
 
+{% set AV178903Status="started" %}
+
 {% from "govuk/components/button/macro.njk" import govukButton %}
-{%- from "moj/components/primary-navigation/macro.njk" import mojPrimaryNavigation -%}
 
 {% if data['jobID'] == '1' and data['alertType'] == 'archive-success' %}
 {% set job1Archived = "yes" %}
@@ -23,7 +24,7 @@
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-quarter">
-            {% include "app/includes/jobs/inc_filters-panel.html" %}
+            {% include "app/includes/jobs/inc_sort-panel.html" %}
         </div>
         <div class="govuk-grid-column-three-quarters">
             {% include "app/includes/jobs/inc_jobs-table.html" %}
