@@ -11,10 +11,10 @@ Unbranded page template – {{ serviceName }} – GOV.UK Prototype Kit
 
 <h1 class="govuk-heading-l">Confirm job to archive</h1>
 
-<form class="form" action="/admin/check-status/jobs-list?alertType=archive-success&AV59722Status=archived" method="post">
+<form class="form" action="/admin/check-status/jobs-list?alertType=archive-success" method="post">
   <div class="govuk-inset-text">
     <p>Job <strong>{{ data['jobID'] }}</strong> </p>
-    <p>Annotator <strong>{{ data['annotator'] }}</strong> </p>
+    <p>Annotator <strong>{{ data['job1-user'] or "1" }}</strong> </p>
   </div>
 
 

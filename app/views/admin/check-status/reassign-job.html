@@ -16,9 +16,9 @@
         <h1 class="govuk-heading-l">Reassign job {{ data['jobID'] }}</h1>
         <div class="govuk-inset-text">
           <h2 class="govuk-heading-s">Current annotator</h2>
-          {{ data['AV59722-user'] or "Annotator 1" }}
+          {{ data['job1-user'] or "Annotator 1" }}
         </div>
-        <form class="form" action="/admin/check-status/jobs-list?jobReassignType=success" method="post">
+        <form class="form" action="/admin/check-status/jobs-list?alertType=reassign-success" method="post">
   
           {{ govukRadios({
             classes: "govuk-radios--small",

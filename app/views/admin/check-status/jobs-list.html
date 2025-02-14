@@ -4,6 +4,10 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {%- from "moj/components/primary-navigation/macro.njk" import mojPrimaryNavigation -%}
 
+{% if data['jobID'] == '1' and data['alertType'] == 'archive-success' %}
+{% set job1Archived = "yes" %}
+{% endif %}
+
 {% block pageTitle %}
 {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
@@ -14,6 +18,7 @@
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             {% include "app/includes/alerts/inc_job-reassign-success.html" %}
+            {% include "app/includes/alerts/inc_job-archive-success.html" %}
         </div>
     </div>
     <div class="govuk-grid-row">

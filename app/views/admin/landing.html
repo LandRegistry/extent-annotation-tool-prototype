@@ -35,8 +35,16 @@
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
     <h2 class="govuk-heading-m">Check the status of jobs and titles</h2>
-    <p class="govuk-body">Check which jobs and titles are to do, in progress or complete and reassign to a different annotator.</p>
-
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Check which jobs and titles are:
+        <ul>
+          <li>to do</li>
+          <li>in progress</li>
+          <li>done</li>
+        </ul>
+      <li>Reassign a job to a different annotator</li>
+      <li>Archive a job</li>
+    </ul>
 
     {{ govukButton({
     text: "Check jobs status",
@@ -44,15 +52,6 @@
     }) }}
 
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-
-    <h2 class="govuk-heading-m">Export annotation results</h2>
-    <p class="govuk-body">To be confirmed - if the tool exports a file manually or writes somewhere</p>
-
-
-    {{ govukButton({
-    text: "Export annotations",
-    disabled: true
-    }) }}
 
   </div>
 </div>

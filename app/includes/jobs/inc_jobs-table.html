@@ -31,11 +31,15 @@
             </td>
 
             <td class="govuk-table__cell" data-sort-value="1">
-                10 Febraury at 9:45am
+                {% if data['jobID'] == 1 and data['alertType'] == 'reassign-success' %}
+                    {{ "now" | govukDateTime }}
+                    {% else %}
+                    10 Febraury at 9:45am
+                    {% endif %}
             </td>
 
             <td class="govuk-table__cell">
-                {% include "app/includes/status-tags/inc_AV59722-status.html" %}
+                {% include "app/includes/status-tags/inc_job1-status.html" %}
             </td>
 
             <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">
@@ -44,7 +48,10 @@
                         <a class="govuk-link" href="/admin/check-status/reassign-job?jobID=1">Reassign</a>
                     </li>
                     <li class="govuk-summary-list__actions-list-item">
-                        <a class="govuk-link" href="#">Archive</a>
+                        {% if job1Archived == 'yes' %}
+                        {% else %}
+                        <a class="govuk-link" href="/admin/check-status/confirm-archive?jobID=1">Archive</a>
+                        {% endif %}
                     </li>
                 </ul>
             </td>
@@ -58,7 +65,11 @@
             <td class="govuk-table__cell" data-sort-value="2">Annotator 2</td>
 
             <td class="govuk-table__cell" data-sort-value="1">
-                [timestamp]
+                {% if data['jobID'] == 9 and data['jobReassignType'] == 'success' %}
+                {{ "now" | govukDateTime }}
+                {% else %}
+                10 Febraury at 9:45am
+                {% endif %}
             </td>
 
             <td class="govuk-table__cell">
@@ -85,11 +96,15 @@
             <td class="govuk-table__cell" data-sort-value="4">Annotator 4</td>
 
             <td class="govuk-table__cell" data-sort-value="1">
-                [timestamp]
+                {% if data['jobID'] == 4 and data['jobReassignType'] == 'success' %}
+                {{ "now" | govukDateTime }}
+                {% else %}
+                10 Febraury at 9:45am
+                {% endif %}
             </td>
 
             <td class="govuk-table__cell">
-                {% include "app/includes/status-tags/inc_AV23084-status.html" %}
+                {% include "app/includes/status-tags/inc_AV17272-status.html" %}
             </td>
 
             <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">
@@ -112,7 +127,11 @@
             <td class="govuk-table__cell" data-sort-value="5">Annotator 5</td>
 
             <td class="govuk-table__cell" data-sort-value="1">
-                [timestamp]
+                {% if data['jobID'] == 3 and data['jobReassignType'] == 'success' %}
+                {{ "now" | govukDateTime }}
+                {% else %}
+                10 Febraury at 9:45am
+                {% endif %}
             </td>
 
             <td class="govuk-table__cell">
@@ -139,7 +158,11 @@
             <td class="govuk-table__cell" data-sort-value="6">Annotator 6</td>
 
             <td class="govuk-table__cell" data-sort-value="1">
-                [timestamp]
+                {% if data['jobID'] == 4 and data['jobReassignType'] == 'success' %}
+                {{ "now" | govukDateTime }}
+                {% else %}
+                10 Febraury at 9:45am
+                {% endif %}
             </td>
 
             <td class="govuk-table__cell">
@@ -166,7 +189,11 @@
             <td class="govuk-table__cell" data-sort-value="1">Annotator 1</td>
 
             <td class="govuk-table__cell" data-sort-value="1">
-                [timestamp]
+                {% if data['jobID'] == 5 and data['jobReassignType'] == 'success' %}
+                {{ "now" | govukDateTime }}
+                {% else %}
+                10 Febraury at 9:45am
+                {% endif %}
             </td>
 
             <td class="govuk-table__cell">
@@ -193,7 +220,11 @@
             <td class="govuk-table__cell" data-sort-value="2">Annotator 2</td>
 
             <td class="govuk-table__cell" data-sort-value="1">
-                [timestamp]
+                {% if data['jobID'] == 5 and data['jobReassignType'] == 'success' %}
+                {{ "now" | govukDateTime }}
+                {% else %}
+                13 Febraury at 4:27pm
+                {% endif %}
             </td>
 
             <td class="govuk-table__cell">
@@ -220,7 +251,11 @@
             <td class="govuk-table__cell" data-sort-value="4">Annotator 4</td>
 
             <td class="govuk-table__cell" data-sort-value="1">
-                [timestamp]
+                {% if data['jobID'] == 7 and data['jobReassignType'] == 'success' %}
+                {{ "now" | govukDateTime }}
+                {% else %}
+                13 Febraury at 4:27pm
+                {% endif %}
             </td>
 
             <td class="govuk-table__cell">
@@ -247,7 +282,11 @@
             <td class="govuk-table__cell" data-sort-value="5">Annotator 5</td>
 
             <td class="govuk-table__cell" data-sort-value="1">
-                [timestamp]
+                {% if data['jobID'] == 8 and data['jobReassignType'] == 'success' %}
+                {{ "now" | govukDateTime }}
+                {% else %}
+                13 Febraury at 4:27pm
+                {% endif %}
             </td>
 
             <td class="govuk-table__cell">

@@ -1,0 +1,27 @@
+{% if data['AV252005Status'] == 'complete' %}
+<div class="govuk-task-list__status" id="task-list-1-status">
+  Done
+</div>
+
+{% elseif data['AV17272Status'] == 'started' %}
+<div class="govuk-task-list__status" id="task-list-1-status">
+  <strong class="govuk-tag govuk-tag--yellow">
+    In progress
+  </strong>
+</div>
+
+{% else %}
+<div class="govuk-task-list__status" id="task-list-1-status">
+  <strong class="govuk-tag govuk-tag--blue">
+    To do
+  </strong>
+</div>
+{% endif %}
+
+{% if job1Archived == 'yes' %}
+<div class="govuk-task-list__status" id="task-list-1-status">
+  <strong class="govuk-tag govuk-tag--grey">
+    Archived
+  </strong>
+</div>
+{% endif %}
