@@ -1,0 +1,354 @@
+{% extends "layouts/hmlr-index.html" %}
+
+{% set pageName="Prototype index" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+
+<div class="sort-pannel">
+    <style>
+        .sort-pannel {
+            box-shadow: inset 0 0 0 1px #b1b4b6;
+            border-width: 1px;
+            border-color: #b1b4b6;
+            border-style: solid;
+        }
+    </style>
+    <div class="sort-header">
+        <style>
+            .sort-header {
+                background-color: #b1b4b6;
+                font-size: 0;
+                padding: 10px 20px;
+                text-align: justify;
+            }
+        </style>
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-0">Sort</h2>
+    </div>
+
+    <div class="sort-options">
+        <style>
+            .sort-options {
+                background-color: #f3f2f1;
+                padding: 20px;
+            }
+        </style>
+        <div class="govuk-form-group">
+            <label class="govuk-label" for="sort">
+                Sort by
+            </label>
+            <select class="govuk-select" id="sortSelect" name="sort"">
+                <option value="job">Job ID</option>
+                <option value="annotator">Annotator</option>
+                <option value="assigned">Assigned on</option>
+                <option value="status">Status</option>
+            </select>
+        </div>
+        <button type="submit" class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button"
+            onclick="sortTable()">
+            Apply sort
+        </button>
+    </div>
+</div>
+
+
+
+
+
+
+
+<table id="dataTable" class="govuk-table govuk-table--small-text-until-tablet">
+    <caption class="govuk-table__caption govuk-table__caption--m">Jobs</caption>
+    <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Job ID</th>
+            <th scope="col" class="govuk-table__header">Annotator</th>
+            <th scope="col" class="govuk-table__header">Assigned on</th>
+            <th scope="col" class="govuk-table__header">Status</th>
+        </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+                <a href="/admin/check-status/titles-list?jobID=1&user=Annotator%201" class="govuk-link">Job 1</a>
+            </td>
+            <td class="govuk-table__cell" id="job1-user">
+                {{ data['AV59722-user'] or "Annotator 1" }}
+            </td>
+            <td class="govuk-table__cell">
+                {% if data['jobID'] == 1 and data['alertType'] == 'reassign-success' %}
+                {{ "now" | govukDateTime }}
+                {% else %}
+                10 Febraury at 9:45am
+                {% endif %}
+            </td>
+            <td class="govuk-table__cell">
+                {% include "app/includes/status-tags/inc_job1-status.html" %}
+            </td>
+            <td class="govuk-table__cell">
+                <ul class="govuk-summary-list__actions-list">
+                    <li class="govuk-summary-list__actions-list-item">
+                        <a class="govuk-link" href="/admin/check-status/reassign-job?jobID=1">Reassign</a>
+                    </li>
+                    <li class="govuk-summary-list__actions-list-item">
+                        {% if job1Archived == 'yes' %}
+                        {% else %}
+                        <a class="govuk-link" href="/admin/check-status/confirm-archive?jobID=1">Archive</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+                Job 9
+            </td>
+            <td class="govuk-table__cell">Annotator 2</td>
+            <td class="govuk-table__cell">
+                {% if data['jobID'] == 9 and data['jobReassignType'] == 'success' %}
+                {{ "now" | govukDateTime }}
+                {% else %}
+                10 Febraury at 9:45am
+                {% endif %}
+            </td>
+            <td class="govuk-table__cell">
+                {% include "app/includes/status-tags/inc_AV57267-status.html" %}
+            </td>
+            <td class="govuk-table__cell">
+                <ul class="govuk-summary-list__actions-list">
+                    <li class="govuk-summary-list__actions-list-item">
+                        Reassign</span>
+                    </li>
+                    <li class="govuk-summary-list__actions-list-item">
+                        Archive</span>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+                Job 2
+            </td>
+            <td class="govuk-table__cell">Annotator 4</td>
+            <td class="govuk-table__cell">
+                {% if data['jobID'] == 4 and data['jobReassignType'] == 'success' %}
+                {{ "now" | govukDateTime }}
+                {% else %}
+                10 Febraury at 9:45am
+                {% endif %}
+            </td>
+            <td class="govuk-table__cell">
+                {% include "app/includes/status-tags/inc_AV17272-status.html" %}
+            </td>
+            <td class="govuk-table__cell">
+                <ul class="govuk-summary-list__actions-list">
+                    <li class="govuk-summary-list__actions-list-item">
+                        Reassign</span>
+                    </li>
+                    <li class="govuk-summary-list__actions-list-item">
+                        Archive</span>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+                Job 3
+            </td>
+            <td class="govuk-table__cell">Annotator 5</td>
+            <td class="govuk-table__cell">
+                {% if data['jobID'] == 3 and data['jobReassignType'] == 'success' %}
+                {{ "now" | govukDateTime }}
+                {% else %}
+                10 Febraury at 9:45am
+                {% endif %}
+            </td>
+            <td class="govuk-table__cell">
+                {% include "app/includes/status-tags/inc_AV225733-status.html" %}
+            </td>
+            <td class="govuk-table__cell">
+                <ul class="govuk-summary-list__actions-list">
+                    <li class="govuk-summary-list__actions-list-item">
+                        Reassign</span>
+                    </li>
+                    <li class="govuk-summary-list__actions-list-item">
+                        Archive</span>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+                Job 4
+            </td>
+            <td class="govuk-table__cell">Annotator 6</td>
+            <td class="govuk-table__cell">
+                {% if data['jobID'] == 4 and data['jobReassignType'] == 'success' %}
+                {{ "now" | govukDateTime }}
+                {% else %}
+                10 Febraury at 9:45am
+                {% endif %}
+            </td>
+            <td class="govuk-table__cell">
+                {% include "app/includes/status-tags/inc_AV178903-status.html" %}
+            </td>
+            <td class="govuk-table__cell">
+                <ul class="govuk-summary-list__actions-list">
+                    <li class="govuk-summary-list__actions-list-item">
+                        Reassign</span>
+                    </li>
+                    <li class="govuk-summary-list__actions-list-item">
+                        Archive</span>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+                Job 5
+            </td>
+            <td class="govuk-table__cell">Annotator 1</td>
+            <td class="govuk-table__cell">
+                {% if data['jobID'] == 5 and data['jobReassignType'] == 'success' %}
+                {{ "now" | govukDateTime }}
+                {% else %}
+                10 Febraury at 9:45am
+                {% endif %}
+            </td>
+            <td class="govuk-table__cell">
+                {% include "app/includes/status-tags/inc_AV17272-status.html" %}
+            </td>
+            <td class="govuk-table__cell">
+                <ul class="govuk-summary-list__actions-list">
+                    <li class="govuk-summary-list__actions-list-item">
+                        Reassign</span>
+                    </li>
+                    <li class="govuk-summary-list__actions-list-item">
+                        Archive</span>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+                Job 6
+            </td>
+            <td class="govuk-table__cell">Annotator 2</td>
+            <td class="govuk-table__cell">
+                {% if data['jobID'] == 5 and data['jobReassignType'] == 'success' %}
+                {{ "now" | govukDateTime }}
+                {% else %}
+                13 Febraury at 4:27pm
+                {% endif %}
+            </td>
+            <td class="govuk-table__cell">
+                {% include "app/includes/status-tags/inc_AV172146-status.html" %}
+            </td>
+            <td class="govuk-table__cell">
+                <ul class="govuk-summary-list__actions-list">
+                    <li class="govuk-summary-list__actions-list-item">
+                        Reassign</span>
+                    </li>
+                    <li class="govuk-summary-list__actions-list-item">
+                        Archive</span>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+                Job 7
+            </td>
+            <td class="govuk-table__cell">Annotator 4</td>
+            <td class="govuk-table__cell">
+                {% if data['jobID'] == 7 and data['jobReassignType'] == 'success' %}
+                {{ "now" | govukDateTime }}
+                {% else %}
+                13 Febraury at 4:27pm
+                {% endif %}
+            </td>
+            <td class="govuk-table__cell">
+                {% include "app/includes/status-tags/inc_AV148282-status.html" %}
+            </td>
+            <td class="govuk-table__cell">
+                <ul class="govuk-summary-list__actions-list">
+                    <li class="govuk-summary-list__actions-list-item">
+                        Reassign</span>
+                    </li>
+                    <li class="govuk-summary-list__actions-list-item">
+                        Archive</span>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+                Job 8
+            </td>
+            <td class="govuk-table__cell">Annotator 5</td>
+            <td class="govuk-table__cell">
+                {% if data['jobID'] == 8 and data['jobReassignType'] == 'success' %}
+                {{ "now" | govukDateTime }}
+                {% else %}
+                13 Febraury at 4:27pm
+                {% endif %}
+            </td>
+            <td class="govuk-table__cell">
+                {% include "app/includes/status-tags/inc_AV148282-status.html" %}
+            </td>
+            <td class="govuk-table__cell">
+                <ul class="govuk-summary-list__actions-list">
+                    <li class="govuk-summary-list__actions-list-item">
+                        Reassign</span>
+                    </li>
+                    <li class="govuk-summary-list__actions-list-item">
+                        Archive</span>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+
+<script>
+    function sortTable() {
+        const table = document.getElementById('dataTable');
+        const select = document.getElementById('sortSelect');
+        const rows = Array.from(table.getElementsByTagName('tr'));
+        const tbody = table.getElementsByTagName('tbody')[0];
+
+        // Remove header row from sorting
+
+        const dataRows = rows.slice(1);
+        const columnIndex = {
+            'job': 0,
+            'annotator': 1,
+            'assigned': 2,
+            'status': 3
+        }[select.value];
+        dataRows.sort((a, b) => {
+            const aValue = a.cells[columnIndex].textContent;
+            const bValue = b.cells[columnIndex].textContent;
+            if (select.value === 'assigned') {
+                return parseInt(aValue) - parseInt(bValue);
+            }
+            return aValue.localeCompare(bValue);
+        });
+
+        // Clear and repopulate tbody
+
+        while (tbody.firstChild) {
+            tbody.removeChild(tbody.firstChild);
+        }
+        dataRows.forEach(row => tbody.appendChild(row));
+    }
+</script>
+
+
+{% endblock %}

@@ -49,6 +49,28 @@
       </li>
     </ul>
 
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text govuk-heading-s">
+          Sprint 1 MVP
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <p class="govuk-body">
+          Version of the Admin jobs list view that uses only gov.uk design system components:
+          <ul class="govuk-list govuk-list--bullet">
+            <li>standard table instead of the MOJ table with sortable columns</li>
+            <li>select input to apply a sort action</li>
+          </ul> 
+        </p>
+    
+        {{ govukButton({
+          text: "Jobs table",
+          href: "admin/check-status/jobs-list-mvp"
+          }) }}
+      </div>
+    </details>
+
     <h2 class="govuk-heading-m">
       Annotators
     </h2>
