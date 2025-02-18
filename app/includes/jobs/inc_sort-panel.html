@@ -1,0 +1,56 @@
+<div class="sort-pannel">
+    <div class="sort-header">
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-0">Sort</h2>
+    </div>
+    <div class="sort-options">
+        <div class="govuk-form-group">
+            <label class="govuk-label" for="sort">
+                Sort by
+            </label>
+            <select class="govuk-select" id="sortSelect" name="sort"">
+                <option value="job">Job ID</option>
+                <option value="annotator">Annotator</option>
+                <option value="assigned">Assigned on</option>
+                <option value="status">Status</option>
+            </select>
+        </div>
+        <button type="submit" class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button"
+            onclick="sortTable()">
+            Apply sort
+        </button>
+    </div>
+</div>
+
+<script>
+    function sortTable() {
+        const table = document.getElementById('dataTable');
+        const select = document.getElementById('sortSelect');
+        const rows = Array.from(table.getElementsByTagName('tr'));
+        const tbody = table.getElementsByTagName('tbody')[0];
+
+        // Remove header row from sorting
+
+        const dataRows = rows.slice(1);
+        const columnIndex = {
+            'job': 0,
+            'annotator': 1,
+            'assigned': 2,
+            'status': 3
+        }[select.value];
+        dataRows.sort((a, b) => {
+            const aValue = a.cells[columnIndex].textContent;
+            const bValue = b.cells[columnIndex].textContent;
+            if (select.value === 'assigned') {
+                return parseInt(aValue) - parseInt(bValue);
+            }
+            return aValue.localeCompare(bValue);
+        });
+
+        // Clear and repopulate tbody
+
+        while (tbody.firstChild) {
+            tbody.removeChild(tbody.firstChild);
+        }
+        dataRows.forEach(row => tbody.appendChild(row));
+    }
+</script>
