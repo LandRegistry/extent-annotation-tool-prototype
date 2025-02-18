@@ -1,0 +1,37 @@
+<table id="archived Table" class="govuk-table govuk-table--small-text-until-tablet">
+    <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Job ID</th>
+            <th scope="col" class="govuk-table__header">Annotator</th>
+            <th scope="col" class="govuk-table__header">Assigned on</th>
+            <th scope="col" class="govuk-table__header">Status</th>
+        </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+                <a href="/admin/check-status/titles-list?jobID=1&user=Annotator%201" class="govuk-link">Job 1</a>
+            </td>
+            <td class="govuk-table__cell" id="job1-user">
+                {{ data['AV59722-user'] or "Annotator 1" }}
+            </td>
+            <td class="govuk-table__cell">
+                {% if data['jobID'] == 1 and data['alertType'] == 'reassign-success' %}
+                {{ "now" | govukDateTime }}
+                {% else %}
+                10 Febraury at 9:45am
+                {% endif %}
+            </td>
+            <td class="govuk-table__cell">
+                {% include "app/includes/status-tags/inc_job1-status.html" %}
+            </td>
+            <td class="govuk-table__cell">
+                <ul class="govuk-summary-list__actions-list">
+                    <li class="govuk-summary-list__actions-list-item">
+                        <a class="govuk-link" href="/admin/check-status/reassign-job?jobID=1">Reassign</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
