@@ -1,45 +1,56 @@
 <div class="sort-pannel">
-    <style>
-        .sort-pannel {
-            box-shadow: inset 0 0 0 1px #b1b4b6;
-            border-width: 1px;
-            border-color: #b1b4b6;
-            border-style: solid;
-
-        }
-    </style>
     <div class="sort-header">
-        <style>
-            .sort-header {
-                background-color: #b1b4b6;
-                font-size: 0;
-                padding: 10px 20px;
-                text-align: justify;
-            }
-        </style>
         <h2 class="govuk-heading-m govuk-!-margin-bottom-0">Sort</h2>
     </div>
-
     <div class="sort-options">
-        <style>
-            .sort-options {
-                background-color: #f3f2f1;
-                padding: 20px;
-            }
-        </style>
         <div class="govuk-form-group">
             <label class="govuk-label" for="sort">
                 Sort by
             </label>
-            <select class="govuk-select" id="sort" name="sort"">
+            <select class="govuk-select" id="sortSelect" name="sort"">
                 <option value="job">Job ID</option>
                 <option value="annotator">Annotator</option>
                 <option value="assigned">Assigned on</option>
                 <option value="status">Status</option>
             </select>
         </div>
-        <button type="submit" class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button">
-            Apply
+        <button type="submit" class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button"
+            onclick="sortTable()">
+            Apply sort
         </button>
     </div>
 </div>
+
+<script>
+    function sortTable() {
+        const table = document.getElementById('dataTable');
+        const select = document.getElementById('sortSelect');
+        const rows = Array.from(table.getElementsByTagName('tr'));
+        const tbody = table.getElementsByTagName('tbody')[0];
+
+        // Remove header row from sorting
+
+        const dataRows = rows.slice(1);
+        const columnIndex = {
+            'job': 0,
+            'annotator': 1,
+            'assigned': 2,
+            'status': 3
+        }[select.value];
+        dataRows.sort((a, b) => {
+            const aValue = a.cells[columnIndex].textContent;
+            const bValue = b.cells[columnIndex].textContent;
+            if (select.value === 'assigned') {
+                return parseInt(aValue) - parseInt(bValue);
+            }
+            return aValue.localeCompare(bValue);
+        });
+
+        // Clear and repopulate tbody
+
+        while (tbody.firstChild) {
+            tbody.removeChild(tbody.firstChild);
+        }
+        dataRows.forEach(row => tbody.appendChild(row));
+    }
+</script>

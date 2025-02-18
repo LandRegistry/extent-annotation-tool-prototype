@@ -1,12 +1,10 @@
-<table class="govuk-table govuk-table--small-text-until-tablet">
-    <caption class="govuk-table__caption govuk-table__caption--m">Jobs</caption>
+<table id="dataTable" class="govuk-table govuk-table--small-text-until-tablet">
     <thead class="govuk-table__head">
         <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header">Job ID</th>
             <th scope="col" class="govuk-table__header">Annotator</th>
             <th scope="col" class="govuk-table__header">Assigned on</th>
             <th scope="col" class="govuk-table__header">Status</th>
-            <th scope="col" class="govuk-table__header"></th>
         </tr>
     </thead>
     <tbody class="govuk-table__body">
@@ -14,7 +12,7 @@
             <td class="govuk-table__cell">
                 <a href="/admin/check-status/titles-list?jobID=1&user=Annotator%201" class="govuk-link">Job 1</a>
             </td>
-            <td class="govuk-table__cell" data-sort-value="1" id="job1-user">
+            <td class="govuk-table__cell" id="job1-user">
                 {{ data['AV59722-user'] or "Annotator 1" }}
             </td>
             <td class="govuk-table__cell">
@@ -45,8 +43,8 @@
             <td class="govuk-table__cell">
                 Job 9
             </td>
-            <td class="govuk-table__cell" data-sort-value="2">Annotator 2</td>
-            <td class="govuk-table__cell" data-sort-value="1">
+            <td class="govuk-table__cell">Annotator 2</td>
+            <td class="govuk-table__cell">
                 {% if data['jobID'] == 9 and data['jobReassignType'] == 'success' %}
                 {{ "now" | govukDateTime }}
                 {% else %}
@@ -56,7 +54,7 @@
             <td class="govuk-table__cell">
                 {% include "app/includes/status-tags/inc_AV57267-status.html" %}
             </td>
-            <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">
+            <td class="govuk-table__cell">
                 <ul class="govuk-summary-list__actions-list">
                     <li class="govuk-summary-list__actions-list-item">
                         Reassign</span>
@@ -68,9 +66,11 @@
             </td>
         </tr>
         <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Job 2</td>
-            <td class="govuk-table__cell" data-sort-value="4">Annotator 4</td>
-            <td class="govuk-table__cell" data-sort-value="1">
+            <td class="govuk-table__cell">
+                Job 2
+            </td>
+            <td class="govuk-table__cell">Annotator 4</td>
+            <td class="govuk-table__cell">
                 {% if data['jobID'] == 4 and data['jobReassignType'] == 'success' %}
                 {{ "now" | govukDateTime }}
                 {% else %}
@@ -80,7 +80,7 @@
             <td class="govuk-table__cell">
                 {% include "app/includes/status-tags/inc_AV17272-status.html" %}
             </td>
-            <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">
+            <td class="govuk-table__cell">
                 <ul class="govuk-summary-list__actions-list">
                     <li class="govuk-summary-list__actions-list-item">
                         Reassign</span>
@@ -92,9 +92,11 @@
             </td>
         </tr>
         <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Job 3</td>
-            <td class="govuk-table__cell" data-sort-value="5">Annotator 5</td>
-            <td class="govuk-table__cell" data-sort-value="1">
+            <td class="govuk-table__cell">
+                Job 3
+            </td>
+            <td class="govuk-table__cell">Annotator 5</td>
+            <td class="govuk-table__cell">
                 {% if data['jobID'] == 3 and data['jobReassignType'] == 'success' %}
                 {{ "now" | govukDateTime }}
                 {% else %}
@@ -104,7 +106,7 @@
             <td class="govuk-table__cell">
                 {% include "app/includes/status-tags/inc_AV225733-status.html" %}
             </td>
-            <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">
+            <td class="govuk-table__cell">
                 <ul class="govuk-summary-list__actions-list">
                     <li class="govuk-summary-list__actions-list-item">
                         Reassign</span>
@@ -116,9 +118,11 @@
             </td>
         </tr>
         <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Job 4</td>
-            <td class="govuk-table__cell" data-sort-value="6">Annotator 6</td>
-            <td class="govuk-table__cell" data-sort-value="1">
+            <td class="govuk-table__cell">
+                Job 4
+            </td>
+            <td class="govuk-table__cell">Annotator 6</td>
+            <td class="govuk-table__cell">
                 {% if data['jobID'] == 4 and data['jobReassignType'] == 'success' %}
                 {{ "now" | govukDateTime }}
                 {% else %}
@@ -128,7 +132,7 @@
             <td class="govuk-table__cell">
                 {% include "app/includes/status-tags/inc_AV178903-status.html" %}
             </td>
-            <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">
+            <td class="govuk-table__cell">
                 <ul class="govuk-summary-list__actions-list">
                     <li class="govuk-summary-list__actions-list-item">
                         Reassign</span>
@@ -140,9 +144,11 @@
             </td>
         </tr>
         <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Job 5</td>
-            <td class="govuk-table__cell" data-sort-value="1">Annotator 1</td>
-            <td class="govuk-table__cell" data-sort-value="1">
+            <td class="govuk-table__cell">
+                Job 5
+            </td>
+            <td class="govuk-table__cell">Annotator 1</td>
+            <td class="govuk-table__cell">
                 {% if data['jobID'] == 5 and data['jobReassignType'] == 'success' %}
                 {{ "now" | govukDateTime }}
                 {% else %}
@@ -152,7 +158,7 @@
             <td class="govuk-table__cell">
                 {% include "app/includes/status-tags/inc_AV17272-status.html" %}
             </td>
-            <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">
+            <td class="govuk-table__cell">
                 <ul class="govuk-summary-list__actions-list">
                     <li class="govuk-summary-list__actions-list-item">
                         Reassign</span>
@@ -164,9 +170,11 @@
             </td>
         </tr>
         <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Job 6</td>
-            <td class="govuk-table__cell" data-sort-value="2">Annotator 2</td>
-            <td class="govuk-table__cell" data-sort-value="1">
+            <td class="govuk-table__cell">
+                Job 6
+            </td>
+            <td class="govuk-table__cell">Annotator 2</td>
+            <td class="govuk-table__cell">
                 {% if data['jobID'] == 5 and data['jobReassignType'] == 'success' %}
                 {{ "now" | govukDateTime }}
                 {% else %}
@@ -176,7 +184,7 @@
             <td class="govuk-table__cell">
                 {% include "app/includes/status-tags/inc_AV172146-status.html" %}
             </td>
-            <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">
+            <td class="govuk-table__cell">
                 <ul class="govuk-summary-list__actions-list">
                     <li class="govuk-summary-list__actions-list-item">
                         Reassign</span>
@@ -188,9 +196,11 @@
             </td>
         </tr>
         <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Job 7</td>
-            <td class="govuk-table__cell" data-sort-value="4">Annotator 4</td>
-            <td class="govuk-table__cell" data-sort-value="1">
+            <td class="govuk-table__cell">
+                Job 7
+            </td>
+            <td class="govuk-table__cell">Annotator 4</td>
+            <td class="govuk-table__cell">
                 {% if data['jobID'] == 7 and data['jobReassignType'] == 'success' %}
                 {{ "now" | govukDateTime }}
                 {% else %}
@@ -200,7 +210,7 @@
             <td class="govuk-table__cell">
                 {% include "app/includes/status-tags/inc_AV148282-status.html" %}
             </td>
-            <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">
+            <td class="govuk-table__cell">
                 <ul class="govuk-summary-list__actions-list">
                     <li class="govuk-summary-list__actions-list-item">
                         Reassign</span>
@@ -212,9 +222,11 @@
             </td>
         </tr>
         <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Job 8</td>
-            <td class="govuk-table__cell" data-sort-value="5">Annotator 5</td>
-            <td class="govuk-table__cell" data-sort-value="1">
+            <td class="govuk-table__cell">
+                Job 8
+            </td>
+            <td class="govuk-table__cell">Annotator 5</td>
+            <td class="govuk-table__cell">
                 {% if data['jobID'] == 8 and data['jobReassignType'] == 'success' %}
                 {{ "now" | govukDateTime }}
                 {% else %}
@@ -224,7 +236,7 @@
             <td class="govuk-table__cell">
                 {% include "app/includes/status-tags/inc_AV148282-status.html" %}
             </td>
-            <td class="govuk-table__cell govuk-table__cell--numeric" data-sort-value="X">
+            <td class="govuk-table__cell">
                 <ul class="govuk-summary-list__actions-list">
                     <li class="govuk-summary-list__actions-list-item">
                         Reassign</span>
@@ -234,7 +246,6 @@
                     </li>
                 </ul>
             </td>
-
         </tr>
     </tbody>
 </table>
