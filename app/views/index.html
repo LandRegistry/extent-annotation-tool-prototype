@@ -45,7 +45,8 @@
         <a class="govuk-link" href="admin/assign-titles/upload-csv">Upload and assign a job</a>
       </li>
       <li>
-        <a class="govuk-link" href="admin/check-status/jobs-list">Check the status of jobs and titles and reassign a job</a>
+        <a class="govuk-link" href="admin/check-status/jobs-list">Check the status of jobs and titles and reassign a
+          job</a>
       </li>
     </ul>
 
@@ -58,16 +59,16 @@
       <div class="govuk-details__text">
         <p class="govuk-body">
           Version of the Admin jobs list view that uses only gov.uk design system components:
-          <ul class="govuk-list govuk-list--bullet">
-            <li>standard table instead of the MOJ table with sortable columns</li>
-            <li>select input to apply a sort action</li>
-          </ul> 
+        <ul class="govuk-list govuk-list--bullet">
+          <li>standard table instead of the MOJ table with sortable columns</li>
+          <li>select input to apply a sort action</li>
+        </ul>
         </p>
-    
+
         {{ govukButton({
-          text: "Jobs table",
-          href: "admin/check-status/jobs-list-mvp"
-          }) }}
+        text: "Jobs table",
+        href: "admin/check-status/jobs-list-mvp"
+        }) }}
       </div>
     </details>
 
@@ -92,31 +93,42 @@
       <li>
         <a class="govuk-link" href="/annotators/assignments">Jobs</a>
       </li>
-      <li>
-        <a class="govuk-link" href="/annotators/assignments/AV57267/entry-1/extent-1">An extent page</a>
-      </li>
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text govuk-body-s">
+            Multiple jobs
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+            <a class="govuk-link govuk-body-s" href="/annotators/your-jobs-multiple">A version of the 'Your jobs' page which shows how more than one job can be displayed </a>
+        </div>
+      </details>
+    <li>
+      <a class="govuk-link" href="/annotators/assignments/AV57267/entry-1/extent-1">An extent page</a>
+    </li>
     </ul>
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
     <h2 class="govuk-heading-m">
-      OS Maps API 
+      OS Maps API
     </h2>
 
 
     <p class="govuk-body">
       Test space for using the OS Maps API with:
-      <ul class="govuk-list govuk-list--bullet">
-        <li>extents from GeoJSON rendered over a base map</li>
-        <li>cycle through different extents</li>
-        <li>custom properties applied based on user research from wider HMLR maps work (zoom level, controls, transparency) </li>
-      </ul> 
+    <ul class="govuk-list govuk-list--bullet">
+      <li>extents from GeoJSON rendered over a base map</li>
+      <li>cycle through different extents</li>
+      <li>custom properties applied based on user research from wider HMLR maps work (zoom level, controls,
+        transparency) </li>
+    </ul>
     </p>
 
     {{ govukButton({
-      text: "Test",
-      href: "maps/geospatial"
-      }) }}
+    text: "Test",
+    href: "maps/geospatial"
+    }) }}
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
