@@ -22,65 +22,23 @@ Assignments – {{ serviceName }} – GOV.UK Prototype Kit
 
       {% include "app/includes/entries/AV57267/inc_AV57267-entry-2.html" %}
 
-      {% from "govuk/components/radios/macro.njk" import govukRadios %}
-      {% from "govuk/components/input/macro.njk" import govukInput %}
+      {% from "govuk/components/radios/macro.njk" import govukRadios %}{% include
+      "app/includes/annotators/entry-extent-match-radios.html" %}
 
-      {% set otherHtml %}
-      {{ govukInput({
-      id: "other",
-      name: "other",
-      classes: "govuk-!-width-one-third",
-      label: {
-      text: "More detail"
-      }
-      }) }}
-      {% endset -%}
+      {% from "govuk/components/button/macro.njk" import govukButton %}
 
-      {{ govukRadios({
-      classes: "govuk-radios--small",
-      name: "defineRelationship",
-      fieldset: {
-      legend: {
-      text: "Type of relationship",
-      classes: "govuk-fieldset__legend--m"
-      }
-      },
-      items: [
-      {
-      value: "link",
-      text: "The extent and entry are linked"
-      },
-      {
-      value: "no-link",
-      text: "The extent and entry are not linked"
-      },
-      {
-      value: "other",
-      text: "Other",
-      hint: {
-      text: "For example, 'the house tinted brown benefits from the blue polygon'"
-      },
-      conditional: {
-      html: otherHtml
-      }
-      }
-      ]
-      }) }}
+      <div class="govuk-button-group">
 
-    {% from "govuk/components/button/macro.njk" import govukButton %}
+        <a class="govuk-link" href="javascript:window.history.back()">Back</a>
 
-    <div class="govuk-button-group">
+        {{ govukButton({
+        text: "Next extent",
+        position: absolute,
+        bottom: 0,
+        right: 0
+        }) }}
 
-      <a class="govuk-link" href="javascript:window.history.back()">Back</a>
-
-      {{ govukButton({
-      text: "Next extent",
-      position: absolute,
-      bottom: 0,
-      right: 0
-      }) }}
-
-    </div>
+      </div>
 
     </div>
 
