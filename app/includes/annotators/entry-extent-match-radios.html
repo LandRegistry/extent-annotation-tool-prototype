@@ -1,0 +1,28 @@
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+
+{{ govukRadios({
+classes: "govuk-radios--small",
+name: "defineRelationship",
+fieldset: {
+legend: {
+text: "Does the entry describe the selected extent?",
+classes: "govuk-fieldset__legend--m"
+}
+},
+items: [
+{
+value: "match",
+text: "Yes"
+},
+{
+value: "no-match",
+text: "No"
+},
+{
+value: "other",
+text: "Other"
+}
+]
+}) }}
