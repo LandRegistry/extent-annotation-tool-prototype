@@ -1,0 +1,61 @@
+{% extends "app/views/layouts/your-jobs.html" %}
+
+{% block pageTitle %}
+Assignments – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+<h1 class="govuk-heading-l">Title AV57267</h1>
+
+<h2 class="govuk-heading-m">Entries</h2>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <ul class="govuk-task-list">
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="annotators/v2-test/assignments/AV57267/entry-1/extent-1" aria-describedby="task-list-1-status">
+            A3
+          </a>
+        </div>
+        {% include "app/includes/status-tags/inc_AV59722-status.html" %}
+      </li>
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            A4
+          </a>
+        </div>
+        {% include "app/includes/status-tags/inc_AV252005-status.html" %}
+      </li>
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            C4
+          </a>
+        </div>
+        {% include "app/includes/status-tags/inc_AV23084-status.html" %}
+      </li>
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            C5
+          </a>
+        </div>
+        {% include "app/includes/status-tags/inc_AV225733-status.html" %}
+      </li>
+    </ul>
+    <div class="govuk-button-group">
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Submit title
+      </button>
+  </div>
+</div>
+
+
+
+{% endblock %}
