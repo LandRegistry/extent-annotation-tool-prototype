@@ -1,4 +1,4 @@
-{% extends "app/views/layouts/hmlr-signed-in.html" %}
+{% extends "app/views/layouts/entry-annotation.html" %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 
@@ -8,22 +8,22 @@ Assignments – {{ serviceName }} – GOV.UK Prototype Kit
 
 {% block content %}
 
-<form class="form" action="/annotators/assignments/AV57267/entry-1/extent-5" method="post">
+<form class="form" action="/annotators/v2-test/titles/AV57267/entry-1/extent-6" method="post">
 
   <h1 class="govuk-heading-l">AV57267</h1>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
-      <h2 class="govuk-heading-m">Extent 4 of 6</h2>
-      {% include "app/includes/extents/AV57267/inc_AV57267-blue-1.html" %}
+      <h2 class="govuk-heading-m">Extent 5 of 6</h2>
+      {% include "app/includes/extents/AV57267/inc_AV57267-blue-2.html" %}
     </div>
     <div class="govuk-grid-column-one-half">
-      <h2 class="govuk-heading-m">Entry 1 of 4</h2>
+      <h2 class="govuk-heading-m">Entry A3</h2>
 
       {% include "app/includes/entries/AV57267/inc_AV57267-entry-1.html" %}
 
       {% include "app/includes/annotators/entry-extent-match-radios.html" %}
-      
+
       {% from "govuk/components/button/macro.njk" import govukButton %}
 
       <div class="govuk-button-group">
