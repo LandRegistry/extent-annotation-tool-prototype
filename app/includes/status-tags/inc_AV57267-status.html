@@ -1,3 +1,4 @@
+
 {% if data['AV57267Status'] == 'started' %}
         <div class="govuk-task-list__status" id="task-list-1-status">
           <strong class="govuk-tag govuk-tag--yellow">
@@ -6,7 +7,7 @@
         </div>
         {% elseif data['AV57267Status'] == 'complete' %}
         <div class="govuk-task-list__status" id="task-list-1-status">
-          Done
+          Submitted
         </div>
         {% else %}
         <div class="govuk-task-list__status" id="task-list-1-status">
@@ -15,3 +16,5 @@
           </strong>
         </div>
         {% endif %}
+
+

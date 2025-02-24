@@ -141,32 +141,3 @@
     top:48px;
   }
 
-/* HIDE GDS FOOTER AND DISPLAY IN NAVBAR */
-  .footer {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .govuk-footer {
-    display:none;
-  }
-
-  .govuk-footer-x{
-    border-top: 1px solid #b1b4b6;
-    color: #0b0c0c;
-    background: #f3f2f1;
-  }
-
-  footer .govuk-list{
-    font-size: 16px;
-  }
-
-  .govuk-footer__copyright-logo {
-    margin-left:40px;
-    background-size: 90px 75px;
-    padding-top: 82px;
-  }
-
-  .govuk-footer__copyright-logo {
-    margin-left:40px;
-  }
