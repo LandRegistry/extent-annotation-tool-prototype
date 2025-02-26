@@ -30,7 +30,7 @@
 
     {{ govukButton({
     text: "Start",
-    href: "admin/sign-in",
+    href: "admin/landing",
     isStartButton: true
     }) }}
 
@@ -42,8 +42,7 @@
         <a class="govuk-link" href="admin/assign-titles/upload-csv">Upload and assign a job</a>
       </li>
       <li>
-        <a class="govuk-link" href="admin/check-status/jobs-list">V1 jobs summary: Check the status of jobs and titles
-          and reassign a
+        <a class="govuk-link" href="admin/check-status/jobs-list">V1 jobs summary: check the status of jobs and titles, reassign or archive a
           job</a>
       </li>
       <li>
@@ -60,7 +59,7 @@
 
     {{ govukButton({
     text: "Start",
-    href: "annotators/sign-in",
+    href: "annotators/v2-test/jobs-list",
     isStartButton: true
     }) }}
 
@@ -83,7 +82,7 @@
       <li>
         <a class="govuk-link" href="/annotators/v2-test/jobs-list">V2 annotation</a>
         <ul>
-          <li>improves the annotation flow UX by breaking the task into steps for each entry</li>
+          <li>improves the annotation flow UX by breaking the full title task into steps for each entry</li>
           <li>makes the annotation page lighter and more accessible</li>
         </ul>
       </li>
