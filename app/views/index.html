@@ -42,32 +42,17 @@
         <a class="govuk-link" href="admin/assign-titles/upload-csv">Upload and assign a job</a>
       </li>
       <li>
-        <a class="govuk-link" href="admin/check-status/jobs-list">V1 jobs table: Check the status of jobs and titles and reassign a
+        <a class="govuk-link" href="admin/check-status/jobs-list">V1 jobs summary: Check the status of jobs and titles
+          and reassign a
           job</a>
       </li>
-    </ul>
-
-    <details class="govuk-details">
-      <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text govuk-heading-s">
-          V2 Jobs table for sprint 1
-        </span>
-      </summary>
-      <div class="govuk-details__text">
-        <p class="govuk-body">
-          Version of the Admin jobs list view that uses only gov.uk design system components:
-        <ul class="govuk-list govuk-list--bullet">
-          <li>standard table instead of the MOJ table with sortable columns</li>
-          <li>select input to apply a sort action</li>
+      <li>
+        <a class="govuk-link" href="admin/check-status/jobs-list-mvp">V2 jobs summary for sprint 1</a>
+        <ul>
+          <li>replaces MoJ sortable table component with a govuk table and a select input to apply a sort action</li>
         </ul>
-        </p>
-
-        {{ govukButton({
-        text: "Jobs table",
-        href: "admin/check-status/jobs-list-mvp"
-        }) }}
-      </div>
-    </details>
+      </li>
+    </ul>
 
     <h2 class="govuk-heading-m">
       Annotators
@@ -87,22 +72,21 @@
       <li>
         <a class="govuk-link" href="/annotators/assignments">Jobs</a>
       </li>
-      <details class="govuk-details">
-        <summary class="govuk-details__summary">
-          <span class="govuk-details__summary-text govuk-body-s">
-            Multiple jobs
-          </span>
-        </summary>
-        <div class="govuk-details__text">
-            <a class="govuk-link govuk-body-s" href="/annotators/your-jobs-multiple">A version of the 'Your jobs' page which shows how more than one job can be displayed </a>
-        </div>
-      </details>
-    <li>
-      <a class="govuk-link" href="/annotators/assignments/AV57267/entry-1/extent-1">V1 annotation page</a>
-    </li>
-    <li>
-      <a class="govuk-link" href="/annotators/v2-test/jobs-list">V2 annotation page: jobs task list with entries sub task list</a>
-    </li>
+      <ul>
+        <li>
+          <a class="govuk-link m" href="/annotators/your-jobs-multiple">Multiple jobs</a>
+        </li>
+      </ul>
+      <li>
+        <a class="govuk-link" href="/annotators/assignments/AV57267/entry-1/extent-1">V1 annotation page</a>
+      </li>
+      <li>
+        <a class="govuk-link" href="/annotators/v2-test/jobs-list">V2 annotation</a>
+        <ul>
+          <li>improves the annotation flow UX by breaking the task into steps for each entry</li>
+          <li>makes the annotation page lighter and more accessible</li>
+        </ul>
+      </li>
     </ul>
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
