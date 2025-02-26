@@ -6,10 +6,15 @@ Assignments – {{ serviceName }} – GOV.UK Prototype Kit
 
 {% block content %}
 
-<h1 class="govuk-heading-l">
-  <span class="govuk-caption-l">Welcome [Full name]</span>
-  Your jobs
-</h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {% include "app/includes/alerts/inc_title-complete.html" %}
+    <h1 class="govuk-heading-l">
+      <span class="govuk-caption-l">Welcome [Full name]</span>
+      Your jobs
+    </h1>
+  </div>
+</div>
 
 <h2 class="govuk-heading-m">Job 1</h2>
 
