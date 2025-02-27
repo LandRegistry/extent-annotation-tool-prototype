@@ -123,6 +123,8 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
 <!-- Custom actions for this page -->
 <script src="/public/map/keyboard_panning.js"></script>
 <script src="/public/map/postcode_actions.js"></script>
+<script src="/public/map/keyboard_panning.js"></script>
+<script src="/public/map/custom_controls.js"></script>
 <!--   <script src="/public/map/custom_controls.js"></script> -->
 
 
@@ -175,16 +177,17 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
     };
     document.getElementById('nextBtn').onclick = function () {
 
-      // direct back to entries after saving last extent
-      if (count === extents.length - 1) {
-        window.location.href = '/annotators/v2-test/titles/AV57267/entries-task-list?AV59722A3Status=complete';
-        return;
-      }
+          // direct back to entries after saving last extent
+          if (count === extents.length - 1) {
+            window.location.href = '/annotators/v2-test/titles/AV57267/entries-task-list?AV59722A3Status=complete';
+            return;
+          }
 
       count++;
       if (count >= extents.length) {
         count = 0;
       }
+      
       updateButtonText();
       showExtent();
     };
