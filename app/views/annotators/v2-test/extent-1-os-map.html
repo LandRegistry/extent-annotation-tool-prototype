@@ -19,7 +19,10 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
 
   <!-- MAP  -->
   <div class="govuk-grid-column-one-half">
-    <h2 class="govuk-heading-m">Extent ABC123</h2>
+    <h2 class="govuk-heading-m">
+      <span>Extent</span>
+      <span id="counter">1 of 14</span>
+    </h2>
     <div>
       <div class="zoom-controls">
         <button id="zoom-in" class="zoom ol-zoom-in zoom-in" type="button" title="Zoom in">+<span
@@ -127,6 +130,31 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
 <script src="/public/map/custom_controls.js"></script>
 <!--   <script src="/public/map/custom_controls.js"></script> -->
 
+<script>
+  // Initialize the extent counter
+  let currentPage = 1;
+  const totalPages = 14;
+  const counterElement = document.getElementById('counter');
+  const nextButton = document.getElementById('nextBtn');
+  const prevButton = document.getElementById('prevBtn');
+  // Update extent counter function
+  function updateCounter() {
+    counterElement.textContent = currentPage + " of " + totalPages;
+  }
+  // Next button click handler
+  nextButton.addEventListener('click', function () {
+    currentPage = (currentPage % totalPages) + 1; // Loop back to 1 after reaching 14
+    updateCounter();
+  });
+  // Previous button click handler
+  prevButton.addEventListener('click', function () {
+    currentPage = currentPage - 1;
+    if (currentPage < 1) {
+      currentPage = totalPages; // Loop back to 14 if going below 1
+    }
+    updateCounter();
+  });
+</script>
 
 <script type="text/javascript">
   // Add open layers map controls: this is now only the scale line
@@ -177,17 +205,17 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
     };
     document.getElementById('nextBtn').onclick = function () {
 
-          // direct back to entries after saving last extent
-          if (count === extents.length - 1) {
-            window.location.href = '/annotators/v2-test/titles/AV57267/entries-task-list?AV59722A3Status=complete';
-            return;
-          }
+      // direct back to entries after saving last extent
+      if (count === extents.length - 1) {
+        window.location.href = '/annotators/v2-test/titles/AV57267/entries-task-list?AV59722A3Status=complete';
+        return;
+      }
 
       count++;
       if (count >= extents.length) {
         count = 0;
       }
-      
+
       updateButtonText();
       showExtent();
     };
