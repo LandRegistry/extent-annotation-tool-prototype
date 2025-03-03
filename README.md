@@ -1,6 +1,6 @@
 ## Running the prototype 
 
-This prototype was designed using: 
+The [Extent annotation tool prototype](https://extent-annotation-tool-dd976d9efdb9.herokuapp.com) was designed using: 
 
 -   Node.js v20 
 
