@@ -123,7 +123,6 @@
             </div>
         </div>
 
-
     </div>
 
     {% include "./includes/footer.html" %}
@@ -132,9 +131,7 @@
 
     {% endblock %}
 
-
     {% block pageScripts %}
-
 
     <!--  Custom map styles for this page -->
     <link rel="stylesheet" href="/public/map/css/map-styles.css">
@@ -181,8 +178,6 @@
 
     <!-- Custom actions for this page -->
     <script src="/public/map/keyboard_panning.js"></script>
-    <script src="/public/map/postcode_actions.js"></script>
-    <script src="/public/map/keyboard_panning.js"></script>
     <script src="/public/map/custom_controls.js"></script>
 
     <!--   <script src="/public/map/custom_controls.js"></script> -->
@@ -213,7 +208,6 @@
         });
     </script>
 
-
     <script type="text/javascript">
         // Add open layers map controls: this is now only the scale line
         // all other controls are now GDS components
@@ -221,6 +215,7 @@
         var center = [];
 
         let count = 0;
+        let style_count = 3;
 
         MAP_HELPERS.init_controls(map, controls);
 
@@ -260,16 +255,26 @@
 
             document.getElementById('prevBtn').onclick = function () {
                 count--;
+                style_count--;
                 if (count < 0) {
                     count = extents.length - 1;
                 }
+                if (style_count < 0) {
+                    style_count = 12;
+                }
+                MAP_CONTROLS.toggle_draw_layer_style(style_count);
                 showExtent();
             };
             document.getElementById('nextBtn').onclick = function () {
                 count++;
+                style_count++;
                 if (count >= extents.length) {
                     count = 0;
                 }
+                if (style_count > 12) {
+                    style_count = 0;
+                }
+                MAP_CONTROLS.toggle_draw_layer_style(style_count);
                 showExtent();
             };
 
@@ -283,7 +288,7 @@
         }
 
 
-
+        // Extents GeoJSON coordinates
         let extents = [
             {
                 "features": [
@@ -525,10 +530,6 @@
             }
 
         ]
-
-
-
-
 
     </script>
     {% endblock %}
