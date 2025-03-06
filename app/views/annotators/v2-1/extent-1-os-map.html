@@ -178,6 +178,7 @@ href: "/annotators/v2-1/titles/AV57267/entries-task-list"
   var center = [];
 
   let count = 0;
+  let style_count = 3;
 
 
   MAP_HELPERS.init_controls(map, controls);
@@ -212,9 +213,14 @@ href: "/annotators/v2-1/titles/AV57267/entries-task-list"
 
     document.getElementById('prevBtn').onclick = function () {
       count--;
+      style_count--;
       if (count < 0) {
         count = extents.length - 1;
       }
+      if (style_count < 0) {
+        style_count = 12;
+      }
+      MAP_CONTROLS.toggle_draw_layer_style(style_count);
       updateButtonText();
       showExtent();
     };
@@ -227,10 +233,14 @@ href: "/annotators/v2-1/titles/AV57267/entries-task-list"
       }
 
       count++;
+      style_count++;
       if (count >= extents.length) {
         count = 0;
       }
-
+      if (style_count > 12) {
+        style_count = 0;
+      }
+      MAP_CONTROLS.toggle_draw_layer_style(style_count);
       updateButtonText();
       showExtent();
     };
