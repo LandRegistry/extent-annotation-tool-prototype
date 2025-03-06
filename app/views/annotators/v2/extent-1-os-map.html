@@ -163,6 +163,7 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
   var center = [];
 
   let count = 0;
+  let style_count = 3;
 
 
   MAP_HELPERS.init_controls(map, controls);
@@ -192,14 +193,19 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
 
   $(document).ready(function () {
 
-    // fade the tiles 
+    // cycle the extents 
     MAP_CONFIG.base_layer.setOpacity(0.6);
 
     document.getElementById('prevBtn').onclick = function () {
       count--;
+      style_count--;
       if (count < 0) {
         count = extents.length - 1;
       }
+      if (style_count < 0) {
+        style_count = 12;
+      }
+      MAP_CONTROLS.toggle_draw_layer_style(style_count);
       updateButtonText();
       showExtent();
     };
@@ -212,10 +218,14 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
       }
 
       count++;
+      style_count++;
       if (count >= extents.length) {
         count = 0;
       }
-
+      if (style_count > 12) {
+        style_count = 0;
+      }
+      MAP_CONTROLS.toggle_draw_layer_style(style_count)
       updateButtonText();
       showExtent();
     };
