@@ -225,7 +225,8 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
       if (style_count > 12) {
         style_count = 0;
       }
-      MAP_CONTROLS.toggle_draw_layer_style(style_count)
+
+      MAP_CONTROLS.toggle_draw_layer_style(style_count);
       updateButtonText();
       showExtent();
     };
