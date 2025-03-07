@@ -9,10 +9,21 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
+<!--Back link-->
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back to Title AV17272",
+href: "/annotators/v2-1/titles/AV17272/entries-task-list"
+}) }}
+{% endblock %}
+
 {% block content %}
 
+<h1 class="govuk-heading-m">Title AV17272</h1>
 <div class="govuk-inset-text">
-  <h1 class="govuk-heading-l">Title AV57267</h1>
+  <h2 class="govuk-heading-s">Property description</h1>
+    <p class="govuk-body-s">(02.07.1976) The Freehold land shown edged with red on the plan of the above Title filed at
+      the Registry and being 53 Fake Street, Sometown (ST1 1TS)</p>
 </div>
 
 <div class="govuk-grid-row">
@@ -51,9 +62,9 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
   <!--  ENTRY AND EXTENT NAVIGATION  -->
   <div class="govuk-grid-column-one-third">
     <div>
-      <h2 class="govuk-heading-m">Entry A3</h2>
+      <h2 class="govuk-heading-m">Entry A1</h2>
 
-      {% include "app/includes/entries/AV57267/inc_AV57267-entry-1.html" %}
+      {% include "app/includes/entries/AV17272/inc_AV17272-entry-A1.html" %}
 
       {% include "app/includes/annotators/entry-extent-match-radios.html" %}
 
@@ -65,7 +76,7 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
         <button id="nextBtn" class="govuk-button govuk-button--primary" data-module="govuk-button">
           Next extent
         </button>
-        <input="hidden" name="AV57267Status" value="started">
+        <input="hidden" name="AV17272A1Status" value="started">
           <br />
       </div>
 
@@ -163,7 +174,6 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
   var center = [];
 
   let count = 0;
-  let style_count = 3;
 
 
   MAP_HELPERS.init_controls(map, controls);
@@ -193,19 +203,14 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
 
   $(document).ready(function () {
 
-    // cycle the extents 
+    // fade the tiles 
     MAP_CONFIG.base_layer.setOpacity(0.6);
 
     document.getElementById('prevBtn').onclick = function () {
       count--;
-      style_count--;
       if (count < 0) {
         count = extents.length - 1;
       }
-      if (style_count < 0) {
-        style_count = 12;
-      }
-      MAP_CONTROLS.toggle_draw_layer_style(style_count);
       updateButtonText();
       showExtent();
     };
@@ -213,20 +218,15 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
 
       // direct back to entries after saving last extent
       if (count === extents.length - 1) {
-        window.location.href = '/annotators/v2/titles/AV57267/entries-task-list?AV59722A3Status=complete';
+        window.location.href = '/annotators/v2-1/titles/AV17272/entries-task-list?AV17272A1Status=complete';
         return;
       }
 
       count++;
-      style_count++;
       if (count >= extents.length) {
         count = 0;
       }
-      if (style_count > 12) {
-        style_count = 0;
-      }
 
-      MAP_CONTROLS.toggle_draw_layer_style(style_count);
       updateButtonText();
       showExtent();
     };

@@ -1,20 +1,35 @@
+<!--Layout-->
 {% extends "app/views/layouts/entry-annotation.html" %}
+
+<!--Import components-->
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
 
+<!--Page title-->
 {% block pageTitle %}
 Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
+<!--Back link-->
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back to Title AV57267",
+href: "/annotators/v2-1/titles/AV57267/entries-task-list"
+}) }}
+{% endblock %}
 
+<!--Main grid-->
 {% block content %}
 
+<!--Title row-->
 <div class="govuk-inset-text">
   <h1 class="govuk-heading-l">Title AV57267</h1>
 </div>
 
+<!--Content row-->
 <div class="govuk-grid-row">
 
   <!-- MAP  -->
@@ -193,7 +208,7 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
 
   $(document).ready(function () {
 
-    // cycle the extents 
+    // fade the tiles 
     MAP_CONFIG.base_layer.setOpacity(0.6);
 
     document.getElementById('prevBtn').onclick = function () {
@@ -213,7 +228,7 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
 
       // direct back to entries after saving last extent
       if (count === extents.length - 1) {
-        window.location.href = '/annotators/v2/titles/AV57267/entries-task-list?AV59722A3Status=complete';
+        window.location.href = '/annotators/v2-1/titles/AV57267/entries-task-list?AV59722A3Status=complete';
         return;
       }
 
@@ -225,7 +240,6 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
       if (style_count > 12) {
         style_count = 0;
       }
-
       MAP_CONTROLS.toggle_draw_layer_style(style_count);
       updateButtonText();
       showExtent();
@@ -251,7 +265,7 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
     load_previous_data(extents[count]);
   }
 
-
+  // Extents GeoJSON coordinates
   let extents = [
     {
       "features": [

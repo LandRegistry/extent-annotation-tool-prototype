@@ -11,4 +11,17 @@
   type: "success"
 }) }}
 
+{% elseif data['AV17272A1Status'] == 'complete' %}
+
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{% set html %}
+  <p class="govuk-body">Entry <strong>A1</strong> saved</p> 
+{% endset %}
+
+{{ govukNotificationBanner({
+  html: html,
+  type: "success"
+}) }}
+
 {% endif %}

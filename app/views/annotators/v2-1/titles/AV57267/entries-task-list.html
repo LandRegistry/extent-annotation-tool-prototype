@@ -1,0 +1,93 @@
+{% extends "app/views/layouts/your-jobs.html" %}
+
+{% block pageTitle %}
+Assignments – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back to your jobs",
+href: "/annotators/v2-1/jobs-list.html"
+}) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {% include "app/includes/alerts/inc_entry-saved.html" %}
+    <div class="govuk-inset-text">
+      <h1 class="govuk-heading-l">Job 1</h1>
+      <h2 class="govuk-heading-m">Title AV57267</h2>
+    </div>
+    <h2 class="govuk-heading-m">Entries</h2>
+    <form action="/annotators/v2-1/jobs-list?AV57267Status=complete" method="post">
+      <ul class="govuk-task-list">
+        <li class="govuk-task-list__item govuk-task-list__item--with-link">
+          <div class="govuk-task-list__name-and-hint">
+            <a class="govuk-link govuk-task-list__link"
+              href="/annotators/v2-1/extent-1-os-map" aria-describedby=" task-list-1-status">
+              A3
+            </a>
+          </div>
+          {% if AV59722A3Status == 'started' %}
+          <div class="govuk-task-list__status" id="task-list-1-status">
+            <strong class="govuk-tag govuk-tag--yellow">
+              In progress
+            </strong>
+          </div>
+          {% elseif data['AV59722A3Status'] == 'complete' %}
+          <div class="govuk-task-list__status" id="task-list-1-status">
+            Done
+          </div>
+          {% else %}
+          <div class="govuk-task-list__status" id="task-list-1-status">
+            <strong class="govuk-tag govuk-tag--blue">
+              To do
+            </strong>
+          </div>
+          {% endif %}
+        </li>
+        <li class="govuk-task-list__item govuk-task-list__item--with-link">
+          <div class="govuk-task-list__name-and-hint">
+            <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+              A4
+            </a>
+          </div>
+          <div class="govuk-task-list__status" id="task-list-1-status">
+            Done
+          </div>
+        </li>
+
+        <li class="govuk-task-list__item govuk-task-list__item--with-link">
+          <div class="govuk-task-list__name-and-hint">
+            <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+              C4
+            </a>
+          </div>
+          <div class="govuk-task-list__status" id="task-list-1-status">
+            Done
+          </div>
+        </li>
+
+        <li class="govuk-task-list__item govuk-task-list__item--with-link">
+          <div class="govuk-task-list__name-and-hint">
+            <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+              C5
+            </a>
+          </div>
+          <div class="govuk-task-list__status" id="task-list-1-status">
+            Done
+          </div>
+        </li>
+      </ul>
+      <div class="govuk-button-group">
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Submit title
+        </button>
+      </div>
+  </div>
+  </form>
+
+
+
+  {% endblock %}
