@@ -1,0 +1,42 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="Multiple jobs" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      ....
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        ...
+      </li>
+    </ul>
+
+    <a href="#" class="govuk-link">...</a>
+
+
+    <h2 class="govuk-heading-m">
+      Screenshot
+    </h2>
+
+    <img src="/public/images/design-history/hmlr-page-template.png" alt="HMLR page template">
+
+    <p class="govuk-body">
+      <a href="/design-history" class="govuk-link">Next post</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}
