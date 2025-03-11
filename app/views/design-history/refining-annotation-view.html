@@ -1,0 +1,84 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="Refining the annotation view" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      After the initial design we made a few refinements to the page which provides the annotation view.
+    </p>
+
+    <p class="govuk-body">
+      The title ID is displayed using inset text, for consistency with other pages where we provide context to the task
+      in focus. We also add the word ‘title’ with the ID string for example ‘Title AV57267’. This is because there are a
+      few places where we use different reference numbers, so have added labels to improve accessibility.
+    </p>
+
+    <p class="govuk-body">
+      As we were only working with screenshots of extent maps for the first draft, we have adjusted the layout to allow
+      more space for an OS maps container. This sets the main page width container to full width and places the map
+      container in a govuk column half to use half of the available page space. This is based on other maps projects at
+      HMLR which have been able to do some user testing.
+    </p>
+
+    <p class="govuk-body">
+      We know our users will be using desktop or laptop monitors and need to compare the map with the entry text at the
+      same time. The entry text is contained within a one third column. This is so that there is enough space for most
+      of the text in longer entries to be displayed without losing the map continer, while avoiding the length of
+      paragraph lines becoming too long and unreadable.
+    </p>
+
+    <p class="govuk-body">
+      We updated the matching question to make it clearer. Instead of asking the user what type of relationship there
+      was, we ask ‘does the entry describe the selected extent?’, ‘yes’, ‘no’, or ‘other’. This gives a clear distinction and simple answer and means that all the extent-entry relationships in a title are defined.
+    </p>
+
+    <p class="govuk-body">
+      We needed to include ‘other’ because:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        due to data quality some extents may not have a corresponding entry
+      </li>
+      <li>
+        some entries may describe part of an extent
+      </li>
+      <li>
+        some entries may describe multtiple extents, or a relationship between them
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      In the earlier prototype we used a back link to show the previous extent. This is because it was built using
+      different html pages linked together. This was refined to use javascript to cycle through an array of extents. We
+      changed ‘previous extent’ to use a secondary button as it is performing an action on the page.
+    </p>
+
+    <p class="govuk-body">
+      ‘Next extent’ uses a primary button as it is both cycing to the next extent and saving the annotator’s in progress data. 
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Screenshot
+    </h2>
+
+    <img src="/public/images/design-history/v2-view.png" alt="The annotation page with a large map view ">
+
+    <p class="govuk-body">
+      <a href="/design-history/refining-annotation-flow" class="govuk-link">Next post</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}
