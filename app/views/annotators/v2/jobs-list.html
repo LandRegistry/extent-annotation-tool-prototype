@@ -17,9 +17,13 @@ Assignments – {{ serviceName }} – GOV.UK Prototype Kit
     <ul class="govuk-task-list">
       <li class="govuk-task-list__item govuk-task-list__item--with-link">
         <div class="govuk-task-list__name-and-hint">
+          {% if data['AV57267Status'] == 'complete' %}
+          AV57267
+          {% else %}
           <a class="govuk-link govuk-task-list__link" href="/annotators/v2/titles/AV57267/entries-task-list">
             AV57267
           </a>
+          {% endif %}
         </div>
         {% include "app/includes/status-tags/inc_AV57267-status.html" %}
       </li>
@@ -80,9 +84,7 @@ Assignments – {{ serviceName }} – GOV.UK Prototype Kit
 
       <li class="govuk-task-list__item govuk-task-list__item--with-link">
         <div class="govuk-task-list__name-and-hint">
-          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
             AV172146
-          </a>
         </div>
         {% include "app/includes/status-tags/inc_AV172146-status.html" %}
       </li>
@@ -107,9 +109,7 @@ Assignments – {{ serviceName }} – GOV.UK Prototype Kit
 
       <li class="govuk-task-list__item govuk-task-list__item--with-link">
         <div class="govuk-task-list__name-and-hint">
-          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
             AV178903
-          </a>
         </div>
         {% include "app/includes/status-tags/inc_AV178903-status.html" %}
       </li>

@@ -1,0 +1,120 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="First pass annotation view" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      Based on the user needs workshops and early mapping, we created some low fidelity wireframes to mock up how the
+      core part of our tool could work.
+    </p>
+
+    <p class="govuk-body">
+      These would be used to:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        build out the prototype
+      </li>
+      <li>
+        give us something to refine
+      </li>
+      <li>
+        check our assumptions
+      </li>
+      <li>
+        consider technical requirements
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      Annotation view
+    </h2>
+
+    <p class="govuk-body">
+      They key things for us to consider at this stage were how the annoation view might work. We knew that there were 4
+      main components to this:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        a base map to show the title plan and it’s context, we were required to use an API for <a
+          href="https://www.ordnancesurvey.co.uk/products/os-maps-api" class="govuk-link">Ordnance Survey base maps</a>
+      </li>
+      <li>
+        <a href="https://openlayers.org" class="govuk-link">OpenLayers</a> to render extents over the base map, using an
+        open GeoJSON format that will be converted from the
+        proprietary TMF format in the existing regiser
+      </li>
+      <li>
+        text to display the entries
+      </li>
+      <li>
+        a way to define matches between extents and entries
+      </li>
+    </ul>
+
+    <h3 class="govuk-heading-s">
+      Prototyping
+    </h3>
+
+    <p class="govuk-body">
+      We moved to higher fidelity in the prototype. The annotation page uses a two half column layout to give the same page width space to the map view, and the entry
+      text and annotation question.
+    </p>
+
+    <p class="govuk-body">
+      The map view uses a basemap which will use a greyscale or transparancy effect to give the extent layer a
+      highlighted effect. We’ll explore how to do this in the next sprint. One extent will be shown at a time to avoid
+      confusion for the user.
+    </p>
+
+    <p class="govuk-body">
+      We’ll use radio buttons with a yes/no answer to define whether the entry describes the displayed extent or not.
+      This will be defined for each possible extent-entry relationship so that the tool can produce a robust and
+      accurate set of answers.
+    </p>
+
+    <p class="govuk-body">
+      We established that we also need to include ‘other’ as answer because there are a small number of entries that
+      desribe reationships between extents. We want to explore this further so we can give accurate answers.
+    </p>
+
+    <p class="govuk-body">
+      In this initial design, the user will be displayed the entry text and cycle through the array of extents. We found
+      that this was easier for the annotator to focus on than if the text changed frequently.
+    </p>
+
+    <p class="govuk-body">
+      When all the extents have been annotated for an entry, the next button will load the next entry and cycle back
+      through the extents. When all the entries have been annotated, the button changes to submit the title.
+    </p>
+
+    <h2 class="govuk-heading-s">
+      Screenshots
+    </h2>
+
+    <img src="/public/images/design-history/lofi-wireframes.png" alt="low fidelity wireframes">
+
+    <br><br>
+
+    <img src="/public/images/design-history/v1-entry1-extent1.png" alt="Annotation view for the first entry">
+
+    <p class="govuk-body">
+      <a href="/design-history/first-pass-annotation-flow" class="govuk-link">Next post</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}
