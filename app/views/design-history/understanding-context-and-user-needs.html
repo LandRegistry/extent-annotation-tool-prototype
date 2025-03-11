@@ -1,0 +1,181 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="Understanding context and user needs " %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      We held a series of workshops to understand more about the context for our projects, who the users will be and
+      what they need from it. Our understanding is summarised at a high level so we could have a theory of change that
+      frames why we’re doing this work. Doing this at the start helps to understand the strategic direction and may
+      inform decisions as we go.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Concepts
+    </h2>
+
+    <p class="govuk-body">
+      The land register is structured around titles. These are usually where someone owns some land. The register has
+      over 160 years of historical data, which has been built and grown in different formats over time, including
+      proprietary data formats that don’t meet open standards.
+    </p>
+
+    <p class="govuk-body">
+      Titles contain, among other things, entries and extents.
+    </p>
+
+    <p class="govuk-body">
+      Extents are geospatial representations that show an area of land. They usually appear as a polygon over a map.
+      Extents within a title may show different things in that bit of land. For example, the garden of a property may
+      have a public footpath crossing it. The area of the footpath would be shown in an extent.
+    </p>
+
+    <p class="govuk-body">
+      Entries are bits of text. They describe things in the title. The footpath extent would also have some text
+      describing what is shown and information about it.
+    </p>
+
+    <p class="govuk-body">
+      Titles can have lots of extents and entries. They often relate to each other, but there is no formal link.
+    </p>
+
+    <p class="govuk-body">
+      Land registry want to link the extents geospatial data with the entries text data. This will help to move to a
+      version of the land register which can be interacted with from a map, instead of only by a list of titles. This
+      means that a user could search an area, such as a local authority or an address, instead of needing to know a
+      specific title reference.
+    </p>
+
+    <p class="govuk-body">
+      The geospatial register will mean that users can answer more questions from the data and make it easier to find
+      what they need. This helps the mission to join up government property data and their priority to improve services
+      for buying and selling property.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Our tool
+    </h2>
+
+    <p class="govuk-body">
+      Our tool will be used to formally link pieces of data in the two categories: extents and entries.
+    </p>
+
+    <p class="govuk-body">
+      It will create a gold standard set of matched data that has a good confidence of accuracy.
+    </p>
+
+    <p class="govuk-body">
+      The primary purpose is to test the results of an automated solution to match more data. It will show how accurate
+      the automated solution is and if it is viable or needs refinement.
+    </p>
+
+    <p class="govuk-body">
+      The tool might also highlight some inaccurate data in the register and help to improve data quality.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Our users
+    </h2>
+
+    <p class="govuk-body">
+      Initially this is intended as a proof of concept for a small group of internal users.
+    </p>
+
+    <p class="govuk-body">
+      We need to prove that technically the data can be transformed into open formats and matched and design an
+      interface, UX and workflow that enables someone without prior knowledge to do this with high accuracy.
+    </p>
+
+    <p class="govuk-body">
+      We have two roles:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        administrators, who can decide the work to be done and own the outputs
+      </li>
+      <li>
+        annotators, who do the matching and cannot assign their own work to reduce the risk of bias
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      User stories
+    </h2>
+
+    <p class="govuk-body">
+      Based on our understanding so far, we created some high level user stories.
+    </p>
+
+    <p class="govuk-body">
+      As an annotator:
+    </p>
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        I need to work through a sample of titles to match the extents to entries in each one, so I can create a set of
+        validated matches that can be used to test the accuracy of an automated solution against
+      </li>
+      <li>
+        I need to view a new title that has been assigned to me, so I can start the task of matching it's geospatial
+        extents to textual entries
+      </li>
+      <li>
+        I need to view the extents on title, so I can see the different geospatial data contained in it
+      </li>
+      <li>
+        I need to view a single extent in a title, so I can check against the textual entries and see which of them
+        match it
+      </li>
+      <li>
+        I need to view title entries, so I can see which ones match a selected extent
+      </li>
+      <li>
+        I need to resume reviewing extents in a title I started processing, so I can pause or leave the task and finish
+        it before submitting
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      As an admin:
+    </p>
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        I need to assign titles to data annotators, including the same title to multiple annotators, so I can reduce
+        risk if users could assign their own tasks
+      </li>
+      <li>
+        I need to review completed matches so I can assure they are accurate
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      We played back our understanding of the context and user needs to our stakeholders and used this to create our
+      initial design to take into the project kick-off.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Screenshots
+    </h2>
+
+    <img src="/public/images/design-history/v1-user-journeys.png" alt="User journey map">
+
+    <img src="/public/images/design-history/concepts-graphic.png" alt="land registry concepts">
+
+    <p class="govuk-body">
+      <a href="/design-history/first-pass-design-for-annotators" class="govuk-link">Next post</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}

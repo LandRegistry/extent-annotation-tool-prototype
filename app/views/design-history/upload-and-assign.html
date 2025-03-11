@@ -1,0 +1,89 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="Upload and assign a job" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      The first task for admin to do is add work to the tool for annotators to do.
+    </p>
+
+    <p class="govuk-body">
+      In our design, work is a list of titles to be annotated. We call each list of titles a job. This is because it is
+      a familiar term from other current workflows they may do.
+    </p>
+
+    <p class="govuk-body">
+      To keep it simple, compiling list of titles into a job will be done outside of the tool. We only need the title
+      IDs to retrieve the data about them.
+    </p>
+
+    <p class="govuk-body">
+      The admin:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        decides which titles to include
+      </li>
+      <li>
+        puts the title IDs into one column in a csv file
+      </li>
+      <li>
+        uploads the csv file into the annotation tool
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      We used a file upload component to import the csv job.
+    </p>
+
+    <p class="govuk-body">
+      Then the job needs to be assigned to an annotator. We have user profiles in our tool, so we included an assign
+      function. For this we use a radio button list of annotator names. A job can only be assigned to one annotator. In
+      the future, we might need to include a way to find an annotator more quickly if there are lots of annotators.
+    </p>
+
+    <p class="govuk-body">
+      We decided to allow the admin to upload and assign one job at a time. This avoids having lots of unassigned jobs
+      stored in the tool. It avoids risk of validation or upload failure with a batch upload of files.
+    </p>
+
+    <p class="govuk-body">
+      There is a user need for admin to be able to assign some of the same titles to different annotators so that they
+      can monitor the accuracy of annotation results. Uploading and assigning one job at a time enables some of the csv
+      lists to include the same titles.
+    </p>
+
+    <p class="govuk-body">
+      When the job is assigned, the annotator returns to their landing page and we display a success alert to confirm
+      the action was done.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Screenshots
+    </h2>
+
+    <img src="/public/images/design-history/upload-titles.png" alt="Upload titles with a file upload component">
+
+    <img src="/public/images/design-history/assign-title.png" alt="Assign job to an annotator">
+
+    <img src="/public/images/design-history/assign-success.png" alt="Admin landing page with a success alert for assigning a job">
+
+    <p class="govuk-body">
+      <a href="/design-history/check-the-status-of-jobs-and-titles" class="govuk-link">Next post</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,143 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="Check the status of jobs and titles" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      We know that admin have a few high-level user needs after assigning jobs to:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        understand how they are progressing
+      </li>
+      <li>
+        manage annotator’s workloads
+      </li>
+      <li>
+        get, analyse and quality assure the results
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      We decided for MVP that analysing results would be done outside of the tool. This is because:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        we don’t know in detail how this will be done
+      </li>
+      <li>
+        we can save the results to a backend database
+      </li>
+      <li>
+        the initial admin will be a data scientist with backend access
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      We focused on the admin stages before results are submitted for titles.
+    </p>
+
+    <p class="govuk-body">
+      The first part of this is a view of the status of jobs in the tool. For this, we use a table which displays:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        a job ID, which is assigned sequentially as they are uploaded
+      </li>
+      <li>
+        the annotator name
+      </li>
+      <li>
+        the date and time it was assigned
+      </li>
+      <li>
+        the status: to do, in progress or done
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      These allow the annotator to get a view of progress. In workshops, we explored why they need this view. The key
+      needs were for managing workloads, for example if an annotator is away from work and unable to complete a job. They may
+      need to archive a job or reassign it to another annotator.
+    </p>
+
+    <p class="govuk-body">
+      We added links to reassign or archive a job using the <a
+        href="https://design-system.service.gov.uk/components/summary-list/" class="govuk-link">summary list action
+        style</a>.
+    </p>
+
+    <p class="govuk-body">
+      In V1 we’ve used a <a href="https://design-patterns.service.justice.gov.uk/components/sortable-table"
+        class="govuk-link">table with sortable heading</a>
+      and <a href="https://design-patterns.service.justice.gov.uk/components/filter" class="govuk-link">filters
+        panel</a> from the Ministry of Justice design system. These
+      help the user to organise the view according to the priority for manageing the workload, such as in order of the
+      date and time they were submitted, or only showing in progress jobs.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Status of titles
+    </h2>
+
+    <p class="govuk-body">
+      For an overall job, the admin can see if it is to do, in progress, or done.
+    </p>
+
+    <p class="govuk-body">
+      As jobs could contain lots of titles, the status ‘in progress’ does not give the admin enough information to
+      monitor workload. The job could just have been started, or be nearly complete.
+    </p>
+
+    <p class="govuk-body">
+      We added a view of the status of tasks within a job. This uses a link in the Job ID to open a table with the list
+      of titles within it and their status. This correlates to the annotator’s task list view.
+    </p>
+
+    <p class="govuk-body">
+      The titles status table includes: 
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        title ID 
+      </li>
+      <li>
+        status 
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      The page also shows which annotator and job number is being presented. 
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Screenshots
+    </h2>
+
+    <img src="/public/images/design-history/v1-jobs-status.png" alt="Jobs status table with filters">
+
+    <img src="/public/images/design-history/v1-titles-status.png" alt="Titles status table with filters">
+
+    <p class="govuk-body">
+      <a href="/design-history/archive-a-job" class="govuk-link">Next post</a>
+    </p>
+
+
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="Reassign a job " %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      The other admin user need for managing workload is to reassign an active job, such as when an annotator is unable
+      to complete a job and they need somone else to complete it.
+    </p>
+
+    <p class="govuk-body">
+      If a job is in progress with some of the titles already submitted, the next annotator only needs to do the
+      reamining titles that havne’t been submitted with a ‘to do’ or ‘in progress’ status.
+    </p>
+
+    <p class="govuk-body">
+      If a job is ‘to do’, then the new annotator will be assigned the whole job.
+    </p>
+
+    <p class="govuk-body">
+      If a job is complete, it can’t be reassigned. However, the admin can upload and assign a new job which contains
+      some of the same titles.
+    </p>
+
+    <p class="govuk-body">
+      The reassign page includes:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        the job number in the h1
+      </li>
+      <li>
+        inset text to show the current annotator
+      </li>
+      <li>
+        radio buttons to select the new annotator
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      The user is then returned to the jobs status page with a success alert to show the job number and the new
+      annotator. The assigned date and time is reset to the current timestamp.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Screenshots
+    </h2>
+
+    <img src="/public/images/design-history/reassign-job.png" alt="Radio buttons to choose an annotator to reassign a job to">
+
+    <img src="/public/images/design-history/reassign-success.png" alt="Jobs status page with a success alert for reassigning a job">
+
+    <p class="govuk-body">
+      <a href="/design-history/mvp-jobs-table" class="govuk-link">Next post</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}

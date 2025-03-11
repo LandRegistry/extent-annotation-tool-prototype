@@ -1,0 +1,72 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="Prototype set up" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      Ahead of the project kicking off, we created some prototyping assets to use.
+    </p>
+
+    <p class="govuk-body">
+      This included some Figma files for page templates and HMLR components so that if needed, we could create
+      wireframes or design assets here:
+    </p>
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        <a href="https://www.figma.com/design/h6VXSzfCcGlH2yqBJ5F75k/Extent-Annotation-Tool-SoW-58?node-id=41-639&t=UFHkoT2WhNctkTyZ-1 "
+          class="govuk-link">Extent annotation tool Figma files</a>
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      We used the GOV.UK prototype kit to create a blank prototype and add a layout using the HMLR design system. This
+      is because the design system should be used for external and internal products and services, and we cannot use the
+      gov.uk font, header or footer. The HMLR design system provides a branded header and footer and uses Arial font:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        <a href="https://hmlr-design-system.herokuapp.com" class="govuk-link">HMLR design system</a>
+      </li>
+      <li>
+        <a href="https://github.com/LandRegistry/extent-annotation-tool-prototype" class="govuk-link">Extent annotation
+          tool prototype GitHub repository</a>
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      It was decided to prototype early, as the project has a short duration and development will need to start quickly.
+      A technical proof of concept had already been made internally which gave us something to start with.
+    </p>
+
+    <p class="govuk-body">
+      It was decided to prototype in code so that design is more likely to be feasible working within the constraints
+      of a small team using established design system patterns. In this case there can be a risk of developing overly
+      complex wireframes that take more effort to build. Designing in code can help design and development by using
+      common concepts and demonstrating relevant logic.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Screenshot
+    </h2>
+
+    <img src="/public/images/design-history/hmlr-page-template.png" alt="HMLR page template">
+
+    <p class="govuk-body">
+      <a href="/design-history/understanding-context-and-user-needs" class="govuk-link">Next post</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}

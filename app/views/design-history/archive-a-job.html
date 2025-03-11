@@ -1,0 +1,61 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="Archive a job" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      We established in user needs and workflow workshops that admin may need to archive a job that’s in progress or to
+      do. For example, if they discover a job has additional complexity that needs to be reviewed or if an annotator is
+      unable to complete the job assigned to them and they don’t need to reassign it.
+    </p>
+
+    <p class="govuk-body">
+      Admin users did not want to delete a job completely so there is a record of work that has already been done and
+      they may need to activate the job again.
+    </p>
+
+    <p class="govuk-body">
+      It was decided that archiving would be suitable at the job level – rather than individual titles. This follows the
+      way they are assigned to annotators.
+    </p>
+
+    <p class="govuk-body">
+      Selecting the archive job action presents a confirmation screen with inset text showing the job number and
+      annotator name.
+    </p>
+
+    <p class="govuk-body">
+      Confirming the archive returns to the jobs status table. A status tag for ‘archived’ is added to the job. In V1,
+      the filters panel panel allows archived jobs to be selected. The job also keeps it’s original status tag so that
+      admin can see if it had been started or not. If a job is archived, it only has a reassign action as it can not be
+      archived again.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Screenshots
+    </h2>
+
+    <img src="/public/images/design-history/v1-jobs-status.png" alt="Jobs status table with filters">
+
+    <img src="/public/images/design-history/confirm-archive.png" alt="Confirmation page for archiving a job">
+
+    <img src="/public/images/design-history/archive-success.png" alt="Jobs status page with a success alert for archiving a job">
+
+    <p class="govuk-body">
+      <a href="/design-history/reassign-a-job" class="govuk-link">Next post</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}
