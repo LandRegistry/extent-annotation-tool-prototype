@@ -1,0 +1,77 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="MVP jobs table" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      As we moved into the first development sprint, it was decided for MVP that it would be more efficient to build the
+      job status screen without using MoJ design system components which provided sortable table headers and a filters
+      panel.
+    </p>
+
+    <p class="govuk-body">
+      To meet the user need to find and manage jobs by different criteria in the simplest way, we designed a jobs status
+      page using:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        a govuk table
+      </li>
+      <li>
+        a sort panel that uses a <a href="https://design-system.service.gov.uk/components/select"
+          class="govuk-link">govuk select component </a>
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      In the previous version, filters allowed the user to show or hide archived jobs from the table, which would not be
+      shown as default. This is because admin do not usually need to see archived jobs.
+    </p>
+
+    <p class="govuk-body">
+      For this version, we added a link below the sort panel to view archived jobs. If there are no archived jobs, a
+      page is displayed which says there are no archived jobs.
+    </p>
+
+    <p class="govuk-body">
+      If there are archived jobs, a page is displayed with a jobs status table only showing the archived jobs. There is
+      a link below the sort panel to return to the active jobs status page.
+    </p>
+
+    <p class="govuk-body">
+      To allow for this additional archived jobs status page, we renamed the main jobs status page to ‘Active jobs’. 
+    </p>
+
+    <p class="govuk-body">
+      In future, we may want to add filters so that admin have more control over the data presented to quickly find certain categories of jobs.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Screenshots
+    </h2>
+
+    <img src="/public/images/design-history/mvp-active-jobs.png" alt="Table of active jobs with a sort dropdown">
+
+    <img src="/public/images/design-history/no-archived.png" alt="A page wite text saying there are no archived jobs">
+
+    <img src="/public/images/design-history/archived-jobs.png" alt="A table of archived jobs with a sort dropdown">
+
+    <p class="govuk-body">
+      <a href="/design-history/multiple-jobs" class="govuk-link">Next post</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}

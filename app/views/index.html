@@ -30,7 +30,7 @@
 
     {{ govukButton({
     text: "Start",
-    href: "admin/sign-in",
+    href: "admin/landing",
     isStartButton: true
     }) }}
 
@@ -39,37 +39,20 @@
     </h3>
     <ul class="govuk-list govuk-list--bullet">
       <li>
-        <a class="govuk-link" href="admin/sign-in">Sign in</a>
-      </li>
-      <li>
         <a class="govuk-link" href="admin/assign-titles/upload-csv">Upload and assign a job</a>
       </li>
       <li>
-        <a class="govuk-link" href="admin/check-status/jobs-list">Check the status of jobs and titles and reassign a job</a>
+        <a class="govuk-link" href="admin/check-status/jobs-list">V1 jobs summary: check the status of jobs and titles,
+          reassign or archive a
+          job</a>
+      </li>
+      <li>
+        <a class="govuk-link" href="admin/check-status/jobs-list-mvp">V2 jobs summary for sprint 1</a>
+        <ul>
+          <li>replaces MoJ sortable table component with a govuk table and a select input to apply a sort action</li>
+        </ul>
       </li>
     </ul>
-
-    <details class="govuk-details">
-      <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text govuk-heading-s">
-          Sprint 1 MVP
-        </span>
-      </summary>
-      <div class="govuk-details__text">
-        <p class="govuk-body">
-          Version of the Admin jobs list view that uses only gov.uk design system components:
-          <ul class="govuk-list govuk-list--bullet">
-            <li>standard table instead of the MOJ table with sortable columns</li>
-            <li>select input to apply a sort action</li>
-          </ul> 
-        </p>
-    
-        {{ govukButton({
-          text: "Jobs table",
-          href: "admin/check-status/jobs-list-mvp"
-          }) }}
-      </div>
-    </details>
 
     <h2 class="govuk-heading-m">
       Annotators
@@ -77,7 +60,7 @@
 
     {{ govukButton({
     text: "Start",
-    href: "annotators/sign-in",
+    href: "annotators/v2/jobs-list",
     isStartButton: true
     }) }}
 
@@ -87,36 +70,57 @@
 
     <ul class="govuk-list govuk-list--bullet">
       <li>
-        <a class="govuk-link" href="/annotators/sign-in">Sign in</a>
-      </li>
-      <li>
         <a class="govuk-link" href="/annotators/assignments">Jobs</a>
       </li>
+      <ul>
+        <li>
+          <a class="govuk-link m" href="/annotators/your-jobs-multiple">Multiple jobs</a>
+        </li>
+      </ul>
       <li>
-        <a class="govuk-link" href="/annotators/assignments/AV57267/entry-1/extent-1">An extent page</a>
+        <a class="govuk-link" href="/annotators/assignments/AV57267/entry-1/extent-1">V1 annotation page</a>
+      </li>
+      <li>
+        <a class="govuk-link" href="/annotators/v2/jobs-list">V2 annotation</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <span><strong class="govuk-tag govuk-tag--yellow">User tested</strong></span>
+        <ul>
+          <li>improves the annotation flow UX by breaking the full title task into steps for each entry</li>
+          <li>makes the annotation page lighter and more accessible</li>
+        </ul>
+      </li>
+      <li>
+        <a class="govuk-link" href="/annotators/v2-1/jobs-list">V2.1 anotation</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <span><strong class="govuk-tag">Needs research</strong></span>
+        <ul>
+          <li>includes the property description for <a class="govuk-link"
+              href="/annotators/v2-1/titles/AV17272/A1/extent-map">title AV17272</a></li>
+          <li>uses 'work list' and 'job overview' for task list pages</li>
+        </ul>
       </li>
     </ul>
-
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
     <h2 class="govuk-heading-m">
-      OS Maps API 
+      OS Maps API
     </h2>
-
 
     <p class="govuk-body">
       Test space for using the OS Maps API with:
-      <ul class="govuk-list govuk-list--bullet">
-        <li>extents from GeoJSON rendered over a base map</li>
-        <li>cycle through different extents</li>
-        <li>custom properties applied based on user research from wider HMLR maps work (zoom level, controls, transparency) </li>
-      </ul> 
+    <ul class="govuk-list govuk-list--bullet">
+      <li>extents from GeoJSON rendered over a base map</li>
+      <li>cycle through different extent geometries</li>
+      <li>cycle through different extent styles</li>
+      <li>custom properties applied based on user research from wider HMLR maps work (zoom level, controls,
+        base map opacity) </li>
+    </ul>
     </p>
 
     {{ govukButton({
-      text: "Test",
-      href: "maps/geospatial"
-      }) }}
+    text: "Test",
+    href: "maps/geospatial"
+    }) }}
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 

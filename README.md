@@ -1,6 +1,6 @@
 ## Running the prototype 
 
-This prototype was designed using: 
+The [Extent annotation tool prototype](https://extent-annotation-tool-dd976d9efdb9.herokuapp.com) was designed using: 
 
 -   Node.js v20 
 
@@ -8,7 +8,7 @@ This prototype was designed using: 
 
 -   [Hmlr-frontend v2.0.0](https://github.com/LandRegistry/hmlr-frontend/releases) 
 
-Uses [sortable table](https://design-patterns.service.justice.gov.uk/components/sortable-table/) and [filter](https://design-patterns.service.justice.gov.uk/components/filter/) components from the MoJ design system. 
+V1 Uses [sortable table](https://design-patterns.service.justice.gov.uk/components/sortable-table/) and [filter](https://design-patterns.service.justice.gov.uk/components/filter/) components from the MoJ design system. Sprint 1 MVP includes a version without this.
 
 -   [Install MoJ Frontend 3.3.1](https://design-patterns.service.justice.gov.uk/prototyping/setting-up-coded-prototypes/)
 

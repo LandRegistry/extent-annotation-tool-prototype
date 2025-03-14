@@ -1,0 +1,106 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="First pass annotation flow" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      The user need to complete an annotation task does not just require components on a static UI in our
+      wireframes. We also needed to consider the end to end journey and how best to design the interaction and UX so
+      that users could effectively work through a large sequence of titles, extents and entries in a way that would give
+      high confidence of accuracy.
+    </p>
+
+    <p class="govuk-body">
+      We considered different options for navigating extents within a map, selecting relevant entries from a list, and
+      cycling through entries relating to an extent.
+    </p>
+
+    <p class="govuk-body">
+      We decided not to have a list of entries in one page, because each entry can be long and there can be lots of
+      them. This would give cognitive overload and move the view away from the extent so it would be difficult to
+      process.
+    </p>
+
+    <p class="govuk-body">
+      We also decided against using checkboxes or similar to only identify relevant entries or positive matches. This
+      carries risk of missing matches, and we know accuracy is a high priority. It also could result in lots of unknown
+      or unannotated relationships and the admin would not have information about why. We could improve confidence that
+      the end dataset produced was accurate by making sure that every relationship is defined as either a match or not.
+    </p>
+
+    <p class="govuk-body">
+      We decided that extents should be processed in an order instead of selecting within a map. This means that:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        the user can focus on understanding the text and one extent at a time
+      </li>
+      <li>
+        they don’t need to spend extra time interacting with a map, which is less accessible and more intensive
+      </li>
+      <li>
+        it reduces risk of users prioritising certain extents and gives a more standardised workflow
+      </li>
+      <li>
+        it is easier to navigate by keyboard and to complete each annotation with less work
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      The annotation starts from a <a href="https://design-system.service.gov.uk/components/task-list"
+        class="govuk-link">task list</a> page which containts the job(s) assigned to them. The job is displayed as
+      a list of titles which forms the tasks to complete. Selecting the title starts the task of annotating it. The
+      user continues through extents and entries for that title. When they get to the last extent and entry, the title
+      can be submitted. Once it is submitted, the answers should be available for admin to analyse and can no longer be changed by the annotator. The annotator is
+      returned to the job page with a success notification, the status is updated to show it’s been submitted, and they
+      may start another title.
+    </p>
+
+    <p class="govuk-body">
+      In an earlier version, the status said ‘done’. This was changed to ‘submitted’ to match the submit action of the
+      button which also indicates a handover to admin.
+    </p>
+
+    <p class="govuk-body">
+      Originally we included a success interstitial page after completing a title with the option to go to the next
+      title in the list or back to the jobs page. However, it was simpler to use a notification on the jobs page, which
+      gives user feedback and an indication of progress through the job.
+    </p>
+
+    <h3 class="govuk-heading-s">
+      Screenshots
+    </h3>
+
+    <img src="/public/images/design-history/v1-jobs-todo.png" alt="Job task list to do">
+
+    <img src="/public/images/design-history/v1-entry1-extent1.png" alt="Annotation view for the first entry">
+
+    <img src="/public/images/design-history/v1-jobs-in-progress.png" alt="Job task list in progress">
+
+    <img src="/public/images/design-history/v1-entry1-extent6.png"
+      alt="Annotation view for the first entry and last extent">
+
+    <img src="/public/images/design-history/v1-entry4-extent6.png"
+      alt="Annotation view for the last entry and last extent">
+
+    <img src="/public/images/design-history/v1-jobs-submitted.png" alt="Job task list submitted">
+
+    <p class="govuk-body">
+      <a href="/design-history/upload-and-assign" class="govuk-link">Next post</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}

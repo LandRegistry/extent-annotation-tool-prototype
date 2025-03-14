@@ -1,0 +1,48 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="View of multiple jobs" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      From our workshops it was established that usually the admin will upload and assign an annotator one job at a time
+      with a manageable amount of titles.
+    </p>
+
+    <p class="govuk-body">
+      However, it is possible to assign multiple jobs to an annotator. If the tool is scaled up they may need to manage a
+      larger number of annotators, jobs and titles.
+    </p>
+
+    <p class="govuk-body">
+      We added a view of multiple jobs to the annotators’ ‘Your jobs’ page. 
+    </p>
+
+    <p class="govuk-body">
+      In future, we may need to find other ways to break this down if annotators have lots of jobs. 
+    </p>
+
+
+    <h2 class="govuk-heading-m">
+      Screenshot
+    </h2>
+
+    <img src="/public/images/design-history/multiple-jobs.png" alt="A list of jobs with a heading and task list for each job">
+
+    <p class="govuk-body">
+      <a href="/design-history/refining-annotation-view" class="govuk-link">Next post</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}

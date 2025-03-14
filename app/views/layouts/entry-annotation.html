@@ -1,0 +1,63 @@
+{#
+For guidance on how to use layouts see:
+https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
+#}
+
+{% extends "govuk-prototype-kit/layouts/unbranded.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "hmlr/components/footer/macro.njk" import hmlrFooter %}
+
+{% block headIcons %}
+<link rel="shortcut icon" href="/public/images/hmlr-favicon.ico" type="image/x-icon" />
+{% endblock %}
+
+{% block header %}
+<header class="govuk-header govuk-header--hmlr " role="banner" data-module="govuk-header">
+    <div class="govuk-header__container govuk-width-container">
+        <div class="govuk-header__content govuk-header__content--hmlr">
+            <a href="/index" class="govuk-header__link govuk-header__service-name">
+                {{ serviceName }}
+            </a>
+            <!---
+            &nbsp;
+            <span class="govuk-header__product-name">
+                Product name
+            </span>
+            --->
+        </div>
+    </div>
+</header>
+
+{% endblock %}
+
+{% block beforeContent %}
+
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+
+{{ govukPhaseBanner({
+  tag: {
+    text: "Prototype"
+  },
+  html: 'This is not a production service.'
+}) }}
+
+
+
+
+{% endblock %}
+
+{% block footer %}
+{% from "hmlr/components/footer/macro.njk" import hmlrFooter %}
+{{ hmlrFooter({
+  meta: {
+    visuallyHiddenTitle: "Other links",
+    items: [
+      {
+        text: "Clear session data",
+        href: "/manage-prototype/clear-data"
+      }
+    ]
+  }
+}) }}
+{% endblock %}

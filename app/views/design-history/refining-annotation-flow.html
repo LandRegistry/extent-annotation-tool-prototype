@@ -1,0 +1,209 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="Refining the annotation flow" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      In V1, the annotation view page displays the first entry and first extent for a title. The next button cycles
+      through all the extents. On the last extent, the next button cycles to the next entry and back to the first
+      extent. On the last entry and last extent, the next button changes to a submit title button.
+    </p>
+
+    <p class="govuk-body">
+      This was suitable to initially test the concept of displaying these sets of information at the same time and an
+      end to end journey for annotating a complete title.
+    </p>
+
+    <p class="govuk-body">
+      However, there were a few problems.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      V1 user problems
+    </h2>
+
+    <p class="govuk-body">
+      To start with for a proof of concept, we were using a sample of 11 synthetic titles. In this, most titles have:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        around 6 extents with a maximum of 26
+      </li>
+      <li>
+        between 3 and 6 entries
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      In our ongoing discovery, we found out that some real titles can contain a lot more entries and extents. In a
+      larger sample of data there were a maximum of:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        109 extents
+      </li>
+      <li>
+        149 entries
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      We think that these could be outliers, however this suggested to us that the annotation task for a whole title
+      could be a lot larger than our first impressions.
+    </p>
+
+    <p class="govuk-body">
+      We want to make sure that early decisions we make reduce the risk of needing to make big changes later on when the
+      product is scaled and used by different people.
+    </p>
+
+    <p class="govuk-body">
+      Ideally, as a rule of thumb an individual task should take around a minute, or up to 3 or 4 to complete. If we
+      know something will likely take longer, we want to consider breaking it down more for the user. This helps to
+      avoid cognitive overwhelm and design accessibly and inclusively.
+    </p>
+
+    <p class="govuk-body">
+      We hypothesised that with all the extents and entries in a title for a single task view, users could:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        get overloaded
+      </li>
+      <li>
+        miss that the next button changes between three states
+      </li>
+      <li>
+        lose concentration and motivation
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      This is important because we need to design accessibly and have confidence that the data outputted is accurate.
+    </p>
+
+    <p class="govuk-body">
+      We also know that there is a user need to save progress and be able to resume a task, for example if it is
+      incomplete at the end of the day or they need to leave and do something else. While we can technically meet this
+      by saving data in the cache or storing it in the backend every time the user records an answer, this isn’t
+      reflected in the V1 user interface.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      V1 product problems
+    </h2>
+
+    <p class="govuk-body">
+      Cycling all the extents and entries in the annotation view is also slightly more complex as there is more code and
+      communication via APIs to render two sets of changing information, store answers and update UI elements. We
+      hypothesised that this may increase the risk of something failing and lower performance.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      V2 annotation flow
+    </h2>
+
+    <p class="govuk-body">
+      We wanted to see if we could make the user experience more manageable and the page lighter.
+    </p>
+
+    <p class="govuk-body">
+      We decided to prototype a V2 which breaks the task of annotating a title into steps for each entry. This uses
+      another task list for entries instead of cycling them in the annotation view.
+    </p>
+
+    <p class="govuk-body">
+      The annotation view now only needs to cycle through the extents on a map. When the user gets to the last extent,
+      the next button changes to ‘save entry’. They are then returned to the entries task list page with a success
+      alert.
+    </p>
+
+    <p class="govuk-body">
+      When the user has marked all the entries as ‘done’, they are able to submit the title as ‘submitted’. The answers
+      for entries can still be changed until the title has been submitted. This aligns to the <a
+        href="https://design-system.service.gov.uk/patterns/complete-multiple-tasks" class="govuk-link">help users
+        complete
+        multiple tasks pattern</a>.
+    </p>
+
+    <p class="govuk-body">
+      It means that the next button in the annotation view only changes once to save the entry. We think this will
+      reduce the risk of users missing it.
+    </p>
+
+    <p class="govuk-body">
+      It also means that the submit title button has its own page. It is clearer what work needs to be done and how to
+      check or amend it before submitting for admin to be able to analyse.
+    </p>
+
+    <p class="govuk-body">
+      On the entries task list stage, the entries have a status of ‘to do’, ‘in progress’ or ‘done’. When all are
+      entries are done the title can be submitted. On the Your jobs task list page, completed titles have a status of
+      ‘submitted’. Using ‘done’ vs. ‘submitted’ helps to show the difference between entries that can still be changed
+      and titles that cannot be changed and are ready for admin to analyse.
+    </p>
+
+    <p class="govuk-body">
+      Initially we are showing titles that have been submitted, until the whole job has been completed to give an
+      indication of progress, but we may decide not to show submitted titles that can't be edited.
+    </p>
+
+    <p class="govuk-body">
+      This version could be better because:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        the UX is improved for the overall task by breaking into steps
+      </li>
+      <li>
+        a more focused annotation page with fewer dynamic elements
+      </li>
+      <li>
+        it’s more accessible with less for a screen reader to explain
+      </li>
+      <li>
+        the user gets more regular feedback and view of progress
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      Screenshots
+    </h2>
+
+    <img src="/public/images/design-history/v2-your-jobs.png" alt="Your jobs task list page">
+
+    <img src="/public/images/design-history/v2-entry-list.png" alt="Task list page for the entries in a title">
+
+    <img src="/public/images/design-history/v2-annotation-view.png" alt="Annotation page view">
+
+    <img src="/public/images/design-history/v2-entries-error.png"
+      alt="Task list page for entries with an error, all entries need to be done before the title can be submitted">
+
+    <img src="/public/images/design-history/v2-entry-success.png"
+      alt="Task list page for entries with a success alert that an entry has been saved">
+
+    <img src="/public/images/design-history/v2-title-success.png"
+      alt="Task list page for your jobs with a success alert that a title has been submitted">
+
+    <p class="govuk-body">
+      <a href="/design-history" class="govuk-link">Next post</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}

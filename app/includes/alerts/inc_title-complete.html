@@ -1,0 +1,14 @@
+{% if data['AV57267Status'] == 'complete' %}
+
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{% set html %}
+  <p class="govuk-body">Title <strong>AV57267</strong> submitted</p> 
+{% endset %}
+
+{{ govukNotificationBanner({
+  html: html,
+  type: "success"
+}) }}
+
+{% endif %}
