@@ -1,0 +1,30 @@
+{% extends "app/views/layouts/hmlr-admin.html" %}
+{% set currentPage="check" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block pageTitle %}
+{{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+<main class="govuk-main-wrapper">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Assigned titles for {{ data['user'] }}: Job {{ data['jobID'] }}</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            {% include "app/includes/titles/inc_sort-titles.html" %}
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            {% include "app/includes/titles/inc_title-table-mvp.html" %}
+        </div>
+    </div>
+    </div>
+</main>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+<div> <span>
+        <div class="govuk-form-group"> <label class="govuk-label" for="sort"> Sort by </label> <select
+                class="govuk-select" id="sortTitlesSelect" name="sort-titles">
+                <option value="title-id">Title ID</option>
+                <option value="title-status">Status</option>
+            </select> &nbsp;&nbsp; <button type="submit" class="govuk-button govuk-!-margin-bottom-0"
+                data-module="govuk-button" onclick="sortTable()"> Apply sort </button> </div>
+    </span></div>
+<script>    function sortTable() {
+        const table = document.getElementById('dataTitleTable');
+        const select = document.getElementById('sortTitlesSelect');
+        const tbody = table.getElementsByTagName('tbody')[0];
+        const rows = Array.from(tbody.getElementsByTagName('tr'));
+        const columnIndex = {
+            'title-id': 0,
+            'title-status': 1
+        }[select.value];
+        rows.sort((a, b) => {
+            // Get the text content from the cells
+            let aValue = a.cells[columnIndex].textContent.trim();
+            let bValue = b.cells[columnIndex].textContent.trim();
+            // For title-id column, use natural sort to handle alphanumeric IDs
+            if (select.value === 'title-id') {
+                // Extract the numeric part for better sorting
+                const aNum = aValue.replace(/\D/g, '');
+                const bNum = bValue.replace(/\D/g, '');
+                return parseInt(aNum) - parseInt(bNum);
+            }
+            // For status column, simple text comparison
+            return aValue.localeCompare(bValue);
+        });
+        // Remove all rows from tbody
+        while (tbody.firstChild) {
+            tbody.removeChild(tbody.firstChild);
+        }
+        // Add sorted rows back to tbody
+        rows.forEach(row => {
+            tbody.appendChild(row);
+        });
+    }
+</script>
