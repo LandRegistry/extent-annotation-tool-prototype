@@ -16,22 +16,27 @@
 {% block content %}
 
 <main class="govuk-main-wrapper">
-    <h1 class="govuk-heading-l">Archived jobs</h1>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Jobs</h1>
+            <p class="govuk-body-m"> <a class="govuk-link govuk-link--no-visited-state" href="/admin/check-status/jobs-list-mvp">Active</a> | Archived</p>
+        </div>
+    </div>
 
     {% if job1Archived == 'yes' %}
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-quarter">
-            {% include "app/includes/jobs/inc_sort-panel.html" %}
-            <hr class="govuk-section-break govuk-section-break--m">
-            <a class="govuk-link" href="/admin/check-status/jobs-list-mvp">View active jobs</a>
+        <div class="govuk-grid-column-two-thirds">
+            {% include "app/includes/jobs/inc_sort-horizontal.html" %}
         </div>
+    </div>
+    <div class="govuk-grid-row">
         <div class="govuk-grid-column-three-quarters">
             {% include "app/includes/jobs/inc_archived-jobs-table-mvp.html" %}
         </div>
     </div>
+    </div>
     {% else %}
     <p class="govuk-body">There are no archived jobs.</p>
-    <a class="govuk-link" href="/admin/check-status/jobs-list-mvp">View active jobs</a>
     {% endif %}
 </main>
 
