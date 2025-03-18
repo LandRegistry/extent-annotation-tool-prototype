@@ -1,0 +1,133 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="OS maps and geospatial extents UI" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      For the first pass annotation view design, we used some mocked up screenshots of a title with its extents and used
+      Figma to apply a transparency mask to give an individual extent a highlighted or selected effect.
+    </p>
+
+    <p class="govuk-body">
+      This was enough to use for placeholders while refining how the user journey and UI elements could work. However,
+      we knew that a core component of the tool will be its integration with a map and how we layer extents over the top
+      of it.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Map tiles and extents
+    </h2>
+
+    <p class="govuk-body">
+      We used an API to add an Ordnance Survey base map and some javascript to define a list of geometry layers. The
+      coordinates are added in a GeoJSON format which provides the points for OpenLayers to draw a polygon shape that
+      represents an extent. We used some code from ongoing HMLR work for accessible maps in services in a <a
+        href="https://github.com/LandRegistry/llc-map-prototype/tree/main" class="govuk-link">prototype for
+        local land charges</a> to help with this.
+    </p>
+
+    <p class="govuk-body">
+      We then added javascript that enables the next button on click to cycle through the different extents.
+    </p>
+
+    <p class="govuk-body">
+      We added a <a href="hhttps://extent-annotation-tool-dd976d9efdb9.herokuapp.com/maps/geospatial"
+        class="govuk-link">space in the prototype to test out this feature</a>.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Base map settings
+    </h2>
+
+    <p class="govuk-body">
+      The base map has an opacity level set to 0.6. This means that we can give the extent in focus a selected effect.
+      We want to aim for a contrast ratio of 3:1 between the extent colour and the base map. This helps to meet <a
+        href="https://www.w3.org/TR/WCAG22/#non-text-contrast" class="govuk-link">WCAG 2.2 criteria about non text
+        contrast</a>. It means that more users should be able to clearly separate the two
+      elements. When we have more real data, we will test how the different extent colour attributes meet this and if we
+      need to configure the base map differently.
+    </p>
+
+    <p class="govuk-body">
+      We also applied a zoom level of –1. This uses a bounding box to find the furthest x and y coordinates of the
+      extent
+      geometry to fill the map container and then zoom out a level. This means that the user can see some of the
+      surrounding area to help make sense of the selected extent in context. We will need to test with users if this is
+      the right balance.
+    </p>
+
+    <img src="/public/images/design-history/bounding-box.png"
+      alt="image showing a base map with a polygon on top, a box around the polygon and zoomed out 1 level">
+
+    <p class="govuk-caption-m">Mockup of a polygon with a bounding box zoomed out 1 level over a base map tile</p>
+
+    <h2 class="govuk-heading-m">
+      Panning and zooming
+    </h2>
+
+    <p class="govuk-body">
+      By default with the OS API users can pan to move around and zoom in and out of the map view. This can be done with
+      a mouse dragging movement or with keyboard arrow keys. We need to make sure that users can interact using a
+      keyboard for the
+      <a href="https://www.w3.org/TR/WCAG22/#dragging-movements" class="govuk-link">WCAG criteria for dragging
+        movements</a>. This means that users who don’t or can’t use a mouse have
+      another option to interact with the map.
+    </p>
+
+    <p class="govuk-body">
+      There is also some code available to improve the accessibility and use GDS style buttons for the zoom controls.
+      Our tool may be improved by developments in this space and cross gov maps in services guidance.
+    </p>
+
+    <p class="govuk-body">
+      It is also possible to <a
+        href="https://labs.os.uk/public/os-data-hub-examples/os-maps-api/zxy-example-constrained-map-view#openlayers"
+        class="govuk-link">constrain the panning area in the maps</a>. This means that users can only move within a
+      defined
+      area. We haven’t done this for our proof of concept as we are focused on getting the base functionality working.
+      We might do this in future as we know that users need to focus on a specific extent at a time and do not need to
+      use the entire map. We would need to understand how much of the wider area to restrict to and how we could define
+      this from the data, such as if we know all the titles in a job relate to a certain area.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Layout
+    </h2>
+
+    <p class="govuk-body">
+      For our tool, the map is placed in a container that gives it a half page column in width. The page is set to use
+      the full width of the screen. This follows research into other internal maps at HMLR for the map to be large
+      enough to display geographic information clearly.
+    </p>
+
+    <p class="govuk-body">
+      The annotation task is to compare the extent map and entry text and answer whether they are a match or not. We
+      believe that the page layout and base map settings should mean that users could do this without interacting with
+      the map and with minimal keyboard tabbing. For production we may want to test how often this is true and find any
+      scenarios where this interaction is more complex.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Screenshot
+    </h2>
+
+    <img src="/public/images/design-history/geospatial.png" alt="Image of map with an extent using half page width next to entry text>
+
+    <p class="govuk-body">
+      <a href="/design-history/understanding-more-about-the-annotation-flow" class="govuk-link">Next post</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}

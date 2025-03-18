@@ -1,0 +1,179 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="Understanding more about the annotation flow" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      As a proof of concept with a short project timeline, the delivery team are partly focused on testing technical
+      implementation of back-end processes. However, we know it is important to <a
+        href="https://www.gov.uk/service-manual/service-standard/point-1-understand-user-needs"
+        class="govuk-link">understand our users</a> and work in an
+      <a href="https://www.gov.uk/service-manual/user-research" class="govuk-link">agile and iterative way</a> with user
+      research at each delivery phase. This helps to make sure that what we’re
+      building will work for the people using it and achieve the outcomes they need. Doing this early means we can
+      reduce the risk of having to make bigger changes later.
+    </p>
+
+    <p class="govuk-body">
+      We don’t yet know who our main users as annotators will be. They might be:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        internal staff familiar with the concepts
+      </li>
+      <li>
+        internal staff less familiar with the concepts
+      </li>
+      <li>
+        external staff employed for this task
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      It is probable that a mix of people will use the tool. We also want to design in a way that could be reused in future
+      if another project needs something similar.
+    </p>
+
+    <p class="govuk-body">
+      We need to test our assumptions and that what we’re designing works with users. To start with, we ran a casual
+      session with an internal staff member.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Background
+    </h2>
+
+    <p class="govuk-body">
+      The member of staff has lots of experience with Land Registry, so they already knew about the concepts. They are
+      also one of the project stakeholders, although have not had regular involvement in the delivery. They were
+      familiar with case working, which meant they had some expectations from experience.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Goals
+    </h2>
+
+    <p class="govuk-body">
+      We wanted to:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        learn more about annotation user needs from someone who is familiar with the register and is less involved in
+        daily delivery of the project
+      </li>
+      <li>
+        review the user experience, with a focus on accuracy and concentration
+      </li>
+      <li>
+        compare our v1 and v2 annotation flows
+      </li>
+      <li>
+        check usability of how the map is configured and laid out
+      </li>
+      <li>
+        identify unknown pain points
+      </li>
+      <li>
+        identify possible iterations for MVP or future
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      Method
+    </h2>
+
+    <p class="govuk-body">
+      We asked them to:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        navigate through the annotation journeys in the prototype, including versions v1 and v2
+      </li>
+      <li>
+        think out loud, explaining what they thought they needed to do, what was happening, what would happen next and
+        if anything they needed was missing
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      Observations
+    </h2>
+
+    <p class="govuk-body">
+      We found that:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        the V2 flow with a second task list page for the entries was clearer and more usable
+      </li>
+      <li>
+        they expected to see a property description where the Title ID is on the annotation page, it describes the whole
+        property, so the entry makes more sense in context, it's always entry A1 in the register
+      </li>
+      <li>
+        'other' wasn’t used as intended, for entries that described part or multiple extents they could have said ‘yes’
+        or 'no' to all and expected a ‘partial match’ option
+      </li>
+      <li>
+        the OS map and annotation layout were clear
+      </li>
+      <li>
+        they referred to the Your jobs page as ‘work list’ and entries sub tasks as ‘job overview’
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      Possible iterations
+    </h2>
+
+    <p class="govuk-body">
+      We made a v2.1 of the annotation flow, to try a couple of the insights.
+    </p>
+
+    <p class="govuk-body">
+      It includes:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        an example of a title which includes the property description, we may do this in future but need to understand
+        more about if it makes sense in every scenario and if users need it who don’t expect to see it based on case
+        working experience
+      </li>
+      <li>
+        hint text for the ‘other’ option, we will do this when we can simply define a common example
+      </li>
+      <li>
+        calling the list of jobs ‘work list’, we probably won’t do this but it’s an option for future if we find the
+        term makes more sense for users
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      We will need to do further user research in a more robust way when we plan how to move from a proof of concept to
+      production, so that we can make sure that the tool is accessible, and the business can trust the accuracy of
+      annotators’ outputs.
+    </p>
+
+    <p class="govuk-body">
+      <a href="/design-history" class="govuk-link">Next post</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}
