@@ -1,0 +1,73 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="Defining other more clearly" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      One of the insights from an initial user session was that they expected to see a partial match option.
+    </p>
+
+    <p class="govuk-body">
+      They said that as the entry text did not fully describe the selected entry, they would answer ‘no’ to all similar
+      scenarios. However, they said they could also decide to say ‘yes’ to all similar scenarios.
+    </p>
+
+    <p class="govuk-body">
+      They did not notice that the option ‘other’ could be used for these.
+    </p>
+
+    <p class="govuk-body">
+      If different annotators apply different logic, then the outputted results won’t be accurate or consistent. This is
+      important because the overarching user need for the tool is to produce highly accurate matched data that
+      stakeholders can trust.
+    </p>
+
+    <p class="govuk-body">
+      We needed to include an option other than yes or no, because there are a small number of cases where the entry is
+      describing a relationship between multiple extents, such as ‘the blue polygon has the benefit of the brown dashed
+      line’. The admin user who would analyse results wanted to separate these from clearly defined matches.
+    </p>
+
+    <p class="govuk-body">
+      The word ‘other’ on its own is ambiguous. We don’t know enough about the different outlier entries that would fit
+      this category and as they are quite rare, we didn’t need to define them in more detail individually.
+    </p>
+
+    <p class="govuk-body">
+      In a workshop we agreed that making this clearer would be an important part of guidance and training
+      given to annotators. The content in the tool should be simple enough it doesn't need a long explanation. It also
+      shouldn't require the user to go back to a guidance document somewhere else.
+    </p>
+
+    <p class="govuk-body">
+      We added a version with some hint text to provide an example of when
+      this answer should be used as a reminder. It means that users are less likely to get stuck if they can’t
+      accurately answer yes
+      or no.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Screenshot
+    </h2>
+
+    <img src="/public/images/design-history/hint-text.png"
+      alt="A screenshot of the annotation page with hint text for other saying for example a partial match between extents">
+
+    <p class="govuk-body">
+      <a href="/design-history/exploring-adding-the-property-description" class="govuk-link">Next post</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}
