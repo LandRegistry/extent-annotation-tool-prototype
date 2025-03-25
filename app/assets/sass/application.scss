@@ -13,14 +13,14 @@ img {
 
 figure {
     border: 1px solid #000;
-  }
+}
 
 .govuk-header__account {
     float: right;
 }
 
 .govuk-table__row--custom {
-    padding:0px;
+    padding: 0px;
 }
 
 .sort-pannel {
@@ -44,4 +44,11 @@ figure {
 
 .entry-container {
     max-width: 70ch;
+}
+
+#map-controls {
+    display: inline-block;
+    float: left;
+    margin-left: 20px;
+    margin-right: 20px;
 }
