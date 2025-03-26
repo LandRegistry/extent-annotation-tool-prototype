@@ -1,0 +1,85 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="Exploring adding the property description" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      In our initial user session, our participant highlighted that they found it difficult to assess some of the
+      entries text. They said that it often referred to ‘the land’ but as the map view focuses on a single extent, they
+      found it difficult to understand the title as a whole and how the reference extent relates to the whole plot of
+      land.
+    </p>
+
+    <p class="govuk-body">
+      When asked what they needed, they suggested that the property description would help as it describes the title. It
+      is something they are used to seeing from case working experience on applications.
+    </p>
+
+    <p class="govuk-body">
+      The property description is usually entry A1 in the register and relates to a red boundary title extent.
+    </p>
+
+    <p class="govuk-body">
+      Currently, we are not including title extents in our data for proof of concept but we are including all entries
+      including A1s.
+    </p>
+
+    <p class="govuk-body">
+      We don’t know that our users will have the same experience and expectations of seeing a property description, but
+      we want to understand if this would help them to complete the annotation more accurately.
+    </p>
+
+    <p class="govuk-body">
+      We added <a href="/annotators/v2-1/titles/AV17272/A1/extent-map" class="govuk-link">an example to the
+        prototype</a> of an annotation page with a property description.
+    </p>
+
+    <p class="govuk-body">
+      We noticed that the property description would be repeated when the first entry A1 is being annotated. In our
+      sample of synthetic data only 2 of 11 titles have included this. It could be more common in a larger sample unless
+      we decide not to annotate these entries.
+    </p>
+
+    <p class="govuk-body">
+      We need to understand if:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        the entry A1 always provides an accurate property description
+      </li>
+      <li>
+        the property description helps to make sense of individual entries and reference extents
+      </li>
+    </ul>
+
+
+    <p class="govuk-body">
+      We may also explore other ways to give users more contextual information about a title, such as showing the title
+      boundary with the selected extent.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Screenshot
+    </h2>
+
+    <img src="/public/images/design-history/property-description.png" alt="HMLR page template">
+
+    <p class="govuk-body">
+      <a href="/design-history/refine-admin-tables" class="govuk-link">Next post</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}
