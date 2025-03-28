@@ -1,0 +1,128 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="Refining admin tables" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      In the last two sprints we’ve focused on parts of the annotation user journey. For admin, we initially have a
+      table that shows the jobs in the tool. In sprint 1, we refined an earlier version so that it did not use filters
+      or a table with sortable headings. We revisited the jobs status views to get it ready for development in a future
+      sprint.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Simpler sort function
+    </h2>
+
+    <p class="govuk-body">
+      We decided to simplify the sort function and just use the <a
+        href="https://design-system.service.gov.uk/components/select" class="govuk-link">select input</a> without extra
+      styling to make a panel. This
+      isn’t necessary and without filters doesn’t need the proximity styling to group those elements. We also moved the
+      input into a row container above the table. This means that the table has more width if we need to add more fields
+      in future. It also means that the action button for sorting is before the table it applies to.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Titles status
+    </h2>
+
+    <p class="govuk-body">
+      We applied the same layout to the status of titles within a job. Admin users need this view so that they can see
+      how many tasks within a job an annotator has done, started or not started and understand how they are progressing
+      with their work.
+    </p>
+
+    <p class="govuk-body">
+      The titles view shows:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        the title IDs
+      </li>
+      <li>
+        the task statuses
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      It does not need to include:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        archiving or reassigning, which is done to a whole job
+      </li>
+      <li>
+        the assigned timestamp, which will be the same for all the titles in a job
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      We show the job ID and annotator’s name in the heading.
+    </p>
+
+    <p class="govuk-body">
+      It also includes the simpler sort function so that users can choose which status of jobs they need to see first.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Archived jobs
+    </h2>
+
+    <p class="govuk-body">
+      The main reason for originally including filters was so that archived jobs could be not displayed by default.
+    </p>
+
+    <p class="govuk-body">
+      Instead of using one table with filters, we decided to have separate pages with tables for active and archived
+      jobs.
+    </p>
+
+    <p class="govuk-body">
+      We used the same layout for each page so that the view consistently switches between them.
+    </p>
+
+    <p class="govuk-body">
+      The archived jobs table only has one action to reassign which can be used to make the job active again.
+    </p>
+
+    <p class="govuk-body">
+      It uses two status tags for the status which show if it was in progress or not and that it is archived. This is
+      because users might miss that they are on the archived jobs table view. For example, the status would be incorrect
+      if read as only ‘to do’, but ‘to do’ and ‘archived’ together are correct. This is still displayed at 400% zoom if
+      someone is using a screen magnifier. </p>
+
+    <h2 class="govuk-heading-m">
+      Screenshots
+    </h2>
+
+    <img src="/public/images/design-history/refined-admin-jobs.png" alt="Admin jobs table">
+
+    <img src="/public/images/design-history/refined-admin-titles.png" alt="Admin titles table">
+
+    <img src="/public/images/design-history/refined-admin-no-archived.png" alt="Admin archived page with no jobs">
+
+    <img src="/public/images/design-history/refined-admin-archived.png" alt="Admin archived table">
+
+    <img src="/public/images/design-history/refined-admin-archived-400-zoom.png" alt="Admin archived table zoomed in to the statrus tags">
+
+    <p class="govuk-body">
+      <a href="/design-history" class="govuk-link">Next post</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}
