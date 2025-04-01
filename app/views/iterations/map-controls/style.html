@@ -1,0 +1,688 @@
+{% extends "layouts/hmlr-signed-in.html" %}
+
+{% set serviceName = "Extent annotation tool - map API" %}
+{% set pageName = serviceName %}
+
+{% set bodyClasses = "full-width" %}
+{% set containerClasses = "full-width" %}
+
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+
+    <div id="map-controls">
+
+        <h1 class="govuk-heading-l">AV57267</h2>
+
+            <h2 class="govuk-heading-m">
+                <span>Extent</span>
+                <span id="counter">1 of 14</span>
+            </h2>
+
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+            <h2 class="govuk-heading-m">Map controls</h2>
+
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                        <h3 class="govuk-fieldset__heading">
+                            Dark mode
+                        </h3>
+                    </legend>
+                    <div class="govuk-radios govuk-radios--small govuk-radios--inline" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="darkModeOff" name="darkModeControl" type="radio"
+                                value="off" checked>
+                            <label class="govuk-label govuk-radios__label" for="darkModeOff">
+                                Off
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="darkModeOn" name="darkModeControl" type="radio"
+                                value="on">
+                            <label class="govuk-label govuk-radios__label" for="darkModeOn">
+                                On
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <h3 class="govuk-heading-s">Opacity</h3>
+
+            <div class="govuk-button-group">
+                <button id="opacityDown" class="ol-zoom-out" data-module="govuk-button">
+                </button>
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                <button id="opacityUp" class="ol-zoom-in" data-module="govuk-button">
+                </button>
+            </div>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+
+            <details class="govuk-details">
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                        More controls
+                    </span>
+                </summary>
+                <div class="govuk-details__text">
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                                <h3 class="govuk-fieldset__heading">
+                                    Greyscale
+                                </h3>
+                            </legend>
+                            <div class="govuk-radios govuk-radios--small govuk-radios--inline"
+                                data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="greyscaleOff" name="greyscaleControl"
+                                        type="radio" value="off" checked>
+                                    <label class="govuk-label govuk-radios__label" for="greyscaleOff">
+                                        Off
+                                    </label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="greyscaleOn" name="greyscaleControl"
+                                        type="radio" value="on">
+                                    <label class="govuk-label govuk-radios__label" for="greyscaleOn">
+                                        On
+                                    </label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                                <h3 class="govuk-fieldset__heading">
+                                    Invert colours
+                                </h3>
+                            </legend>
+                            <div class="govuk-radios govuk-radios--small govuk-radios--inline"
+                                data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="invertOff" name="invertControl" type="radio"
+                                        value="off" checked>
+                                    <label class="govuk-label govuk-radios__label" for="invertOff">
+                                        Off
+                                    </label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="invertOn" name="invertControl" type="radio"
+                                        value="on">
+                                    <label class="govuk-label govuk-radios__label" for="invertOn">
+                                        On
+                                    </label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="govuk-form-group">
+                        <h3 class="govuk-heading-s">Contrast</h3>
+                        <div class="govuk-button-group">
+                            <button id="contrastDown" class="ol-zoom-out" data-module="govuk-button">
+                            </button>
+                            &nbsp;
+                            &nbsp;
+                            &nbsp;
+                            <button id="contrastUp" class="ol-zoom-in" data-module="govuk-button">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+
+
+
+    </div>
+
+    <!-- MAP  -->
+    <div class="govuk-grid-column-one-half">
+
+        <div>
+            <div class="zoom-controls">
+                <button id="zoom-in" class="zoom ol-zoom-in zoom-in" type="button" title="Zoom in">+<span
+                        class="govuk-visually-hidden">Zoom in</span></button>
+                <button id="zoom-out" class="zoom ol-zoom-out zoom-out" type="button" title="Zoom out">-
+                    <span class="govuk-visually-hidden">Zoom out</span>
+                </button>
+            </div>
+        </div>
+        <div id="map" class="maintain-llc-map" tabindex="0" aria-label="Image showing search extent">
+            <noscript>
+                <div id="nojs" class="nojs-content">
+                    <div id="nojs-message" class="notification-summary">
+                        <p>
+                            You need to turn on JavaScript to use this service. Or, for assistance, please use the
+                            following link -
+                            <a id="" assistance-link""
+                                href="https://customerhelp.landregistry.gov.uk/local-land-charges">https://customerhelp.landregistry.gov.uk/local-land-charges</a>
+                        </p>
+                    </div>
+                </div>
+            </noscript>
+        </div>
+    </div>
+
+    <!--  NAVIGATION  -->
+    <div class="govuk-grid-column-one-quarter">
+        <div>
+            <h2 class="govuk-heading-m">Entry ABC123</h2>
+
+            <div class="entry-container">
+                {% include "app/includes/entries/AV57267/inc_AV57267-entry-1.html" %}
+            </div>
+
+            {% set otherHtml %}
+            {{ govukInput({
+            id: "other",
+            name: "other",
+            classes: "govuk-!-width-one-third",
+            label: {
+            text: "More detail"
+            }
+            }) }}
+            {% endset -%}
+
+            {{ govukRadios({
+            classes: "govuk-radios--small",
+            name: "defineRelationship",
+            fieldset: {
+            legend: {
+            text: "Does the entry describe the selected extent?",
+            classes: "govuk-fieldset__legend--m"
+            }
+            },
+            items: [
+            {
+            value: "link",
+            text: "Yes"
+            },
+            {
+            value: "no-link",
+            text: "No"
+            },
+            {
+            value: "other",
+            text: "Other",
+            conditional: {
+            html: otherHtml
+            }
+            }
+            ]
+            }) }}
+            <div class="govuk-button-group">
+                <button id="prevBtn" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                    Previous extent
+                </button>
+                <br />
+                <button id="nextBtn" class="govuk-button govuk-button--primry" data-module="govuk-button">
+                    Next extent
+                </button>
+                <br />
+            </div>
+            <div style="height:480px;">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block pageScripts %}
+
+<!--  Custom map styles for this page -->
+<link rel="stylesheet" href="/public/map/css/map-styles.css">
+
+<!-- Jquery -->
+<script src="/public/map/jquery.min.js"></script>
+
+<!-- Open Layers -->
+<script src="/public/map/ol.js"></script>
+<script src="/public/map/proj4.js"></script>
+<script src="/public/map/union.js"></script>
+<script src="/public/map/draw_hole.js"></script>
+
+<!-- Custom Map Styles -->
+<script src="/public/map/hatching_style.js"></script>
+<script src="/public/map/map_styles.js"></script>
+
+<!-- Master Map Vector Layer -->
+<!--------  NB HACK TO FIX THE MASTER MAP SOURCE  -------->
+<script src="/public/map/master_map_vector_layer_fixed.js"></script>
+<script src="/public/map/snap_to_vector_layer.js"></script>
+
+<!-- Custom Map Controls -->
+<script src="/public/map/map_undo_v1.js"></script>
+<script src="/public/map/map_controls.js"></script>
+<script src="/public/map/map_helpers_v1.js"></script>
+
+<!-- Map config -->
+<script src="/public/map/map_config.js"></script>
+
+<script type="text/javascript">
+    var termsLink = "";
+    var mastermap_api_key = "{{ data.API_KEY }}";
+    var map_base_layer_view_name = "m0100";
+    var wfs_server_url = "{{ data.WFS_URL }}";
+    var wmts_server_url = "{{ data.WMTS_URL }}";
+
+    MAP_CONFIG.setBaseLayer(MAP_CONFIG.base_layer_zindex, MAP_CONFIG.mastermapResolutions, MAP_CONFIG.projection, termsLink, false);
+</script>
+
+<!-- OpenLayers Map (Note: must be after the key config) -->
+<script src="/public/map/map.js"></script>
+<script src="/public/map/save_geometries.js"></script>
+
+<!-- Custom actions for this page -->
+<script src="/public/map/keyboard_panning.js"></script>
+<script src="/public/map/custom_controls.js"></script>
+
+<!--   <script src="/public/map/custom_controls.js"></script> -->
+
+<script>
+    // Extents GeoJSON coordinates
+    // Note: Removed duplicate entries (0/5, 4/6, 7/11) to simplify data
+    const extents = [
+        {
+            "features": [
+                {
+                    "geometry": {
+                        "coordinates": [
+                            [
+                                [532042.65, 181758.8], [532046.85, 181752.4], [532047.15, 181751.9], [532047.5, 181751.45], [532048.3, 181750.1], [532051.95, 181752.55], [532052.25, 181752.75], [532051.5, 181754.0], [532050.8, 181755.0], [532046.45, 181761.45], [532042.65, 181758.8]
+                            ]
+                        ],
+                        "type": "Polygon",
+                    },
+                    "properties": { "id": 1000 },
+                    "type": "Feature"
+                }],
+            "type": "FeatureCollection"
+        },
+        {
+            "features": [
+                {
+                    "geometry":
+                    {
+                        "coordinates": [
+                            [
+                                [532032.2, 181739.4], [532036.2, 181734.35], [532042.7, 181739.1], [532046.3, 181741.7], [532048.35, 181743.2], [532053.1, 181736.4], [532060.45, 181740.65], [532051.95, 181752.55], [532048.3, 181750.1], [532047.5, 181751.45], [532046.85, 181752.4], [532042.65, 181758.8], [532036.3, 181754.65], [532040.7, 181747.9], [532032.7, 181742.95], [532034.1, 181740.7], [532032.2, 181739.4]
+                            ]
+                        ],
+                        "type": "Polygon"
+                    },
+                    "properties": { "id": 1001 },
+                    "type": "Feature"
+                }],
+            "type": "FeatureCollection"
+        },
+        {
+            "features": [
+                {
+                    "geometry":
+                    {
+                        "coordinates": [
+                            [
+                                [532032.7, 181742.95], [532034.1, 181740.7], [532038.9, 181743.9], [532042, 181745.9], [532042.5, 181746.25], [532043.55, 181746.95], [532045.05, 181747.95], [532048.3, 181750.1], [532051.95, 181752.55], [532052.25, 181752.75], [532051.5, 181754], [532050.8, 181755], [532046.85, 181752.4], [532042.65, 181758.8], [532036.3, 181754.65], [532040.7, 181747.9], [532032.7, 181742.95]
+                            ]
+                        ],
+                        "type": "Polygon"
+                    },
+                    "properties": { "id": 1002 },
+                    "type": "Feature"
+                }],
+            "type": "FeatureCollection"
+        },
+        {
+            "features": [
+                {
+                    "geometry":
+                    {
+                        "coordinates": [
+                            [
+                                [532017.1, 181740.25], [532023.3, 181733.7], [532023.9, 181734.05], [532028.75, 181737.2], [532031.05, 181738.65], [532032.2, 181739.4], [532034.1, 181740.7], [532038.9, 181743.9], [532042, 181745.9], [532042.5, 181746.25], [532043.55, 181746.95], [532045.05, 181747.95], [532048.3, 181750.1], [532047.5, 181751.45], [532046.85, 181752.4], [532042.65, 181758.8], [532036.3, 181754.65], [532029.7, 181750.4], [532017.45, 181742.55], [532017.1, 181740.25]
+                            ]
+                        ],
+                        "type": "Polygon"
+                    },
+                    "properties": { "id": 1003 },
+                    "type": "Feature"
+                }],
+            "type": "FeatureCollection"
+        },
+        {
+            "features": [
+                {
+                    "geometry":
+                    {
+                        "coordinates": [
+                            [
+                                [532096.659508772, 181839.07500000004], [531978.2764912281, 181784.47500000006], [531943.9524210526, 181764.17500000005], [531860.5939649123, 181713.77500000005], [531894.2175438596, 181676.67500000005], [531915.9327719299, 181654.97500000006], [531945.3534035088, 181629.77500000005], [532033.6152982457, 181535.97500000006], [532068.6398596491, 181568.17500000005], [532116.2732631579, 181582.17500000005], [532137.2880000001, 181614.37500000006], [532096.659508772, 181839.07500000004]
+                            ]
+                        ],
+                        "type": "Polygon"
+                    },
+                    "properties": { "id": 1004 },
+                    "type": "Feature"
+                }],
+            "type": "FeatureCollection"
+        },
+        {
+            "features": [
+                {
+                    "geometry":
+                    {
+                        "coordinates": [
+                            [
+                                [532017.1, 181740.25], [532023.3, 181733.7], [532023.9, 181734.05], [532030.55, 181725.8], [532035.3, 181729.15], [532038.55, 181731.4], [532036.2, 181734.35], [532042.7, 181739.1], [532046.3, 181741.7], [532048.35, 181743.2], [532053.1, 181736.4], [532060.45, 181740.65], [532061.9, 181737.85], [532063.75, 181739.25], [532064.6, 181737.6], [532065.5, 181738], [532069.1, 181739.8], [532073.95, 181742.25], [532076.5, 181736.6], [532076.9, 181736.85], [532077.35, 181737.1], [532077.5, 181736.8], [532079.3, 181737.45], [532078.65, 181742], [532082.2, 181742.5], [532080.5, 181753.8], [532073.85, 181752.8], [532073.15, 181756.8], [532073.05, 181758.75], [532072.85, 181759.45], [532069.7, 181764.5], [532072.6, 181766.15], [532067.8, 181776.05], [532058.3, 181769.8], [532046.45, 181761.45], [532042.65, 181758.8], [532036.3, 181754.65], [532029.7, 181750.4], [532017.45, 181742.55], [532017.1, 181740.25]
+                            ]
+                        ],
+                        "type": "Polygon"
+                    },
+                    "properties": { "id": 1007 },
+                    "type": "Feature"
+                }],
+            "type": "FeatureCollection"
+        },
+        {
+            "features": [
+                {
+                    "geometry":
+                    {
+                        "coordinates": [
+                            [
+                                [532042.5, 181746.25], [532042, 181745.9], [532040.7, 181747.9], [532036.3, 181754.65], [532042.65, 181758.8], [532046.85, 181752.4], [532047.5, 181751.45], [532048.3, 181750.1], [532045.05, 181747.95], [532043.55, 181746.95], [532042.5, 181746.25]
+                            ]
+                        ],
+                        "type": "Polygon"
+                    },
+                    "properties": { "id": 1008 },
+                    "type": "Feature"
+                }],
+            "type": "FeatureCollection"
+        },
+        {
+            "features": [
+                {
+                    "geometry":
+                    {
+                        "coordinates": [
+                            [
+                                [532062.65, 181763.15], [532064.1, 181760.85], [532062.15, 181759.5], [532059.45, 181757.65], [532052.25, 181752.75], [532051.5, 181754], [532050.8, 181755], [532046.45, 181761.45], [532058.3, 181769.8], [532062.65, 181763.15]
+                            ]
+                        ],
+                        "type": "Polygon"
+                    },
+                    "properties": { "id": 1009 },
+                    "type": "Feature"
+                }],
+            "type": "FeatureCollection"
+        },
+        {
+            "features": [
+                {
+                    "geometry":
+                    {
+                        "coordinates": [
+                            [
+                                [532058.3, 181769.8], [532062.65, 181763.15], [532064.1, 181760.85], [532069.7, 181764.5], [532072.6, 181766.15], [532067.8, 181776.05], [532058.3, 181769.8]
+                            ]
+                        ],
+                        "type": "Polygon"
+                    },
+                    "properties": { "id": 1010 },
+                    "type": "Feature"
+                }],
+            "type": "FeatureCollection"
+        },
+        {
+            "features": [
+                {
+                    "geometry":
+                    {
+                        "coordinates": [
+                            [
+                                [532051.95, 181792.9], [532059.05, 181791.5], [532065.3, 181781.4], [532054.6, 181774.3], [532046.3, 181768.85], [532042, 181775.2], [532040.85, 181775.5], [532036.35, 181782.95], [532044.8, 181788.4], [532051.95, 181792.9]
+                            ]
+                        ],
+                        "type": "Polygon"
+                    },
+                    "properties": { "id": 1013 },
+                    "type": "Feature"
+                }],
+            "type": "FeatureCollection"
+        }
+    ];
+
+    // Common variables
+    let count = 0;
+    let style_count = 3;
+    let currentPage = 1;
+    const totalPages = extents.length;
+
+    /**
+     * Create map style manager to handle visual styles
+     */
+    function createMapStyleManager() {
+        let baseLayerEl = null;
+        let settings = {
+            darkMode: false,
+            greyscale: false,
+            invert: false,
+            contrast: 1.0,
+            opacity: 0.6
+        };
+
+        // Find the map base layer element
+        function findBaseLayerElement() {
+            const mapLayers = document.querySelectorAll('.ol-layer');
+            if (mapLayers.length > 0) return mapLayers[0];
+            return null;
+        }
+
+        // Apply all current style settings to the map
+        function updateMapStyle() {
+            if (!baseLayerEl) baseLayerEl = findBaseLayerElement();
+            if (!baseLayerEl) return;
+
+            // Build the filter string
+            let filterString = '';
+
+            if (settings.greyscale || settings.darkMode) filterString += 'grayscale(100%) ';
+            if (settings.invert || settings.darkMode) filterString += 'invert(1) ';
+            if (settings.contrast !== 1.0) filterString += `contrast(${settings.contrast}) `;
+
+            // Apply the filter
+            baseLayerEl.style.filter = filterString.trim() || 'none';
+
+            // Apply opacity separately
+            MAP_CONFIG.base_layer.setOpacity(settings.opacity);
+        }
+
+        // Initialize after map loads
+        setTimeout(() => {
+            baseLayerEl = findBaseLayerElement();
+            updateMapStyle(); // Add this line to apply initial settings
+        }, 500);
+
+        return {
+            // Update a single setting and refresh the map style
+            updateSetting: function (setting, value) {
+                settings[setting] = value;
+                updateMapStyle();
+            },
+            // Get a copy of all current settings
+            getSettings: function () {
+                return { ...settings };
+            }
+        };
+    }
+
+    /**
+     * Setup radio button controls
+     */
+    function setupRadioControls(controlName, handler) {
+        const onButton = document.getElementById(`${controlName}On`);
+        const offButton = document.getElementById(`${controlName}Off`);
+
+        // Set default
+        offButton.checked = true;
+
+        // Add listeners
+        onButton.addEventListener('change', () => {
+            if (onButton.checked) handler(true);
+        });
+
+        offButton.addEventListener('change', () => {
+            if (offButton.checked) handler(false);
+        });
+    }
+
+    /**
+     * Setup control for adjustable numeric values (opacity, contrast)
+     */
+    function setupAdjustmentControl(property, initialValue, minValue, maxValue, step) {
+        const downButton = document.getElementById(`${property}Down`);
+        const upButton = document.getElementById(`${property}Up`);
+        let currentValue = initialValue;
+
+        // Update the value ensuring it stays within bounds
+        function updateValue(newValue) {
+            currentValue = Math.max(minValue, Math.min(maxValue, newValue));
+            mapStyleManager.updateSetting(property, currentValue);
+        }
+
+        // Add event listeners
+        upButton.addEventListener('click', () => updateValue(currentValue + step));
+        downButton.addEventListener('click', () => updateValue(currentValue - step));
+    }
+
+    /**
+     * Set up extent navigation controls
+     */
+    function initExtentNavigation() {
+        const counterElement = document.getElementById('counter');
+        const nextButton = document.getElementById('nextBtn');
+        const prevButton = document.getElementById('prevBtn');
+
+        // Update extent counter display
+        function updateCounter() {
+            counterElement.textContent = currentPage + " of " + totalPages;
+        }
+
+        // Navigate to a specific extent
+        function navigateToExtent(index) {
+            count = index;
+            style_count = (index % 13); // Keep style count within bounds
+            MAP_CONTROLS.toggle_draw_layer_style(style_count);
+            showExtent();
+            updateCounter();
+        }
+
+        // Add event listeners for navigation buttons
+        nextButton.addEventListener('click', function () {
+            currentPage = (currentPage % totalPages) + 1;
+            navigateToExtent(currentPage - 1); // Zero-based index
+        });
+
+        prevButton.addEventListener('click', function () {
+            currentPage = (currentPage === 1) ? totalPages : currentPage - 1;
+            navigateToExtent(currentPage - 1); // Zero-based index
+        });
+
+        // Initialize
+        updateCounter();
+    }
+
+    /**
+     * Adjust map height to match window size
+     */
+    function adjustMapHeight() {
+        let page_height = Math.floor($(window).height());
+        $("#map").css("height", page_height - 70);
+        $("#container").css("height", page_height - 120);
+        $('.scroll').css('height', page_height - 70);
+    }
+
+    /**
+     * Show the current extent on the map
+     */
+    function showExtent() {
+        MAP_CONFIG.draw_source.clear();
+        load_previous_data(extents[count]);
+    }
+
+    /**
+     * Add open layers map controls
+     */
+    function initMapControls() {
+        var controls;
+        var center = [];
+        MAP_HELPERS.init_controls(map, controls);
+
+        // Prepopulate with an extent to set initial map bounds
+        $(function () {
+            load_previous_data({
+                "features": [
+                    {
+                        "geometry": {
+                            "coordinates": [[[532042.65, 181758.8]]],
+                            "type": "Polygon"
+                        },
+                        "properties": { "id": 1000 },
+                        "type": "Feature"
+                    }],
+                "type": "FeatureCollection"
+            });
+        });
+    }
+
+    // Initialize everything once the DOM is ready
+    document.addEventListener('DOMContentLoaded', function () {
+        // Create map style manager first
+        window.mapStyleManager = createMapStyleManager();
+
+        // Setup all controls
+        setupRadioControls('darkMode', (isOn) => {
+            mapStyleManager.updateSetting('darkMode', isOn);
+        });
+
+        setupRadioControls('greyscale', (isOn) => {
+            mapStyleManager.updateSetting('greyscale', isOn);
+        });
+
+        setupRadioControls('invert', (isOn) => {
+            mapStyleManager.updateSetting('invert', isOn);
+        });
+
+        setupAdjustmentControl('opacity', 0.6, 0.1, 1.0, 0.1);
+        setupAdjustmentControl('contrast', 1.0, 0.5, 2.0, 0.1);
+
+        // Initialize extent navigation and map controls
+        initExtentNavigation();
+        initMapControls();
+
+        // Set map height
+        adjustMapHeight();
+
+        // Show initial extent
+        showExtent();
+    });
+</script>
+
+{% endblock %}
