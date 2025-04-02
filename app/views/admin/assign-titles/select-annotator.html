@@ -5,7 +5,7 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
 {% block pageTitle %}
-  Unbranded page template – {{ serviceName }} – GOV.UK Prototype Kit
+  Select an annotator – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block beforeContent %}
@@ -21,7 +21,7 @@ html: 'This is not a production service.'
 {% include "app/includes/inc_admin-nav-bar.html" %}
 
 {{ govukBackLink({
-  text: "Back",
+  text: "Back to upload a job",
   href: "/admin/assign-titles/upload-csv"
 }) }}
 
@@ -39,7 +39,7 @@ html: 'This is not a production service.'
       legend: {
         text: "Select an annotator to assign the job to",
         isPageHeading: true,
-        classes: "govuk-fieldset__legend--s"
+        classes: "govuk-fieldset__legend--m"
       }
     },
     items: [
