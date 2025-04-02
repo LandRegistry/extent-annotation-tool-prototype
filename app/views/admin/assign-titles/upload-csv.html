@@ -3,6 +3,8 @@
 {% set currentPage="upload" %}
 
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/file-upload/macro.njk" import govukFileUpload %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block pageTitle %}
 {{ serviceName }} – GOV.UK Prototype Kit
@@ -10,20 +12,20 @@
 
 {% block content %}
 
-<h1 class="govuk-heading-l">Upload titles</h1>
+<h1 class="govuk-heading-l">Upload a job</h1>
 
 <form class="form" action="/admin/assign-titles/select-annotator" method="post">
 
-  <p class="govuk-body">Upload a CSV file with one column containing a list of title IDs.</p>
-
-  {% from "govuk/components/file-upload/macro.njk" import govukFileUpload %}
+  <p class="govuk-body">Upload a CSV file with one column containing a list of title IDs. The first title must be in cell A1.</p>
 
   {{ govukFileUpload({
     id: "file-upload-1",
-    name: "fileUpload1"
+    name: "fileUpload1",
+    label: {
+      text: "Upload a file"
+    }
   }) }}
 
-  {% from "govuk/components/button/macro.njk" import govukButton %}
 
 {{ govukButton({
   text: "Continue"
