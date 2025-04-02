@@ -6,8 +6,23 @@
 {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
+{% block beforeContent %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{{ govukPhaseBanner({
+  tag: {
+  text: "Prototype"
+  },
+  html: 'This is not a production service.'
+  }) }}
+
+{{ govukBackLink({
+  text: "Back to jobs",
+  href: "/admin/check-status/jobs-list-mvp?alertType"
+}) }}
+{% endblock %}
+
 {% block content %}
-<a href="/admin/check-status/jobs-list-mvp" class="govuk-back-link">Back to jobs</a>
 <main class="govuk-main-wrapper">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">

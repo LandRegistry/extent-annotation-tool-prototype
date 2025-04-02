@@ -7,6 +7,22 @@
 Unbranded page template – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
+{% block beforeContent %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{{ govukPhaseBanner({
+  tag: {
+  text: "Prototype"
+  },
+  html: 'This is not a production service.'
+  }) }}
+
+{{ govukBackLink({
+  text: "Back to jobs",
+  href: "/admin/check-status/jobs-list-mvp"
+}) }}
+{% endblock %}
+
 {% block content %}
 
 <h1 class="govuk-heading-l">Confirm job to archive</h1>

@@ -10,6 +10,22 @@
 {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
+{% block beforeContent %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{{ govukPhaseBanner({
+  tag: {
+  text: "Prototype"
+  },
+  html: 'This is not a production service.'
+  }) }}
+
+{{ govukBackLink({
+  text: "Back to admin",
+  href: "/admin/landing?alertType"
+}) }}
+{% endblock %}
+
 {% block content %}
 
 <h1 class="govuk-heading-l">Upload a job</h1>

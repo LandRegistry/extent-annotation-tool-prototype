@@ -13,9 +13,24 @@
 {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
+{% block beforeContent %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{{ govukPhaseBanner({
+  tag: {
+  text: "Prototype"
+  },
+  html: 'This is not a production service.'
+  }) }}
+
+{{ govukBackLink({
+  text: "Back to admin",
+  href: "/admin/landing.html"
+}) }}
+{% endblock %}
+
 {% block content %}
 
-<main class="govuk-main-wrapper">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-l">Jobs</h1>
@@ -38,7 +53,5 @@
     {% else %}
     <p class="govuk-body">There are no archived jobs.</p>
     {% endif %}
-</main>
-
 
 {% endblock %}

@@ -7,10 +7,24 @@
 {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
-{% block content %}
+{% block beforeContent %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
+{{ govukPhaseBanner({
+  tag: {
+  text: "Prototype"
+  },
+  html: 'This is not a production service.'
+  }) }}
+
+{{ govukBackLink({
+  text: "Back to jobs",
+  href: "/admin/check-status/jobs-list-mvp"
+}) }}
+{% endblock %}
+
+{% block content %}
 <div class="govuk-width-container">
-  <main class="govuk-main-wrapper">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-l">Reassign job {{ data['jobID'] }}</h1>
@@ -64,7 +78,6 @@
         </form>
       </div>
     </div>
-  </main>
 </div>
 
 {% endblock %}
