@@ -101,7 +101,6 @@
                         </fieldset>
                     </div>
 
-
                     <div class="govuk-form-group">
                         <fieldset class="govuk-fieldset">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
@@ -143,6 +142,13 @@
                     </div>
                 </div>
             </details>
+
+            <div class="govuk-button-group">
+                <button id="resetControls" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                    Reset map controls
+                </button>
+            </div>
+            <br>
 
 
 
@@ -682,6 +688,22 @@
 
         // Show initial extent
         showExtent();
+
+        // Reset button functionality
+        const resetButton = document.getElementById('resetControls');
+        resetButton.addEventListener('click', () => {
+            // Reset radio buttons
+            document.getElementById('darkModeOff').checked = true;
+            document.getElementById('greyscaleOff').checked = true;
+            document.getElementById('invertOff').checked = true;
+
+            // Reset all map style settings to defaults
+            mapStyleManager.updateSetting('darkMode', false);
+            mapStyleManager.updateSetting('greyscale', false);
+            mapStyleManager.updateSetting('invert', false);
+            mapStyleManager.updateSetting('contrast', 1.0);
+            mapStyleManager.updateSetting('opacity', 0.6);
+        });
     });
 </script>
 
