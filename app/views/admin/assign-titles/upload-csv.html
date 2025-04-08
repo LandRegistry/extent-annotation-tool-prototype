@@ -32,7 +32,16 @@
 
 <form class="form" action="/admin/assign-titles/select-annotator" method="post">
 
-  <p class="govuk-body">Upload a CSV file with one column containing a list of title IDs. The first title must be in cell A1.</p>
+  <p class="govuk-body">Upload a CSV file with a list of title IDs. The titles must be in one column starting with cell A1.</p>
+
+  <p class="govuk-body">Title IDs must be either:</p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <li>up to 3 letters followed by up to 6 numbers</li>
+    <li>up to 3 letters followed by 4 numbers and the letter ‘z’</li>
+  </ul>
+
+  <p class="govuk-body">For example, AV59722 or AV123Z.</p>
 
   {{ govukFileUpload({
     id: "file-upload-1",
