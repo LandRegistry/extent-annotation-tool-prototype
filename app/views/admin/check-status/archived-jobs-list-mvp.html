@@ -17,41 +17,48 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
 {{ govukPhaseBanner({
-  tag: {
-  text: "Prototype"
-  },
-  html: 'This is not a production service.'
-  }) }}
+tag: {
+text: "Prototype"
+},
+html: 'This is not a production service.'
+}) }}
 
 {{ govukBackLink({
-  text: "Back to admin",
-  href: "/admin/landing.html"
+text: "Back to admin",
+href: "/admin/landing.html"
 }) }}
 {% endblock %}
 
 {% block content %}
 
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-l">Jobs</h1>
-            <p class="govuk-body-m"> <a class="govuk-link govuk-link--no-visited-state" href="/admin/check-status/jobs-list-mvp">Active</a> | Archived</p>
-        </div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">Jobs</h1>
+        <ul class="govuk-summary-list__actions-list">
+            <li class="govuk-summary-list__actions-list-item">
+                <a class="govuk-link govuk-body-m govuk-link--no-visited-state"
+                    href="/admin/check-status/jobs-list-mvp">Active</a>
+            </li>
+            <li class="govuk-summary-list__actions-list-item govuk-body-m">Archived
+            </li>
+        </ul>
     </div>
+</div>
 
-    {% if job1Archived == 'yes' %}
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            {% include "app/includes/jobs/inc_sort-horizontal.html" %}
-        </div>
+{% if job1Archived == 'yes' %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {% include "app/includes/jobs/inc_sort-horizontal.html" %}
     </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-three-quarters">
-            {% include "app/includes/jobs/inc_archived-jobs-table-mvp.html" %}
-        </div>
+</div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        {% include "app/includes/jobs/inc_archived-jobs-table-mvp.html" %}
     </div>
-    </div>
-    {% else %}
-    <p class="govuk-body">There are no archived jobs.</p>
-    {% endif %}
+</div>
+</div>
+{% else %}
+<p class="govuk-body">There are no archived jobs.</p>
+{% endif %}
 
 {% endblock %}
