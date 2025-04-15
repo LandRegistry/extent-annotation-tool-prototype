@@ -24,9 +24,14 @@ href: "/admin/check-status/jobs-list-mvp?alertType"
 
 {% block content %}
 <main class="govuk-main-wrapper">
-    <div class="govuk-grid-row">
+    <div style="margin-bottom: 30px;"class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-l">Assigned titles for {{ data['user'] }}: Job {{ data['jobID'] }}</h1>
+                <h1 style="display: inline;" class="govuk-heading-l">Assigned titles for {{ data['user'] }}: Job {{ data['jobID'] }}</h1>
+                <div style="display: inline; vertical-align: text-bottom;" class="govuk-task-list__status" id="task-list-1-status">
+                    <strong class="govuk-tag govuk-tag--grey">
+                        Archived
+                    </strong>
+                </div>
         </div>
     </div>
     <div class="govuk-grid-row">
