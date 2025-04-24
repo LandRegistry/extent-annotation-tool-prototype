@@ -81,63 +81,63 @@
   }
 
 
-  /* Customise the ol zoom controls */
-  .ol-zoom-in {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Crect width='14' height='2' x='8' y='14' style='fill:%230b0c0c'/%3E%3Crect width='2' height='14' x='14' y='8' style='fill:%230b0c0c'/%3E%3C/svg%3E");
-  }
+/* Customise the ol zoom controls */
+.ol-zoom-in {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Crect width='14' height='2' x='8' y='14' style='fill:%230b0c0c'/%3E%3Crect width='2' height='14' x='14' y='8' style='fill:%230b0c0c'/%3E%3C/svg%3E");
+}
 
-  .ol-zoom-out {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Crect width='14' height='2' x='8' y='14' style='fill:%230b0c0c'/%3E%3C/svg%3E");
-  }
-  
-  .ol-zoom-in,
-  .ol-zoom-out {
-    display: block;
-    border: 0;
-    outline: 2px solid rgba(0,0,0,0.2);
-    height: 40px;
-    width: 40px;
-    padding: 0;
-    cursor: pointer;
-    background-color: #fff;
-    background-size: 30px;
-    background-position: 5px 5px;
-    overflow: hidden;
-    text-indent: -5000px;
-  }
-  /* OpenLayers Scale Line Override */
-  .ol-scale-line {
-    background: rgba(255, 255, 255, .8) !important;
-    border-radius: 5px !important;
-    padding: 2px !important;
-    position: absolute !important;
-  }
+.ol-zoom-out {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Crect width='14' height='2' x='8' y='14' style='fill:%230b0c0c'/%3E%3C/svg%3E");
+}
 
-  .ol-scale-line-inner {
-    color: #000 !important;
-    border: 1px solid #000 !important;
-    border-top: none !important;
-  }
+.ol-zoom-in,
+.ol-zoom-out {
+  display: block;
+  border: 0;
+  outline: 2px solid rgba(0,0,0,0.2);
+  height: 44px;
+  width: 44px;
+  padding: 0;
+  cursor: pointer;
+  background-color: #fff;
+  background-size: 30px;
+  background-position: 7px 7px;
+  overflow: hidden;
+  text-indent: -5000px;
+}
+/* OpenLayers Scale Line Override */
+.ol-scale-line {
+  background: rgba(255, 255, 255, .8) !important;
+  border-radius: 5px !important;
+  padding: 2px !important;
+  position: absolute !important;
+}
 
-  .ol-scale-line-inner{
-    color: #0b0c0c;
-    font-family: "GDS Transport", arial, sans-serif;
-  }
-  
-  .zoom-controls{
-    position: relative;
-    z-index: 12;
-    top: 20px;
-    left: calc(100% - 140px);
-  }
+.ol-scale-line-inner {
+  color: #000 !important;
+  border: 1px solid #000 !important;
+  border-top: none !important;
+}
 
-  .zoom-in{
-    position: absolute;
-    top: 0px;
-  }
+.ol-scale-line-inner{
+  color: #0b0c0c;
+  font-family: "GDS Transport", arial, sans-serif;
+}
 
-  .zoom-out{
-    position: absolute;
-    top:48px;
-  }
+.zoom-controls{
+  position: relative;
+  z-index: 12;
+  top: 20px;
+  left: calc(100% - 140px);
+}
+
+.zoom-in{
+  position: absolute;
+  top: 0px;
+}
+
+.zoom-out{
+  position: absolute;
+  top:52px;
+}
 
