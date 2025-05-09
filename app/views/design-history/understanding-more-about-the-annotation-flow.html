@@ -1,6 +1,7 @@
 {% extends "layouts/design-history-post.html" %}
 
 {% set pageName="Understanding more about the annotation flow" %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
@@ -169,9 +170,16 @@
       annotators’ outputs.
     </p>
 
-    <p class="govuk-body">
-      <a href="/design-history/defining-other-more-clearly" class="govuk-link">Next post</a>
-    </p>
+    {{ govukPagination({
+      previous: {
+        labelText: "OS maps and geospatial extents UI",
+        href: "/design-history/os-maps-and-geospatial-extents-ui"
+      },
+      next: {
+        labelText: "Defining other relationships more clearly",
+        href: "/design-history/defining-other-more-clearly"
+      }
+    }) }}
 
   </div>
 </div>

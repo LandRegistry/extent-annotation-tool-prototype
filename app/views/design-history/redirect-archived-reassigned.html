@@ -1,0 +1,117 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="Redirect an annotator if their job is archived or reassigned" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      Admins can archive or reassign any active job. This action is applied to all the titles in the job regardless of
+      their status.
+    </p>
+
+    <p class="govuk-body">
+      If an annotator is working on a title in a job at the same time it is archived or reassigned, we needed to define
+      what happens, so they don’t get an unexpected error or cause a bug by continuing.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Possible approaches
+    </h2>
+
+    <p class="govuk-body">
+      We could block an admin from archiving or reassigning any job that has an in-progress status. We decided not to do
+      this because it could make it difficult for admin to do something they need, especially if a job had been left in
+      progress by an annotator who’s no longer available.
+    </p>
+
+    <p class="govuk-body">
+      We could stop the annotator from submitting a title or job that’s been archived or reassigned, but this would mean
+      they have wasted effort in annotating something they can’t submit.
+    </p>
+
+    <p class="govuk-body">
+      We could allow the annotator to complete the title they are working on and only archive or reassign the remaining
+      titles. However, our current data model does not allow jobs to be split in this way, and it would be more work to
+      enable it.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Approach for MVP
+    </h2>
+
+    <p class="govuk-body">
+      We decided to redirect an annotator the next time they try and save an answer to a service problem page.
+    </p>
+
+    <p class="govuk-body">
+      We save an answer to the backend and cycle to the next extent every time the user selects next. If the job has
+      been archived or reassigned, we will redirect to a service problem page which explains what has happened and links
+      to the Your jobs page to start a different job. It includes email addresses for admins in case there has been a
+      mistake.
+    </p>
+
+    <p class="govuk-body">
+      We do this so they don’t have a dead end and can continue work. We don’t use an error message on the page as it is
+      not a user input error.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Approach for future iteration
+    </h2>
+
+    <p class="govuk-body">
+      As this scenario could interrupt the user and cause friction, we want to reduce the risk of it happening.
+    </p>
+
+    <p class="govuk-body">
+      We don’t have a data variable that tells us if an annotator actively has a title open. However, if a title is in
+      progress we can see the last time that the user saved an answer.
+    </p>
+
+    <p class="govuk-body">
+      In future we might display this information so that the admin can see if work was recently saved and understand if
+      someone may actively be working on a job before archiving or reassigning it.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Wireframes
+    </h2>
+
+    <h3 class="govuk-heading-s">
+      This job has been reassigned
+    </h3>
+
+    <img src="/public/images/design-history/reassigned_error_page.png" alt="Service error page saying this job has been reassigned, with admin email addresses and a link to return to your jobs">
+
+    <h3 class="govuk-heading-s">
+      This job has been archived
+    </h3>
+
+    <img src="/public/images/design-history/archived_error_page.png" alt="Service error page saying this job has been reassigned, with admin email addresses and a link to return to your jobs">
+
+    {{ govukPagination({
+      previous: {
+        labelText: "Routes and landing pages",
+        href: "/design-history/routes-landing-pages"
+      },
+      next: {
+        labelText: "Validating a job file",
+        href: "/design-history/job-validation"
+      }
+    }) }}
+
+
+  </div>
+</div>
+
+{% endblock %}

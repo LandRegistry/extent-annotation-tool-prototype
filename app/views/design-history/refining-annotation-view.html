@@ -3,6 +3,7 @@
 {% set pageName="Refining the annotation view" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 
 {% block content %}
 
@@ -87,9 +88,16 @@
 
     <img src="/public/images/design-history/v2-view.png" alt="The annotation page with a large map view ">
 
-    <p class="govuk-body">
-      <a href="/design-history/refining-annotation-flow" class="govuk-link">Next post</a>
-    </p>
+    {{ govukPagination({
+      previous: {
+        labelText: "Refining the annotation view",
+        href: "/design-history/refining-annotation-view"
+      },
+      next: {
+        labelText: "OS maps and geospatial extents UI",
+        href: "/design-history/os-maps-and-geospatial-extents-ui"
+      }
+    }) }}
 
   </div>
 </div>

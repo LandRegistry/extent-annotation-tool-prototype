@@ -3,6 +3,7 @@
 {% set pageName="View of multiple jobs" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 
 {% block content %}
 
@@ -38,9 +39,16 @@
 
     <img src="/public/images/design-history/multiple-jobs.png" alt="A list of jobs with a heading and task list for each job">
 
-    <p class="govuk-body">
-      <a href="/design-history/refining-annotation-view" class="govuk-link">Next post</a>
-    </p>
+    {{ govukPagination({
+      previous: {
+        labelText: "MVP jobs table",
+        href: "/design-history"
+      },
+      next: {
+        labelText: "Refining the annotation view",
+        href: "/design-history/refining-annotation-view"
+      }
+    }) }}
 
   </div>
 </div>

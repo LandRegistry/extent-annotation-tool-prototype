@@ -3,6 +3,7 @@
 {% set pageName="First pass annotation flow" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 
 {% block content %}
 
@@ -14,9 +15,7 @@
     </h1>
 
     <p class="govuk-body">
-      The user need to complete an annotation task does not just require components on a static UI in our
-      wireframes. We also needed to consider the end to end journey and how best to design the interaction and UX so
-      that users could effectively work through a large sequence of titles, extents and entries in a way that would give
+      As well as the annotation page and its components, we needed to consider the end to end journey and how best to make sure users could effectively work through a large sequence of titles, extents and entries in a way that would give
       high confidence of accuracy.
     </p>
 
@@ -103,9 +102,16 @@
 
     <img src="/public/images/design-history/v1-jobs-submitted.png" alt="Job task list submitted">
 
-    <p class="govuk-body">
-      <a href="/design-history/upload-and-assign" class="govuk-link">Next post</a>
-    </p>
+    {{ govukPagination({
+      previous: {
+        labelText: "First pass design for annotation view",
+        href: "/design-history/first-pass-annotation-view"
+      },
+      next: {
+        labelText: "Upload and assign",
+        href: "/design-history/upload-and-assign"
+      }
+    }) }}
 
   </div>
 </div>

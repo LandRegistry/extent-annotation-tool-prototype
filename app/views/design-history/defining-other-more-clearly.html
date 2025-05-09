@@ -3,6 +3,7 @@
 {% set pageName="Defining other more clearly" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 
 {% block content %}
 
@@ -63,9 +64,17 @@
     <img src="/public/images/design-history/hint-text.png"
       alt="A screenshot of the annotation page with hint text for other saying for example a partial match between extents">
 
-    <p class="govuk-body">
-      <a href="/design-history/exploring-adding-the-property-description" class="govuk-link">Next post</a>
-    </p>
+      {{ govukPagination({
+        previous: {
+          labelText: "Understanding more about the annoation flow",
+          href: "/design-history/understanding-more-about-the-annotation-flow"
+        },
+        next: {
+          labelText: "Exploring adding the property description",
+          href: "/design-history/exploring-adding-property-description"
+        }
+      }) }}
+  
 
   </div>
 </div>

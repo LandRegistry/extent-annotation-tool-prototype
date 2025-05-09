@@ -1,0 +1,194 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="Showing the latest version of extents and entries" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      Some titles contain different versions of the same extent or entry. This is usually where a caseworker has
+      processed an application to make a change to some information, such as when part of the land covered by the extent
+      has changed over time.
+    </p>
+
+    <p class="govuk-body">
+      Any historic versions still exist in the database. This means someone could understand the history of a title.
+    </p>
+
+    <p class="govuk-body">
+      In our proof of value phase, we are using synthetic data for 11 titles. Some of them have different versions, for
+      example one has 28 extents of which 10 contain 5 pairs of versions of extents.
+    </p>
+
+    <p class="govuk-body">
+      We could either annotate all the title data as it is or choose to annotate a selection of it. HMLR want to only
+      show the latest versions. However, caseworkers used different ways to edit the data over time, and it is not easy
+      to define rules that can accurately identify the latest version in a consistent way. There was a partial solution
+      in an earlier proof of concept, but it doesn’t always work.
+    </p>
+
+    <p class="govuk-body">
+      We would need to make sure we used the same approach for extents and entries, as both can have different versions.
+      The tool will be used as a step towards a future Geospatial register which will need a way to show the correct
+      entry and extent versions together so it’s accurate to a point in time.
+    </p>
+
+    <p class="govuk-body">
+      We did some analysis and a workshop with stakeholders to better understand if this was still a problem and how to
+      approach it.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Example of a title with multiple extent versions
+    </h2>
+
+    <img src="/public/images/design-history/multiple_extents.png" alt="A title with 5 pairs of similar looking extents">
+
+    <h2 class="govuk-heading-m">
+      Effects on the outcomes from the tool
+    </h2>
+
+    <p class="govuk-body">
+      In nearly all the cases identified, any different versions of extents appear visually to be very similar. It is
+      likely that the annotation results would therefore be the same for them.
+    </p>
+
+    <p class="govuk-body">
+      If we annotated all the data including different versions, this would result in an entry having more ‘yes’ or ‘no’
+      matches to extents, some of which would be referring to the same area of land.
+    </p>
+
+    <p class="govuk-body">
+      This would not significantly affect the primary need to create an accurate matched dataset.
+    </p>
+
+    <p class="govuk-body">
+      It might help the secondary value of the tool in identifying data anomalies that could be investigated to improve
+      data quality. It might also improve how representative the dataset is of the register by including historic
+      versions that exist and could help if a future automated solution needs to be tested against historic versions.
+    </p>
+
+    <p class="govuk-body">
+      However, it could produce extra ‘yes’ or ‘no’ matches that affect how a data scientist would query the results.
+      They might also need a way to understand if discrepancies between annotators’ results were due to people
+      interpreting versions differently.
+    </p>
+
+    <h3 class="govuk-heading-s">
+      Simplified example of the output dataset with more or fewer matches
+    </h3>
+
+    <img src="/public/images/design-history/versions-outputs.png"
+      alt="Diagram showing the difference between an output where all the possible matches for different versions are defined and an output where only the matches for a single version of each extent are defined">
+
+    <h2 class="govuk-heading-m">
+      Effects on the user experience
+    </h2>
+
+    <p class="govuk-body">
+      There was a hypothesis that the user experience would be worse if all versions were included because there would
+      be more annotations to complete. The effect would have been more significant in an earlier proof of concept which
+      had showed all of them at once, as they could overlap and cause confusion.
+    </p>
+
+    <p class="govuk-body">
+      In our version, annotators complete the annotations for each entry-extent relationship one at a time so this would
+      be less of problem. Our measures of success are the accuracy of the output and simplicity of the annotation task
+      more than the speed of completing it, in line with the principle to focus more on effectiveness than efficiency or
+      satisfaction. </p>
+
+    <p class="govuk-body">
+      There was also an expectation that as a proof of value the tool should reflect the future production user
+      experience and this would only show the latest versions, therefore it needed to be done at this stage. However, we
+      would expect to test with users and iterate the experience as we develop.
+    </p>
+
+    <p class="govuk-body">
+      It could also cause confusion if users annotated an extent and later saw a similar one. It would be valuable to
+      test with users if they understood that they might see similar versions of the same extent and to answer them
+      individually, or if this impacted confidence in their answers.
+    </p>
+
+    <h3 class="govuk-heading-s">
+      Where to filter the data
+    </h3>
+
+    <p class="govuk-body">
+      We worked on the assumption that having different versions of extents is an annotation problem.
+    </p>
+
+    <p class="govuk-body">
+      We could solve this either:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        outside of the tool, for example by cleaning the data or only including titles without multiple versions
+      </li>
+      <li>
+        creating a feature within the tool that filters the data to only display one version
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      It was decided that the tool should only display the latest version as there was an existing partial solution and
+      expectation to do this.
+    </p>
+
+    <p class="govuk-body">
+      We didn’t want to create work for data scientists to select data before uploading it. This is because it
+      is a complex task to accurately interpret the different versions of extents.
+    </p>
+
+    <p class="govuk-body">
+      We could also have found another way to display only one version, but this would have been a lot of work that
+      would have to be done again to show the latest version in future.
+    </p>
+
+    <h3 class="govuk-heading-s">
+      Solution
+    </h3>
+
+    <p class="govuk-body">
+      It was decided that showing one version of an extent was important to assess the value of the tool and should be
+      prioritised over other possible iterations.
+    </p>
+
+    <p class="govuk-body">
+      For extents, changes can be referred to as “applications”. We look for the entries with an empty "update application"
+      and filter out changes which are "deletions" or "unchanged" to find the most recent one.
+    </p>
+
+    <p class="govuk-body">
+      For entries, we group by each type and select the most recent.
+    </p>
+
+    <p class="govuk-body">
+      The solution we have works for a sample of synthetic data in our tool, but we don’t currently understand a
+      versioning solution for real data in the full register.
+    </p>
+
+    {{ govukPagination({
+      previous: {
+        labelText: "Refining admin tables",
+        href: "/design-history/refine-admin-tables"
+      },
+      next: {
+        labelText: "Routes and landing pages",
+        href: "/design-history/routes-landing-pages"
+      }
+    }) }}
+
+  </div>
+</div>
+
+{% endblock %}

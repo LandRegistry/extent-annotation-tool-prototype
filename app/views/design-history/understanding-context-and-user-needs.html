@@ -3,6 +3,7 @@
 {% set pageName="Understanding context and user needs " %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 
 {% block content %}
 
@@ -171,9 +172,16 @@
 
     <img src="/public/images/design-history/concepts-graphic.png" alt="Land Registry concepts">
 
-    <p class="govuk-body">
-      <a href="/design-history/first-pass-annotation-view" class="govuk-link">Next post</a>
-    </p>
+    {{ govukPagination({
+      previous: {
+        labelText: "Prototype set up",
+        href: "/design-history/prototype-set-up"
+      },
+      next: {
+        labelText: "First pass design for annotation view",
+        href: "/design-history/first-pass-annotation-view"
+      }
+    }) }}
 
   </div>
 </div>

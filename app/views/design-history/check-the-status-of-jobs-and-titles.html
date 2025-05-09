@@ -3,6 +3,7 @@
 {% set pageName="Check the status of jobs and titles" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 
 {% block content %}
 
@@ -146,8 +147,16 @@
 
     <img src="/public/images/design-history/v1-titles-status.png" alt="Titles status table with filters">
 
-    <p class="govuk-body">
-      <a href="/design-history/archive-a-job" class="govuk-link">Next post</a>
+    {{ govukPagination({
+      previous: {
+        labelText: "Upload and assign",
+        href: "/design-history/upload-and-assign"
+      },
+      next: {
+        labelText: "Archive a job",
+        href: "/design-history/archive-a-job"
+      }
+    }) }}
     </p>
 
 

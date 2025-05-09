@@ -3,6 +3,7 @@
 {% set pageName="Reassign a job " %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 
 {% block content %}
 
@@ -61,9 +62,16 @@
 
     <img src="/public/images/design-history/reassign-success.png" alt="Jobs status page with a success alert for reassigning a job">
 
-    <p class="govuk-body">
-      <a href="/design-history/mvp-jobs-table" class="govuk-link">Next post</a>
-    </p>
+    {{ govukPagination({
+      previous: {
+        labelText: "Archive a job",
+        href: "/design-history/archive-a-job"
+      },
+      next: {
+        labelText: "MVP jobs table",
+        href: "/design-history/mvp-jobs-table"
+      }
+    }) }}
 
   </div>
 </div>

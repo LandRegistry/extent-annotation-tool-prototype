@@ -3,6 +3,7 @@
 {% set pageName="MVP jobs table" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 
 {% block content %}
 
@@ -67,9 +68,17 @@
 
     <img src="/public/images/design-history/archived-jobs.png" alt="A table of archived jobs with a sort dropdown">
 
-    <p class="govuk-body">
-      <a href="/design-history/multiple-jobs" class="govuk-link">Next post</a>
-    </p>
+
+    {{ govukPagination({
+      previous: {
+        labelText: "Reassign a job",
+        href: "/design-history/reassign-a-job"
+      },
+      next: {
+        labelText: "View mnultiple jobs",
+        href: "/design-history/multiple-jobs"
+      }
+    }) }}
 
   </div>
 </div>

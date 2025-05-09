@@ -1,0 +1,276 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="Validating a job file" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      A job is a collection of titles for a user to annotate. It is created by uploading a list of the titles an admin
+      wants it to contain and assigning it to an annotator.
+    </p>
+
+    <p class="govuk-body">
+      We decided that admins would define the list of titles outside of the tool so we could focus on developing the
+      annotation experience inside the tool.
+    </p>
+
+    <p class="govuk-body">
+      We needed to define the validations for the file upload so an admin can understand how to prepare the file and how
+      to fix any errors that stop it from being uploaded.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Validations
+    </h2>
+
+    <p class="govuk-body">
+      We defined some validations the file must meet.
+    </p>
+
+    <h3 class="govuk-heading-s">
+      File format
+    </h3>
+
+    <p class="govuk-body">
+      The file must be a spreadsheet in a csv format. This is a common format with admins using Excel.
+    </p>
+
+    <h3 class="govuk-heading-s">
+      Layout
+    </h3>
+
+    <p class="govuk-body">
+      The titles must be:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        in one column
+      </li>
+      <li>
+        with no header
+      </li>
+      <li>
+        starting in cell A1
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      This is so the jobs are consistent, and the tool knows how to read them in a simple way.
+    </p>
+
+    <h3 class="govuk-heading-s">
+      File size
+    </h3>
+
+    <p class="govuk-body">
+      The file must be up to 1mb. This reduces the risk of uploading an unsuitable file or overloading the tool.
+    </p>
+
+    <p class="govuk-body">
+      This does not restrict the size of the job in terms of how many titles it contains. A 1mb spreadsheet could
+      contain thousands of title IDs. Admins may need to do this in different ways and will decide outside of the tool
+      how give annotators the right amount of work.
+    </p>
+
+    <h3 class="govuk-heading-s">
+      Titles format
+    </h3>
+
+    <p class="govuk-body">
+      The file should not contain anything other than title IDs.
+    </p>
+
+    <p class="govuk-body">
+      To make sure that the titles IDs are valid, we use a regular expression (regex) which is being used in other live
+      services. It checks that the ID is either:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        up to 3 letters (uppercase or lowercase), followed by a non-zero number (1-9), followed by up to 5 more numbers
+        (0-9)
+      </li>
+      <li>
+        1 to 3 letters (uppercase or lowercase), followed by a non-zero number (1-9), followed by up to 3 more numbers
+        (0-9), ending with either 'z' or 'Z
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      Updated page content
+    </h2>
+
+    <p class="govuk-body">
+      We updated the page content for the file upload to make it clear how the job should be prepared. This should
+      reduce the risk of errors happening and helps to meet WCAG accessibility requirements to helps users avoid errors
+      before needing to fix them.
+    </p>
+
+    <p class="govuk-body">
+      We added:
+    </p>
+
+    <div class="govuk-inset-text">
+      <p class="govuk-body">
+        Upload a CSV file with a list of title IDs. The titles must be in one column starting with cell A1.
+      </p>
+
+      <p class="govuk-body">
+        Title IDs must be either:
+      </p>
+
+      <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+        <li>
+          up to 3 letters followed by up to 6 numbers
+        </li>
+        <li>
+          up to 3 letters followed by 4 numbers and the letter ‘z’
+        </li>
+      </ul>
+
+      <p class="govuk-body">
+        For example, AV59722 or AV123Z.
+      </p>
+    </div>
+
+    <h2 class="govuk-heading-m">
+      Error messages
+    </h2>
+
+    <p class="govuk-body">
+      We defined error messages that help the user to fix a mistake.
+    </p>
+
+    <h3 class="govuk-heading-s">
+      File format
+    </h3>
+
+    <p class="govuk-body">
+      “The selected file must be a CSV”
+    </p>
+
+    <h3 class="govuk-heading-s">
+      Incorrect layout
+    </h3>
+
+    <p class="govuk-body">
+      “The file must only contain title IDs in column A”
+    </p>
+
+    <h3 class="govuk-heading-s">
+      File size
+    </h3>
+
+    <p class="govuk-body">
+      “The CSV must be smaller than 1MB”
+    </p>
+
+    <h3 class="govuk-heading-s">
+      Incorrect title ID format
+    </h3>
+
+    <p class="govuk-body">
+      “The file must only contain title IDs in a valid format”
+    </p>
+
+    <h3 class="govuk-heading-s">
+      Select continue without uploading
+    </h3>
+
+    <p class="govuk-body">
+      “Select a job”
+    </p>
+
+    <h3 class="govuk-heading-s">
+      Empty file
+    </h3>
+
+    <p class="govuk-body">
+      “The selected file is empty or values are missing”
+    </p>
+
+    <h3 class="govuk-heading-s">
+      Undefined error
+    </h3>
+
+    <p class="govuk-body">
+      “The selected file could not be uploaded – try again”
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Wireframes
+    </h2>
+
+    <h3 class="govuk-heading-s">
+      Updated page content
+    </h3>
+
+    <img src="/public/images/design-history/upload_file_content.png"
+      alt="Upload a job file page with validation rules explained">
+
+    <h3 class="govuk-heading-s">
+      File format error
+    </h3>
+
+    <img src="/public/images/design-history/job_format_error.png" alt="Upload a job error message for the file format">
+
+    <h3 class="govuk-heading-s">
+      File layout error
+    </h3>
+
+    <img src="/public/images/design-history/job_layout_error.png" alt="Upload a job error message for the file layout">
+
+    <h3 class="govuk-heading-s">
+      File size error
+    </h3>
+
+    <img src="/public/images/design-history/job_file_size_error.png" alt="Upload a job error message for the file size">
+
+    <h3 class="govuk-heading-s">
+    Title ID format error
+    </h3>
+
+    <img src="/public/images/design-history/job_title_id_format_error.png"
+      alt="Upload a job error message for the title ID format">
+
+    <h3 class="govuk-heading-s">
+      No file error
+    </h3>
+
+    <img src="/public/images/design-history/job_no_file_error.png" alt="Upload a job error message for no file">
+
+    <h3 class="govuk-heading-s">
+      Empty file error
+    </h3>
+
+    <img src="/public/images/design-history/job_empty_error.png" alt="Upload a job error message for empty file">
+
+    <h3 class="govuk-heading-s">
+      Undefined error
+    </h3>
+
+    <img src="/public/images/design-history/job_general_error.png" alt="Upload a job error message for general fail">
+
+    {% from "govuk/components/pagination/macro.njk" import govukPagination %}
+    {{ govukPagination({
+    previous: {
+    labelText: "Redirect an annotator if their job is archived or reassigned",
+    href: "/design-history/redirect-archived-reassigned"
+    }
+    }) }}
+
+
+  </div>
+</div>
+
+{% endblock %}

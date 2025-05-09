@@ -3,6 +3,7 @@
 {% set pageName="Refining admin tables" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 
 {% block content %}
 
@@ -118,9 +119,16 @@
 
     <img src="/public/images/design-history/refined-admin-archived-400-zoom.png" alt="Admin archived table zoomed in to the statrus tags">
 
-    <p class="govuk-body">
-      <a href="/design-history" class="govuk-link">Next post</a>
-    </p>
+    {{ govukPagination({
+      previous: {
+        labelText: "Exploring adding the property description",
+        href: "/design-history/exploring-adding-property-description"
+      }, 
+      next: {
+        labelText: "Showing the latest version of extents and entries",
+        href: "/design-history/showing-latest-versions"
+      }
+    }) }}
 
   </div>
 </div>

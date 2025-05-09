@@ -3,6 +3,7 @@
 {% set pageName="Prototype set up" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 
 {% block content %}
 
@@ -62,9 +63,12 @@
 
     <img src="/public/images/design-history/hmlr-page-template.png" alt="HMLR page template">
 
-    <p class="govuk-body">
-      <a href="/design-history/understanding-context-and-user-needs" class="govuk-link">Next post</a>
-    </p>
+    {{ govukPagination({
+    next: {
+    labelText: "Understanding context and user needs",
+    href: "/design-history/understanding-context-and-user-needs"
+    }
+    }) }}
 
   </div>
 </div>

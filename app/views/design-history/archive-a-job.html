@@ -3,6 +3,7 @@
 {% set pageName="Archive a job" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 
 {% block content %}
 
@@ -54,6 +55,17 @@
     <p class="govuk-body">
       <a href="/design-history/reassign-a-job" class="govuk-link">Next post</a>
     </p>
+
+    {{ govukPagination({
+      previous: {
+        labelText: "Check the status of jobs and titles",
+        href: "/design-history/check-the-status-of-jobs-and-titles"
+      },
+      next: {
+        labelText: "Reassign a job",
+        href: "/design-history/reassign-a-job"
+      }
+    }) }}
 
   </div>
 </div>
