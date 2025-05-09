@@ -3,6 +3,7 @@
 {% set pageName="Refining the annotation flow" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 
 {% block content %}
 
@@ -199,9 +200,17 @@
     <img src="/public/images/design-history/v2-title-success.png"
       alt="Task list page for your jobs with a success alert that a title has been submitted">
 
-    <p class="govuk-body">
-      <a href="/design-history" class="govuk-link">Next post</a>
-    </p>
+      {{ govukPagination({
+        previous: {
+          labelText: "Refining the annotation view",
+          href: "/design-history/refining-annotation-view"
+        },
+        next: {
+          labelText: "OS maps and geospatial extents UI",
+          href: "/design-history/os-maps-and-geospatial-extents-ui"
+        }
+      }) }}
+  
 
   </div>
 </div>
