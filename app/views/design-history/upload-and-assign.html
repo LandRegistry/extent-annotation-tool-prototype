@@ -3,6 +3,7 @@
 {% set pageName="Upload and assign a job" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 
 {% block content %}
 
@@ -79,9 +80,16 @@
 
     <img src="/public/images/design-history/assign-success.png" alt="Admin landing page with a success alert for assigning a job">
 
-    <p class="govuk-body">
-      <a href="/design-history/check-the-status-of-jobs-and-titles" class="govuk-link">Next post</a>
-    </p>
+    {{ govukPagination({
+      previous: {
+        labelText: "First pass design for annotation flow",
+        href: "/design-history/first-pass-annotation-flow"
+      },
+      next: {
+        labelText: "Check the status of jobs and titles",
+        href: "/design-history/check-the-status-of-jobs-and-titles"
+      }
+    }) }}
 
   </div>
 </div>

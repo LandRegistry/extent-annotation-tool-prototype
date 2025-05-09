@@ -3,6 +3,7 @@
 {% set pageName="OS maps and geospatial extents UI" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 
 {% block content %}
 
@@ -121,11 +122,18 @@
       Screenshot
     </h2>
 
-    <img src="/public/images/design-history/geospatial.png" alt="Image of map with an extent using half page width next to entry text>
+    <img src="/public/images/design-history/geospatial.png" alt="Image of map with an extent using half page width next to entry text">
 
-    <p class="govuk-body">
-      <a href="/design-history/understanding-more-about-the-annotation-flow" class="govuk-link">Next post</a>
-    </p>
+    {{ govukPagination({
+      previous: {
+        labelText: "Refining the annotation flow",
+        href: "/design-history/refining-annotation-flow"
+      },
+      next: {
+        labelText: "Understandiong more about the annoation flow",
+        href: "/design-history/understanding-more-about-the-annotation-flow"
+      }
+    }) }}
 
   </div>
 </div>

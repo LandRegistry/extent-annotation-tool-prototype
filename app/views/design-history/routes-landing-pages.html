@@ -1,0 +1,377 @@
+{% extends "layouts/design-history-post.html" %}
+
+{% set pageName="Routes and landing pages" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      {{ pageName }}
+    </h1>
+
+    <p class="govuk-body">
+      We use routes to determine which pages users land on when they navigate to different URLs.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      User groups and permissions
+    </h2>
+
+    <p class="govuk-body">
+      In our tool, we have two user groups:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        administrators, or admin
+      </li>
+      <li>
+        annotators
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      At this stage, we expect them all to be internal staff members. We are using Entra ID to authenticate users with
+      an HMLR email address. We plan to associate user roles to their accounts so we know which parts of the tool they
+      should have access to.
+    </p>
+
+    <p class="govuk-body">
+      There are four permissions scenarios:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        admin role
+      </li>
+      <li>
+        annotator role
+      </li>
+      <li>
+        admin and annotator roles
+      </li>
+      <li>
+        neither role
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      Initially we are using different URLs to access either an admin or annotator landing page. However, we want to use
+      a common URL to access the tool, to make sure users always start in the right place and can’t access pages they don’t
+      have permission for.
+    </p>
+
+    <p class="govuk-body">
+      In future we don’t expect users to have both roles, but some have been given them for testing.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Deep links
+    </h2>
+
+    <p class="govuk-body">
+      Deep links are URLs for specific pages that sit under the homepage or main navigation.
+    </p>
+
+    <p class="govuk-body">
+      When accessing the tool, we want users to start from an appropriate landing page and not part way through a
+      journey. This is to make the service more robust and reduce errors from missing part of a journey or using the
+      wrong link. We have designed the tool so that users can exit and then resume an in-progress task from the landing
+      page.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Routes
+    </h2>
+
+    <p class="govuk-body">
+      There are three routes into the tool:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        the main URL
+      </li>
+      <li>
+        an admin deep link, such as <a
+          href="https://extent-annotation-tool-dd976d9efdb9.herokuapp.com/admin/assign-titles/upload-csv"
+          class="govuk-link">https://extent-annotation-tool-dd976d9efdb9.herokuapp.com/admin/assign-titles/upload-csv</a>
+      </li>
+      <li>
+        an annotator deep link, such as <a
+          href="https://extent-annotation-tool-dd976d9efdb9.herokuapp.com/annotators/v2/extent-1-os-map"
+          class="govuk-link">https://extent-annotation-tool-dd976d9efdb9.herokuapp.com/annotators/v2/extent-1-os-map</a>
+      </li>
+    </ul>
+
+    <h3 class="govuk-heading-s">
+      Main URL route
+    </h3>
+
+    <p class="govuk-body">
+      From a common URL to access the tool, if a user has:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        the admin role only, they are redirected to the admin landing page
+      </li>
+      <li>
+        the annotator role only, they are redirected to the annotator landing page
+      </li>
+      <li>
+        both roles, they land on a ‘both roles’ page
+      </li>
+      <li>
+        neither role, they are redirected to a ‘no access’ page
+      </li>
+    </ul>
+
+    <h4 class="govuk-heading-s">
+      Main URL route diagram
+    </h4>
+
+    <img src="/public/images/design-history/main_URL_route.png"
+      alt="Diagram with landing pages for admin, annotator, both roles or no access">
+
+    <h3 class="govuk-heading-s">
+      Admin deep links routes
+    </h3>
+
+    <p class="govuk-body">
+      From any admin deep link, if a user has:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        the admin role only, they are redirected to the admin landing page
+      </li>
+      <li>
+        the annotator role only, they get a ‘no admin access’ page which includes a link to the annotator landing page
+      </li>
+      <li>
+        neither role, they get a ‘no access’ page
+      </li>
+      <li>
+        both roles, they are redirected to a ‘both roles’ page
+      </li>
+    </ul>
+
+    <h4 class="govuk-heading-s">
+      Admin deep link route diagram
+    </h4>
+
+    <img src="/public/images/design-history/admin_deep_link_route.png"
+      alt="Diagram with landing pages for admin, no admin acesss, both roles or no access">
+
+    <h3 class="govuk-heading-s">
+      Annotator deep links routes
+    </h3>
+
+    <p class="govuk-body">
+      From any annotator deep link, if a user has:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        the admin role only, they are redirected to a ‘no annotator access’ page
+      </li>
+      <li>
+        the annotator role only, they are redirected to the annotator landing page
+      </li>
+      <li>
+        neither role, they get a ‘no access’ page
+      </li>
+      <li>
+        both roles, they are redirected to a ‘both roles’ page
+      </li>
+    </ul>
+
+    <h4 class="govuk-heading-s">
+      Annotator deep link route diagram
+    </h4>
+
+    <img src="/public/images/design-history/annotator_deep_link_route.png"
+      alt="Diagram with landing pages for annotator, no annotator acesss, both roles or no access">
+
+    <h2 class="govuk-heading-m">
+      Landing pages
+    </h2>
+
+    <h3 class="govuk-heading-s">
+      Admin landing page
+    </h3>
+
+    <p class="govuk-body">
+      The admin landing page includes two main tasks we have built for an MVP:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        upload and assign a job
+      </li>
+      <li>
+        check the status of jobs and titles
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      Each task has a heading, some content with detail about what it includes and a call-to-action button.
+    </p>
+
+    <h4 class="govuk-heading-s">
+      Screenshot
+    </h4>
+
+    <img src="/public/images/design-history/admin_landing.png" alt="Admin landing page">
+
+    <h3 class="govuk-heading-s">
+      Annotator landing page
+    </h3>
+
+    <p class="govuk-body">
+      The annotator landing page is called ‘Your jobs’. It includes a caption to the h1 which displays their username
+      and task lists for the titles in any jobs assigned to them.
+    </p>
+
+    <h4 class="govuk-heading-s">
+      Screenshot
+    </h4>
+
+    <img src="/public/images/design-history/annotator_landing.png" alt="Annotator landing page">
+
+    <h3 class="govuk-heading-s">
+      Both roles landing page
+    </h3>
+
+    <p class="govuk-body">
+      The ‘both roles’ landing page will mainly be needed when testing. It uses an interstitial page based on <a
+      href="https://github.com/alphagov/govuk-design-system-backlog/issues/27"
+      class="govuk-link">interruption cards</a>
+    </p>
+
+    <p class="govuk-body">
+      It has:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        a panel in govuk blue, instead of the green used for success alerts 
+      </li>
+      <li>
+        inverse blue start buttons, so there is sufficient contrast with the panel 
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      The user can navigate to the landing page they need. 
+    </p>
+
+    <h4 class="govuk-heading-s">
+      Screenshot
+    </h4>
+
+    <img src="/public/images/design-history/both_roles_page.png" alt="Both roles page with links to admin and annotator landing pages">
+
+    <h3 class="govuk-heading-s">
+      No access landing pages
+    </h3>
+
+    <h4 class="govuk-heading-s">
+      No access page
+    </h4>
+
+    <p class="govuk-body">
+      The no access page is for users who don’t have either admin or annotator roles. 
+    </p>
+
+    <p class="govuk-body">
+      It includes email addresses to contact administrators, so the user does not get a dead end and can understand how to get access if they need it. 
+    </p>
+
+    <h5 class="govuk-heading-s">
+      Screenshot
+    </h5>
+
+    <img src="/public/images/design-history/no_access_page.png" alt="No access page with details how to get access from an admin">
+
+    <h4 class="govuk-heading-s">
+      No annotator access page
+    </h4>
+
+    <p class="govuk-body">
+      The no annotator access page is used if someone with only an admin role tries to access any annotator deep link. 
+    </p>
+
+    <p class="govuk-body">
+      It helps the user to: 
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        understand they don’t have access to part of the tool  
+      </li>
+      <li>
+        understand how to get access if they need it  
+      </li>
+      <li>
+        navigate to the admin landing page they do have access to 
+      </li>
+    </ul>
+
+    <h5 class="govuk-heading-s">
+      Screenshot
+    </h5>
+
+    <img src="/public/images/design-history/no_annotator_access.png" alt="No annotator access page with details how to get access from an admin">
+
+    <h4 class="govuk-heading-s">
+      No admin access page
+    </h4>
+
+    <p class="govuk-body">
+      The no admin access page is used if someone with only an annotator role tries to access any admin deep link.
+    </p>
+
+    <p class="govuk-body">
+It helps the user to:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>
+        understand they don’t have access to part of the tool  
+      </li>
+      <li>
+        understand how to get access if they need it  
+      </li>
+      <li>
+        navigate to the annotator Your jobs page they do have access to 
+      </li>
+    </ul>
+
+    <h5 class="govuk-heading-s">
+      Screenshot
+    </h5>
+
+    <img src="/public/images/design-history/no_admin_access.png" alt="No admin access page with details how to get access from an admin">
+
+    {{ govukPagination({
+      previous: {
+        labelText: "Showing the latest version of extents and entries",
+        href: "/design-history/showing-latest-versions"
+      },
+      next: {
+        labelText: "Redirect an annotator if their job is archived or reassigned",
+        href: "/design-history/redirect-archived-reassigned"
+      }
+    }) }}
+
+  </div>
+</div>
+
+{% endblock %}

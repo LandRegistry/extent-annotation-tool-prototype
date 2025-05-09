@@ -3,6 +3,7 @@
 {% set pageName="Template " %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 
 {% block content %}
 
@@ -32,9 +33,16 @@
 
     <img src="/public/images/design-history/hmlr-page-template.png" alt="HMLR page template">
 
-    <p class="govuk-body">
-      <a href="/design-history" class="govuk-link">Next post</a>
-    </p>
+    {{ govukPagination({
+      previous: {
+        labelText: "Title",
+        href: "/design-history"
+      },
+      next: {
+        labelText: "Title",
+        href: "/design-history"
+      }
+    }) }}
 
   </div>
 </div>

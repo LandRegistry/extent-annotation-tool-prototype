@@ -3,6 +3,7 @@
 {% set pageName="First pass annotation view" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 
 {% block content %}
 
@@ -110,9 +111,16 @@
 
     <img src="/public/images/design-history/v1-entry1-extent1.png" alt="Annotation view for the first entry">
 
-    <p class="govuk-body">
-      <a href="/design-history/first-pass-annotation-flow" class="govuk-link">Next post</a>
-    </p>
+    {{ govukPagination({
+      previous: {
+        labelText: "Understanding context and user needs",
+        href: "/design-history//understanding-context-and-user-needs"
+      },
+      next: {
+        labelText: "First pass design for annotation flow",
+        href: "/design-history/first-pass-annotation-flow"
+      }
+    }) }}
 
   </div>
 </div>
