@@ -146,8 +146,8 @@
     left: auto;
 }
 
-.maintain-llc-map,
-.maintain-llc-map .ol-viewport {
+.annotation-map,
+.annotation-map .ol-viewport {
     min-height: 630px;
 }
 

@@ -9,6 +9,7 @@
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
+
 {% block content %}
 
 <h1 class="govuk-heading-l">AV57267</h2>
@@ -22,6 +23,7 @@
                 <span id="counter">1 of 14</span>
             </h2>
             <div>
+                <!-- custom zoom controls ≈
                 <div class="zoom-controls">
                     <button id="zoom-in" class="zoom ol-zoom-in zoom-in" type="button" title="Zoom in">+<span
                             class="govuk-visually-hidden">Zoom in</span></button>
@@ -29,39 +31,11 @@
                         <span class="govuk-visually-hidden">Zoom out</span>
                     </button>
                 </div>
+                        <!-- MAP  -->
             </div>
             <div id="map" class="annotation-map" tabindex="0" aria-label="Image showing search extent">
-                <noscript>
-                    <div id="nojs" class="nojs-content">
-                        <div id="nojs-message" class="notification-summary">
-                            <p>
-                                You need to turn on JavaScript to use this service. Or, for assistance, please use the
-                                following link -
-                                <a id="“assistance-link”"
-                                    href="https://customerhelp.landregistry.gov.uk/local-land-charges">https://customerhelp.landregistry.gov.uk/local-land-charges</a>
-                            </p>
-                        </div>
-                    </div>
-                </noscript>
             </div>
-            <!--     <div class=" govuk-!-padding-top-2">
-      <div class="govuk-heading-s ">
-        Map key
-
-        <img class="key-image govuk-!-padding-left-3" src="/public/ol/images/information_available.png"
-          alt="Location available key" height="19" width="19">
-        <span class="key-text govuk-body-s">Location available</span>
-
-        <img class="key-image govuk-!-padding-left-3" src="/public/ol/images/information_not_available.png"
-          alt="Location not available key" height="19" width="19">
-        <span class="key-text govuk-body-s">Location not available</span>
-
-        <span class="govuk-body-s align-right">
-          Use of address and mapping data is subject to <a href="#" target="_blank">Ordnance Survey terms and
-            conditions</a>
-        </span>
-      </div>
-    </div> -->
+          
         </div>
 
         <!--  NAVIGATION  -->
@@ -161,110 +135,91 @@
     <!-- Map config -->
     <script src="/public/map/map_config.js"></script>
 
-    <script type="text/javascript">
-        var termsLink = "";
-        var mastermap_api_key = "{{ data.API_KEY }}";
-        var map_base_layer_view_name = "m0100";
-        var wfs_server_url = "{{ data.WFS_URL }}";
-        var wmts_server_url = "{{ data.WMTS_URL }}";
-
-        MAP_CONFIG.setBaseLayer(MAP_CONFIG.base_layer_zindex, MAP_CONFIG.mastermapResolutions, MAP_CONFIG.projection, termsLink, false);
-    </script>
-
-    <!-- OpenLayers Map (Note: must be after the key config) -->
-    <script src="/public/map/map.js"></script>
-    <script src="/public/map/save_geometries.js"></script>
-
-    <!-- Custom actions for this page -->
-    <script src="/public/map/keyboard_panning.js"></script>
-    <script src="/public/map/custom_controls.js"></script>
-
-    <!--   <script src="/public/map/custom_controls.js"></script> -->
-
+    <script src="https://cdn.jsdelivr.net/npm/ol@v10.5.0/dist/ol.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.15.0/proj4.js"></script>
     <script>
+
+        const apiKey = 'qZywYzmUQmZLI3uEimKtf1EGxWOHbTSj';
+
+        const parser = new ol.format.WMTSCapabilities();
+        let map;
+
+        let vectorLayer;
+
+        // Setup the EPSG:27700 (British National Grid) projection.
+        proj4.defs("EPSG:27700", "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs");
+        ol.proj.proj4.register(proj4);
+
+        fetch('https://api.os.uk/maps/raster/v1/wmts?key=' + apiKey + '&service=WMTS&request=GetCapabilities&version=2.0.0')
+            .then(response => response.text())
+            .then(text => {
+                const result = parser.read(text);
+                const options = ol.source.WMTS.optionsFromCapabilities(result, {
+                    layer: 'Outdoor_27700',
+                    matrixSet: 'EPSG:27700',
+                });
+
+                const source = new ol.source.WMTS(options);
+                const layer = new ol.layer.Tile({
+                    source: source,
+                    opacity: 1 // Set base map opacity between 0 and 1
+                });
+
+                // Create vector source and layer for extents
+                vectorSource = new ol.source.Vector();
+                vectorLayer = new ol.layer.Vector({
+                    source: vectorSource,
+                    style: new ol.style.Style({
+                        fill: new ol.style.Fill({
+                            color: 'rgba(255, 0, 0, 0.3)'
+                        }),
+                        stroke: new ol.style.Stroke({
+                            color: 'red',
+                            width: 2
+                        })
+                    })
+                });
+
+                // Initialize the map object.
+                map = new ol.Map({
+                    layers: [layer, vectorLayer],
+                    target: 'map',
+                    view: new ol.View({
+                        projection: 'EPSG:27700',
+                        extent: [-238375.0, 0.0, 900000.0, 1376256.0],
+                        resolutions: options.tileGrid.getResolutions(),
+                        minZoom: 0,
+                        maxZoom: 14,
+                        center: [337297, 503695],
+                        zoom: 7
+                    })
+                });
+
+                // Initialize extent functionality after map is created
+                initializeExtentCycling();
+            })
+            .catch(error => {
+                console.error('Error loading map:', error);
+            });
+
         // Initialize the extent counter
         let currentPage = 1;
         const totalPages = 14;
+        let count = 0;
+        let style_count = 3;
         const counterElement = document.getElementById('counter');
         const nextButton = document.getElementById('nextBtn');
         const prevButton = document.getElementById('prevBtn');
-        // Update extent counter function
-        function updateCounter() {
-            counterElement.textContent = currentPage + " of " + totalPages;
-        }
-        // Next button click handler
-        nextButton.addEventListener('click', function () {
-            currentPage = (currentPage % totalPages) + 1; // Loop back to 1 after reaching 14
-            updateCounter();
-        });
-        // Previous button click handler
-        prevButton.addEventListener('click', function () {
-            currentPage = currentPage - 1;
-            if (currentPage < 1) {
-                currentPage = totalPages; // Loop back to 14 if going below 1
+
+        function initializeExtentCycling() {
+            // Update extent counter function
+            function updateCounter() {
+                counterElement.textContent = currentPage + " of " + totalPages;
             }
-            updateCounter();
-        });
-    </script>
 
-    <script type="text/javascript">
-        // Add open layers map controls: this is now only the scale line
-        // all other controls are now GDS components
-        var controls;
-        var center = [];
-
-        let count = 0;
-        let style_count = 3;
-
-        MAP_HELPERS.init_controls(map, controls);
-
-        // use this to prepopulate with an extent
-        // or in this case to set the initial map bounds
-        $(function () {
-            load_previous_data({
-                "features": [
-                    {
-                        "geometry":
-                        {
-                            //set the coordinates to center the map
-                            "coordinates": [[[532042.65, 181758.8]]],
-                            "type": "Polygon"
-                        },
-                        "properties": { "id": 1000 },
-                        "type": "Feature"
-                    }],
-                "type": "FeatureCollection"
-            });
-        });
-
-
-        ///////////////////////////////////////////////
-        // initialise 
-        ///////////////////////////////////////////////
-        $(document).ready(function () {
-
-            // hack the map height
-            let page_height = Math.floor($(window).height());
-            $("#map").css("height", page_height - 70);
-            $("#container").css("height", page_height - 120);
-            $('.scroll').css('height', page_height - 70);
-
-            // fade the tiles 
-            MAP_CONFIG.base_layer.setOpacity(0.6);
-
-            document.getElementById('prevBtn').onclick = function () {
-                count--;
-                style_count--;
-                if (count < 0) {
-                    count = extents.length - 1;
-                }
-                if (style_count < 0) {
-                    style_count = 12;
-                }
-                MAP_CONTROLS.toggle_draw_layer_style(style_count);
-                showExtent();
-            };
-            document.getElementById('nextBtn').onclick = function () {
+            // Next button click handler
+            nextButton.addEventListener('click', function () {
+                currentPage = (currentPage % totalPages) + 1;
                 count++;
                 style_count++;
                 if (count >= extents.length) {
@@ -273,18 +228,474 @@
                 if (style_count > 12) {
                     style_count = 0;
                 }
-                MAP_CONTROLS.toggle_draw_layer_style(style_count);
+                updateCounter();
                 showExtent();
-            };
+            });
 
-            // init
+            // Previous button click handler
+            prevButton.addEventListener('click', function () {
+                currentPage = currentPage - 1;
+                if (currentPage < 1) {
+                    currentPage = totalPages;
+                }
+                count--;
+                style_count--;
+                if (count < 0) {
+                    count = extents.length - 1;
+                }
+                if (style_count < 0) {
+                    style_count = 12;
+                }
+                updateCounter();
+                showExtent();
+            });
+
+            // Initialize with first extent
+            console.log('Initializing with first extent');
             showExtent();
+        }
+
+        let hoverEventKey = null;
+let hoveredFeature = null;
+let originalStyle = null;
+
+// Define different style configurations
+const styleConfigurations = [
+    {
+        // Style 0: Classic red with transparency
+        fill: 'rgba(255, 0, 0, 0.3)',
+        stroke: '#ff0000',
+        strokeWidth: 2,
+        name: 'Classic Red'
+    },
+    {
+        // Style 1: Blue with red border (like your image 2)
+        fill: 'rgba(0, 100, 200, 0.4)',
+        stroke: '#cc0000',
+        strokeWidth: 3,
+        name: 'Blue Fill Red Border'
+    },
+    {
+        // Style 2: Green with diagonal hatching
+        fill: 'rgba(0, 150, 0, 0.15)',
+        stroke: '#006600',
+        strokeWidth: 2,
+        pattern: 'diagonal',
+        patternColor: '#006600',
+        name: 'Green Diagonal Hatch'
+    },
+    {
+        // Style 3: Purple with solid fill
+        fill: 'rgba(128, 0, 128, 0.5)',
+        stroke: '#800080',
+        strokeWidth: 2,
+        name: 'Purple Solid'
+    },
+    {
+        // Style 4: Orange with cross-hatch
+        fill: 'rgba(255, 165, 0, 0.15)',
+        stroke: '#ff6600',
+        strokeWidth: 2,
+        pattern: 'crosshatch',
+        patternColor: '#ff6600',
+        name: 'Orange Cross-hatch'
+    },
+    {
+        // Style 5: Pink with dots pattern
+        fill: 'rgba(255, 192, 203, 0.2)',
+        stroke: '#ff1493',
+        strokeWidth: 2,
+        pattern: 'dots',
+        patternColor: '#ff1493',
+        name: 'Pink Dots'
+    },
+    {
+        // Style 6: Teal with vertical lines
+        fill: 'rgba(0, 128, 128, 0.15)',
+        stroke: '#008080',
+        strokeWidth: 2,
+        pattern: 'vertical',
+        patternColor: '#008080',
+        name: 'Teal Vertical'
+    },
+    {
+        // Style 7: Navy with horizontal lines
+        fill: 'rgba(0, 0, 128, 0.2)',
+        stroke: '#000080',
+        strokeWidth: 3,
+        pattern: 'horizontal',
+        patternColor: '#000080',
+        name: 'Navy Horizontal'
+    },
+    {
+        // Style 8: Yellow with black border
+        fill: 'rgba(255, 255, 0, 0.4)',
+        stroke: '#000000',
+        strokeWidth: 2,
+        name: 'Yellow Black Border'
+    },
+    {
+        // Style 9: Cyan with reverse diagonal hatching
+        fill: 'rgba(0, 255, 255, 0.15)',
+        stroke: '#ff00ff',
+        strokeWidth: 2,
+        pattern: 'diagonal_reverse',
+        patternColor: '#00aaaa',
+        name: 'Cyan Reverse Diagonal'
+    },
+    {
+        // Style 10: Light green with dark green thick border
+        fill: 'rgba(144, 238, 144, 0.6)',
+        stroke: '#228b22',
+        strokeWidth: 4,
+        name: 'Light Green Thick Border'
+    },
+    {
+        // Style 11: Brown with grid pattern
+        fill: 'rgba(139, 69, 19, 0.15)',
+        stroke: '#8b4513',
+        strokeWidth: 2,
+        pattern: 'grid',
+        patternColor: '#8b4513',
+        name: 'Brown Grid'
+    },
+    {
+        // Style 12: Indigo with dense diagonal hatching
+        fill: 'rgba(75, 0, 130, 0.15)',
+        stroke: '#4b0082',
+        strokeWidth: 2,
+        pattern: 'dense_diagonal',
+        patternColor: '#4b0082',
+        name: 'Indigo Dense Hatch'
+    }
+];
+
+// Function to create hatching pattern as canvas pattern for OpenLayers
+function createHatchingPattern(patternType, color, backgroundColor) {
+    const canvas = document.createElement('canvas');
+    const size = 20;
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    
+    // Fill with background color (semi-transparent)
+    ctx.fillStyle = backgroundColor;
+    ctx.fillRect(0, 0, size, size);
+    
+    // Draw pattern
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    
+    switch(patternType) {
+        case 'diagonal':
+            // Diagonal lines from bottom-left to top-right
+            for(let i = -size; i <= size * 2; i += 6) {
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i + size, size);
+            }
+            break;
+            
+        case 'diagonal_reverse':
+            // Diagonal lines from top-left to bottom-right
+            for(let i = -size; i <= size * 2; i += 6) {
+                ctx.moveTo(i, size);
+                ctx.lineTo(i + size, 0);
+            }
+            break;
+            
+        case 'crosshatch':
+            // Both diagonal directions
+            for(let i = -size; i <= size * 2; i += 8) {
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i + size, size);
+                ctx.moveTo(i, size);
+                ctx.lineTo(i + size, 0);
+            }
+            break;
+            
+        case 'vertical':
+            // Vertical lines
+            for(let i = 0; i < size; i += 5) {
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, size);
+            }
+            break;
+            
+        case 'horizontal':
+            // Horizontal lines
+            for(let i = 0; i < size; i += 5) {
+                ctx.moveTo(0, i);
+                ctx.lineTo(size, i);
+            }
+            break;
+            
+        case 'grid':
+            // Grid pattern
+            for(let i = 0; i < size; i += 6) {
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, size);
+                ctx.moveTo(0, i);
+                ctx.lineTo(size, i);
+            }
+            break;
+            
+        case 'dense_diagonal':
+            // Dense diagonal hatching
+            for(let i = -size; i <= size * 2; i += 4) {
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i + size, size);
+            }
+            break;
+            
+        case 'dots':
+            ctx.stroke(); // Clear any pending paths
+            ctx.fillStyle = color;
+            for(let x = 3; x < size; x += 6) {
+                for(let y = 3; y < size; y += 6) {
+                    ctx.beginPath();
+                    ctx.arc(x, y, 1.5, 0, 2 * Math.PI);
+                    ctx.fill();
+                }
+            }
+            return canvas; // Return early for dots
+    }
+    
+    ctx.stroke();
+    return canvas;
+}
+
+// Function to create style with optional pattern
+function createStyleWithPattern(styleConfig) {
+    let fillStyle;
+    
+    if (styleConfig.pattern) {
+        // Create pattern using canvas
+        const patternCanvas = createHatchingPattern(
+            styleConfig.pattern, 
+            styleConfig.patternColor || styleConfig.stroke,
+            styleConfig.fill
+        );
+        
+        // Create pattern context for OpenLayers
+        const patternCtx = document.createElement('canvas').getContext('2d');
+        const pattern = patternCtx.createPattern(patternCanvas, 'repeat');
+        
+        // For OpenLayers, we need to use a custom renderer approach
+        // We'll create a style function that draws the pattern
+        return function(feature, resolution) {
+            return new ol.style.Style({
+                fill: new ol.style.Fill({
+                    color: function(context) {
+                        const canvas = context.canvas;
+                        const ctx = canvas.getContext('2d');
+                        const pattern = ctx.createPattern(patternCanvas, 'repeat');
+                        return pattern;
+                    }
+                }),
+                stroke: new ol.style.Stroke({
+                    color: styleConfig.stroke,
+                    width: styleConfig.strokeWidth
+                })
+            });
+        };
+    } else {
+        // Simple solid fill
+        return new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: styleConfig.fill
+            }),
+            stroke: new ol.style.Stroke({
+                color: styleConfig.stroke,
+                width: styleConfig.strokeWidth
+            })
+        });
+    }
+}
+
+// Create a custom style function for patterns that works with OpenLayers
+function createPatternStyleFunction(styleConfig) {
+    if (!styleConfig.pattern) {
+        return new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: styleConfig.fill
+            }),
+            stroke: new ol.style.Stroke({
+                color: styleConfig.stroke,
+                width: styleConfig.strokeWidth
+            })
+        });
+    }
+
+    // For patterns, create a style function
+    return function(feature, resolution) {
+        const patternCanvas = createHatchingPattern(
+            styleConfig.pattern,
+            styleConfig.patternColor || styleConfig.stroke,
+            styleConfig.fill
+        );
+        
+        return new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: function(pixelContext) {
+                    const context = pixelContext.context;
+                    const pattern = context.createPattern(patternCanvas, 'repeat');
+                    return pattern || styleConfig.fill;
+                }
+            }),
+            stroke: new ol.style.Stroke({
+                color: styleConfig.stroke,
+                width: styleConfig.strokeWidth
+            }),
+            // Custom renderer for the pattern
+            renderer: function(coordinates, state) {
+                const context = state.context;
+                const pixelRatio = state.pixelRatio;
+                
+                // Save the current context
+                context.save();
+                
+                // Create the pattern
+                const pattern = context.createPattern(patternCanvas, 'repeat');
+                
+                // Draw the geometry with pattern
+                context.beginPath();
+                
+                // Handle different geometry types
+                if (coordinates[0] && Array.isArray(coordinates[0][0])) {
+                    // Polygon
+                    coordinates.forEach((ring) => {
+                        ring.forEach((coord, index) => {
+                            if (index === 0) {
+                                context.moveTo(coord[0], coord[1]);
+                            } else {
+                                context.lineTo(coord[0], coord[1]);
+                            }
+                        });
+                        context.closePath();
+                    });
+                }
+                
+                // Fill with pattern
+                if (pattern) {
+                    context.fillStyle = pattern;
+                    context.fill();
+                }
+                
+                // Stroke the outline
+                context.strokeStyle = styleConfig.stroke;
+                context.lineWidth = styleConfig.strokeWidth;
+                context.stroke();
+                
+                // Restore context
+                context.restore();
+            }
+        });
+    };
+}
+
+// Enhanced showExtent function with working patterns and preserved hover style
+function showExtent() {
+    console.log('showExtent called, count:', count, 'extent:', extents[count], 'style_count:', style_count);
+
+    if (!vectorSource || !extents[count]) {
+        console.log('vectorSource or extent not available');
+        return;
+    }
+
+    // Clean up previous hover event listener
+    if (hoverEventKey) {
+        ol.Observable.unByKey(hoverEventKey);
+        hoverEventKey = null;
+    }
+
+    // Reset hover state
+    if (hoveredFeature) {
+        hoveredFeature.setStyle(originalStyle);
+        hoveredFeature = null;
+        originalStyle = null;
+    }
+
+    // Get current style configuration
+    const currentStyleConfig = styleConfigurations[style_count % styleConfigurations.length];
+    console.log('Using style:', currentStyleConfig.name, 'Index:', style_count % styleConfigurations.length);
+
+    // Create default style with current configuration
+    const defaultStyle = createPatternStyleFunction(currentStyleConfig);
+
+    // Create hover style (your original blue and yellow colors)
+    const hoverStyle = new ol.style.Style({
+        fill: new ol.style.Fill({
+            color: 'rgba(0, 48, 120, 0.8)' // GOVUK Link Hover Blue fill
+        }),
+        stroke: new ol.style.Stroke({
+            color: '#ffdd00', // GOVUK Focus Yellow border
+            width: 2
+        })
+    });
+
+    // Clear existing features
+    vectorSource.clear();
+
+    try {
+        // Load the current extent
+        const extent = extents[count];
+        const geojsonFormat = new ol.format.GeoJSON();
+
+        // Read features with explicit projection conversion
+        const features = geojsonFormat.readFeatures(extent, {
+            dataProjection: 'EPSG:27700',
+            featureProjection: 'EPSG:27700'
         });
 
-        function showExtent() {
-            MAP_CONFIG.draw_source.clear();
-            load_previous_data(extents[count]);
+        console.log('Features loaded:', features.length);
+
+        if (features.length > 0) {
+            // Set default style for all features
+            features.forEach(feature => {
+                feature.setStyle(defaultStyle);
+            });
+
+            vectorSource.addFeatures(features);
+
+            // Add hover event listener with your original colors
+            hoverEventKey = map.on('pointermove', function (evt) {
+                const pixel = map.getEventPixel(evt.originalEvent);
+                const feature = map.forEachFeatureAtPixel(pixel, function (feature) {
+                    return feature;
+                });
+
+                if (feature && feature !== hoveredFeature) {
+                    // Restore previous hovered feature's style
+                    if (hoveredFeature) {
+                        hoveredFeature.setStyle(defaultStyle);
+                    }
+
+                    // Apply hover style to new feature (blue and yellow)
+                    hoveredFeature = feature;
+                    originalStyle = feature.getStyle();
+                    feature.setStyle(hoverStyle);
+                } else if (!feature && hoveredFeature) {
+                    // No feature under cursor, restore default style
+                    hoveredFeature.setStyle(defaultStyle);
+                    hoveredFeature = null;
+                    originalStyle = null;
+                }
+            });
+
+            // Fit the view to the extent with padding
+            const geometry = features[0].getGeometry();
+            const extentBounds = geometry.getExtent();
+            console.log('Extent bounds:', extentBounds);
+
+            map.getView().fit(extentBounds, {
+                padding: [50, 50, 50, 50]
+            });
         }
+    } catch (error) {
+        console.error('Error loading extent:', error);
+    }
+}
 
 
         // Extents GeoJSON coordinates
@@ -530,5 +941,7 @@
 
         ]
 
+
     </script>
+
     {% endblock %}

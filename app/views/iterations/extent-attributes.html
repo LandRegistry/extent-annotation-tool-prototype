@@ -21,6 +21,16 @@
                 <span>Extent</span>
                 <span id="counter">1 of 14</span>
             </h2>
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Attributes
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    <p id="style-description" class="govuk-body">Blue border and blue fill</p>
+                  </dd>
+                </div>
+              </dl>
             <div>
                 <div class="zoom-controls">
                     <button id="zoom-in" class="zoom ol-zoom-in zoom-in" type="button" title="Zoom in">+<span
@@ -29,6 +39,7 @@
                         <span class="govuk-visually-hidden">Zoom out</span>
                     </button>
                 </div>
+
             </div>
             <div id="map" class="annotation-map" tabindex="0" aria-label="Image showing search extent">
                 <noscript>
@@ -237,6 +248,107 @@
             });
         });
 
+        function updateStyleInfo(styleCount) {
+            // Define attribute information for each style count
+            const styleInfo = {
+                0: { // DRAW | add
+                    borderColor: "blue",
+                    borderStyle: "dashed",
+                    fillColor: "blue",
+                    hasHatching: false
+                },
+                1: { // EDIT
+                    borderColor: "green",
+                    borderStyle: "solid",
+                    fillColor: "green",
+                    hasHatching: false
+                },
+                2: { // REMOVE | delete
+                    borderColor: "red",
+                    borderStyle: "solid",
+                    fillColor: "red",
+                    hasHatching: false
+                },
+                3: { // NONE
+                    borderColor: "blue",
+                    borderStyle: "solid",
+                    fillColor: "blue",
+                    hasHatching: false
+                },
+                4: { // HOLE
+                    borderColor: "blue",
+                    borderStyle: "dashed",
+                    fillColor: "blue",
+                    hasHatching: false
+                },
+                5: { // HOVER
+                    borderColor: "blue",
+                    borderStyle: "solid",
+                    fillColor: "blue",
+                    hasHatching: false
+                },
+                6: { // HIGHLIGHT
+                    borderColor: "blue",
+                    borderStyle: "solid",
+                    fillColor: "yellow",
+                    hasHatching: false
+                },
+                7: { // SHOW_CHARGE
+                    borderColor: "blue",
+                    borderStyle: "solid",
+                    fillColor: "white",
+                    hasHatching: false
+                },
+                8: { // FADE
+                    borderColor: "transparent",
+                    borderStyle: "solid",
+                    fillColor: "transparent",
+                    hasHatching: false
+                },
+                10: { // DRAW | add with hatching
+                    borderColor: "blue",
+                    borderStyle: "dashed",
+                    fillColor: "blue",
+                    hasHatching: true
+                },
+                11: { // EDIT with hatching
+                    borderColor: "green",
+                    borderStyle: "dashed",
+                    fillColor: "green",
+                    hasHatching: true
+                },
+                12: { // DELETE | remove with hatching
+                    borderColor: "red",
+                    borderStyle: "dashed",
+                    fillColor: "red",
+                    hasHatching: true
+                }
+            };
+
+            // Get current style info or default if not found
+            const currentStyle = styleInfo[styleCount] || {
+                borderColor: "unknown",
+                borderStyle: "unknown",
+                fillColor: "unknown",
+                hasHatching: false
+            };
+
+            // Create a descriptive sentence
+            let description = `${currentStyle.borderColor} ${currentStyle.borderStyle} border and ${currentStyle.fillColor} `;
+            if (currentStyle.hasHatching) {
+                description += "hatched ";
+            }
+            description += "fill";
+
+            // Handle the case of transparent elements
+            if (currentStyle.borderColor === "transparent" && currentStyle.fillColor === "transparent") {
+                description = "Transparent border and fill";
+            }
+
+            // Update the style description
+            document.getElementById('style-description').textContent = description;
+        }
+
 
         ///////////////////////////////////////////////
         // initialise 
@@ -262,6 +374,7 @@
                     style_count = 12;
                 }
                 MAP_CONTROLS.toggle_draw_layer_style(style_count);
+                updateStyleInfo(style_count);
                 showExtent();
             };
             document.getElementById('nextBtn').onclick = function () {
@@ -274,8 +387,12 @@
                     style_count = 0;
                 }
                 MAP_CONTROLS.toggle_draw_layer_style(style_count);
+                updateStyleInfo(style_count);
                 showExtent();
             };
+
+            // Initialize style info display
+            updateStyleInfo(style_count);
 
             // init
             showExtent();
