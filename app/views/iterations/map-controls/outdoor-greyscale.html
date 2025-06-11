@@ -16,7 +16,7 @@
 
     <div id="map-controls">
 
-        <h1 class="govuk-heading-l">AV57267</h1>
+        <h1 class="govuk-heading-l">AV118735</h1>
 
         <h2 class="govuk-heading-m">
             <span>Extent</span>
@@ -318,7 +318,7 @@
     let currentPage = 1;
     const totalPages = 14;
     let count = 0;
-    let style_count = 3;
+    let style_count = 0; // Start from 0 to cycle through all styles
     const counterElement = document.getElementById('counter');
     const nextButton = document.getElementById('nextBtn');
     const prevButton = document.getElementById('prevBtn');
@@ -337,7 +337,7 @@
             if (count >= extents.length) {
                 count = 0;
             }
-            if (style_count > 12) {
+            if (style_count >= styleConfigurations.length) {
                 style_count = 0;
             }
             updateCounter();
@@ -356,7 +356,7 @@
                 count = extents.length - 1;
             }
             if (style_count < 0) {
-                style_count = 12;
+                style_count = styleConfigurations.length - 1;
             }
             updateCounter();
             showExtent();
@@ -371,154 +371,194 @@
     let hoveredFeature = null;
     let originalStyle = null;
 
-    // Define different style configurations
+// Define different style configurations with colours and patterns based on snyth data
     const styleConfigurations = [
         {
-            // Style 0: Classic red with transparency
-            fill: 'rgba(255, 0, 0, 0.3)',
-            stroke: '#ff0000',
-            strokeWidth: 2,
-            name: 'Classic Red'
-        },
-        {
-            // Style 1: Blue with red border (like your image 2)
-            fill: 'rgba(0, 100, 200, 0.4)',
-            stroke: '#cc0000',
+            // Style 0: Solid fill - Copperfield with nutmeg border
+            fill: 'rgba(214, 144, 103, 0.8)',
+            stroke: 'rgb(102, 51, 0)', // Nutmeg
             strokeWidth: 3,
-            name: 'Blue Fill Red Border'
+            name: 'Copperfield Solid with Nutmeg Border'
         },
         {
-            // Style 2: Green with diagonal hatching
-            fill: 'rgba(0, 150, 0, 0.15)',
-            stroke: '#006600',
-            strokeWidth: 2,
-            pattern: 'diagonal',
-            patternColor: '#006600',
-            name: 'Green Diagonal Hatch'
-        },
-        {
-            // Style 3: Purple with solid fill
-            fill: 'rgba(128, 0, 128, 0.5)',
-            stroke: '#800080',
-            strokeWidth: 2,
-            name: 'Purple Solid'
-        },
-        {
-            // Style 4: Orange with cross-hatch
-            fill: 'rgba(255, 165, 0, 0.15)',
-            stroke: '#ff6600',
-            strokeWidth: 2,
-            pattern: 'crosshatch',
-            patternColor: '#ff6600',
-            name: 'Orange Cross-hatch'
-        },
-        {
-            // Style 5: Pink with dots pattern
-            fill: 'rgba(255, 192, 203, 0.2)',
-            stroke: '#ff1493',
-            strokeWidth: 2,
-            pattern: 'dots',
-            patternColor: '#ff1493',
-            name: 'Pink Dots'
-        },
-        {
-            // Style 6: Teal with vertical lines
-            fill: 'rgba(0, 128, 128, 0.15)',
-            stroke: '#008080',
-            strokeWidth: 2,
-            pattern: 'vertical',
-            patternColor: '#008080',
-            name: 'Teal Vertical'
-        },
-        {
-            // Style 7: Navy with horizontal lines
-            fill: 'rgba(0, 0, 128, 0.2)',
-            stroke: '#000080',
+            // Style 1: Solid fill - Pastel pink with nutmeg border
+            fill: 'rgba(255, 202, 211, 0.8)',
+            stroke: 'rgb(102, 51, 0)', // Nutmeg
             strokeWidth: 3,
-            pattern: 'horizontal',
-            patternColor: '#000080',
-            name: 'Navy Horizontal'
+            name: 'Pastel Pink Solid with Nutmeg Border'
         },
         {
-            // Style 8: Yellow with black border
-            fill: 'rgba(255, 255, 0, 0.4)',
-            stroke: '#000000',
-            strokeWidth: 2,
-            name: 'Yellow Black Border'
+            // Style 2: Solid fill - Pastel green with nutmeg border
+            fill: 'rgba(117, 239, 137, 0.8)',
+            stroke: 'rgb(102, 51, 0)', // Nutmeg
+            strokeWidth: 3,
+            name: 'Pastel Green Solid with Nutmeg Border'
         },
         {
-            // Style 9: Cyan with reverse diagonal hatching
-            fill: 'rgba(0, 255, 255, 0.15)',
-            stroke: '#ff00ff',
-            strokeWidth: 2,
-            pattern: 'diagonal_reverse',
-            patternColor: '#00aaaa',
-            name: 'Cyan Reverse Diagonal'
+            // Style 3: Solid fill - Dolly with nutmeg border
+            fill: 'rgba(255, 255, 126, 0.8)',
+            stroke: 'rgb(102, 51, 0)', // Nutmeg
+            strokeWidth: 3,
+            name: 'Dolly Solid with Nutmeg Border'
         },
         {
-            // Style 10: Light green with dark green thick border
-            fill: 'rgba(144, 238, 144, 0.6)',
-            stroke: '#228b22',
-            strokeWidth: 4,
-            name: 'Light Green Thick Border'
+            // Style 4: Solid fill - Anakiwa with nutmeg border
+            fill: 'rgba(158, 221, 255, 0.8)',
+            stroke: 'rgb(102, 51, 0)', // Nutmeg
+            strokeWidth: 3,
+            name: 'Anakiwa Solid with Nutmeg Border'
         },
         {
-            // Style 11: Brown with grid pattern
-            fill: 'rgba(139, 69, 19, 0.15)',
-            stroke: '#8b4513',
-            strokeWidth: 2,
-            pattern: 'grid',
-            patternColor: '#8b4513',
-            name: 'Brown Grid'
+            // Style 5: Solid fill - Mauve with nutmeg border
+            fill: 'rgba(199, 152, 255, 0.8)',
+            stroke: 'rgb(102, 51, 0)', // Nutmeg
+            strokeWidth: 3,
+            name: 'Mauve Solid with Nutmeg Border'
         },
         {
-            // Style 12: Indigo with dense diagonal hatching
-            fill: 'rgba(75, 0, 130, 0.15)',
-            stroke: '#4b0082',
-            strokeWidth: 2,
-            pattern: 'dense_diagonal',
-            patternColor: '#4b0082',
-            name: 'Indigo Dense Hatch'
+            // Style 6: Wide right diagonal hatching - Killarney with nutmeg border
+            fill: 'transparent',
+            stroke: 'rgb(102, 51, 0)', // Nutmeg border
+            strokeWidth: 3,
+            pattern: 'wide_diagonal_right',
+            patternColor: 'rgb(51, 102, 51)', // Killarney pattern
+            name: 'Killarney Wide Right Diagonal with Nutmeg Border'
+        },
+        {
+            // Style 7: Wide cross-hatching - Yellow with nutmeg border
+            fill: 'transparent',
+            stroke: 'rgb(102, 51, 0)', // Nutmeg border
+            strokeWidth: 3,
+            pattern: 'wide_crosshatch',
+            patternColor: 'rgb(255, 255, 0)', // Yellow pattern
+            name: 'Yellow Wide Cross-hatch with Nutmeg Border'
+        },
+        {
+            // Style 8: Wide diagonal cross-hatching - Blue ribbon with nutmeg border
+            fill: 'transparent',
+            stroke: 'rgb(102, 51, 0)', // Nutmeg border
+            strokeWidth: 3,
+            pattern: 'wide_diagonal_crosshatch',
+            patternColor: 'rgb(0, 51, 255)', // Blue ribbon pattern
+            name: 'Blue Ribbon Wide Diagonal Cross-hatch with Nutmeg Border'
+        },
+        {
+            // Style 9: Wide left diagonal hatching - Heliotrope with nutmeg border
+            fill: 'transparent',
+            stroke: 'rgb(102, 51, 0)', // Nutmeg border
+            strokeWidth: 3,
+            pattern: 'wide_diagonal_left',
+            patternColor: 'rgb(178, 75, 255)', // Heliotrope pattern
+            name: 'Heliotrope Wide Left Diagonal with Nutmeg Border'
+        },
+        {
+            // Style 10: Wide horizontal hatching - Nutmeg with nutmeg border
+            fill: 'transparent',
+            stroke: 'rgb(102, 51, 0)', // Nutmeg border
+            strokeWidth: 3,
+            pattern: 'wide_horizontal',
+            patternColor: 'rgb(102, 51, 0)', // Nutmeg pattern
+            name: 'Nutmeg Wide Horizontal with Nutmeg Border'
+        },
+        {
+            // Style 11: Wide vertical hatching - Killarney with nutmeg border
+            fill: 'transparent',
+            stroke: 'rgb(102, 51, 0)', // Nutmeg border
+            strokeWidth: 3,
+            pattern: 'wide_vertical',
+            patternColor: 'rgb(51, 102, 51)', // Killarney pattern
+            name: 'Killarney Wide Vertical with Nutmeg Border'
+        },
+        {
+            // Style 12: No fill - Blue ribbon border only
+            fill: 'transparent',
+            stroke: 'rgb(0, 51, 255)', // Blue ribbon
+            strokeWidth: 3,
+            name: 'Blue Ribbon Border Only'
+        },
+        {
+            // Style 13: No fill - Killarney border only
+            fill: 'transparent',
+            stroke: 'rgb(51, 102, 51)', // Killarney
+            strokeWidth: 3,
+            name: 'Killarney Border Only'
+        },
+        {
+            // Style 14: No fill - Blue ribbon border only
+            fill: 'transparent',
+            stroke: 'rgb(0, 51, 255)', // Blue ribbon
+            strokeWidth: 3,
+            name: 'Blue Ribbon Border Only'
+        },
+        {
+            // Style 15: No fill - Killarney border only
+            fill: 'transparent',
+            stroke: 'rgb(51, 102, 51)', // Killarney
+            strokeWidth: 3,
+            name: 'Killarney Border Only'
+        },
+        {
+            // Style 16: No fill - Blue ribbon border only
+            fill: 'transparent',
+            stroke: 'rgb(0, 51, 255)', // Blue ribbon
+            strokeWidth: 3,
+            name: 'Blue Ribbon Border Only'
+        },
+        {
+            // Style 17: No fill - Killarney border only
+            fill: 'transparent',
+            stroke: 'rgb(51, 102, 51)', // Killarney
+            strokeWidth: 3,
+            name: 'Killarney Border Only'
         }
     ];
 
     // Function to create hatching pattern as canvas pattern for OpenLayers
     function createHatchingPattern(patternType, color, backgroundColor) {
         const canvas = document.createElement('canvas');
-        const size = 20;
+        let size = 95; // Base size for wide patterns
+        
+        // Adjust size for medium patterns
+        if (patternType.includes('medium')) {
+            size = 20;
+        }
+        
         canvas.width = size;
         canvas.height = size;
         const ctx = canvas.getContext('2d');
 
-        // Fill with background color (semi-transparent)
-        ctx.fillStyle = backgroundColor;
+        // Fill with transparent background for hatching
+        ctx.fillStyle = backgroundColor === 'transparent' ? 'rgba(0,0,0,0)' : backgroundColor;
         ctx.fillRect(0, 0, size, size);
 
         // Draw pattern
         ctx.strokeStyle = color;
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 2;
         ctx.beginPath();
 
+        const spacing = patternType.includes('wide') ? 24 : 16;
+
         switch (patternType) {
-            case 'diagonal':
+            case 'wide_diagonal_right':
+            case 'medium_diagonal_right':
                 // Diagonal lines from bottom-left to top-right
-                for (let i = -size; i <= size * 2; i += 6) {
+                for (let i = -size; i <= size * 2; i += spacing) {
                     ctx.moveTo(i, 0);
                     ctx.lineTo(i + size, size);
                 }
                 break;
 
-            case 'diagonal_reverse':
+            case 'wide_diagonal_left':
                 // Diagonal lines from top-left to bottom-right
-                for (let i = -size; i <= size * 2; i += 6) {
+                for (let i = -size; i <= size * 2; i += spacing) {
                     ctx.moveTo(i, size);
                     ctx.lineTo(i + size, 0);
                 }
                 break;
 
-            case 'crosshatch':
+            case 'wide_crosshatch':
                 // Both diagonal directions
-                for (let i = -size; i <= size * 2; i += 8) {
+                for (let i = -size; i <= size * 2; i += spacing) {
                     ctx.moveTo(i, 0);
                     ctx.lineTo(i + size, size);
                     ctx.moveTo(i, size);
@@ -526,117 +566,57 @@
                 }
                 break;
 
-            case 'vertical':
-                // Vertical lines
-                for (let i = 0; i < size; i += 5) {
-                    ctx.moveTo(i, 0);
-                    ctx.lineTo(i, size);
-                }
-                break;
-
-            case 'horizontal':
-                // Horizontal lines
-                for (let i = 0; i < size; i += 5) {
-                    ctx.moveTo(0, i);
-                    ctx.lineTo(size, i);
-                }
-                break;
-
-            case 'grid':
-                // Grid pattern
-                for (let i = 0; i < size; i += 6) {
-                    ctx.moveTo(i, 0);
-                    ctx.lineTo(i, size);
-                    ctx.moveTo(0, i);
-                    ctx.lineTo(size, i);
-                }
-                break;
-
-            case 'dense_diagonal':
-                // Dense diagonal hatching
-                for (let i = -size; i <= size * 2; i += 4) {
+            case 'wide_diagonal_crosshatch':
+                // X pattern - both diagonals intersecting
+                for (let i = -size; i <= size * 2; i += spacing) {
                     ctx.moveTo(i, 0);
                     ctx.lineTo(i + size, size);
+                    ctx.moveTo(i, size);
+                    ctx.lineTo(i + size, 0);
                 }
                 break;
 
-            case 'dots':
-                ctx.stroke(); // Clear any pending paths
-                ctx.fillStyle = color;
-                for (let x = 3; x < size; x += 6) {
-                    for (let y = 3; y < size; y += 6) {
-                        ctx.beginPath();
-                        ctx.arc(x, y, 1.5, 0, 2 * Math.PI);
-                        ctx.fill();
-                    }
+            case 'wide_vertical':
+                // Vertical lines
+                for (let i = 0; i < size; i += spacing) {
+                    ctx.moveTo(i, 0);
+                    ctx.lineTo(i, size);
                 }
-                return canvas; // Return early for dots
+                break;
+
+            case 'wide_horizontal':
+                // Horizontal lines
+                for (let i = 0; i < size; i += spacing) {
+                    ctx.moveTo(0, i);
+                    ctx.lineTo(size, i);
+                }
+                break;
         }
 
         ctx.stroke();
         return canvas;
     }
 
-    // Function to create style with optional pattern
-    function createStyleWithPattern(styleConfig) {
-        let fillStyle;
-
-        if (styleConfig.pattern) {
-            // Create pattern using canvas
-            const patternCanvas = createHatchingPattern(
-                styleConfig.pattern,
-                styleConfig.patternColor || styleConfig.stroke,
-                styleConfig.fill
-            );
-
-            // Create pattern context for OpenLayers
-            const patternCtx = document.createElement('canvas').getContext('2d');
-            const pattern = patternCtx.createPattern(patternCanvas, 'repeat');
-
-            // For OpenLayers, we need to use a custom renderer approach
-            // We'll create a style function that draws the pattern
-            return function (feature, resolution) {
-                return new ol.style.Style({
-                    fill: new ol.style.Fill({
-                        color: function (context) {
-                            const canvas = context.canvas;
-                            const ctx = canvas.getContext('2d');
-                            const pattern = ctx.createPattern(patternCanvas, 'repeat');
-                            return pattern;
-                        }
-                    }),
-                    stroke: new ol.style.Stroke({
-                        color: styleConfig.stroke,
-                        width: styleConfig.strokeWidth
-                    })
-                });
-            };
-        } else {
-            // Simple solid fill
-            return new ol.style.Style({
-                fill: new ol.style.Fill({
-                    color: styleConfig.fill
-                }),
-                stroke: new ol.style.Stroke({
-                    color: styleConfig.stroke,
-                    width: styleConfig.strokeWidth
-                })
-            });
-        }
-    }
-
     // Create a custom style function for patterns that works with OpenLayers
     function createPatternStyleFunction(styleConfig) {
         if (!styleConfig.pattern) {
-            return new ol.style.Style({
-                fill: new ol.style.Fill({
+            // Simple solid fill or border only
+            const styleOptions = {};
+            
+            if (styleConfig.fill && styleConfig.fill !== 'transparent') {
+                styleOptions.fill = new ol.style.Fill({
                     color: styleConfig.fill
-                }),
-                stroke: new ol.style.Stroke({
+                });
+            }
+            
+            if (styleConfig.stroke && styleConfig.strokeWidth > 0) {
+                styleOptions.stroke = new ol.style.Stroke({
                     color: styleConfig.stroke,
                     width: styleConfig.strokeWidth
-                })
-            });
+                });
+            }
+            
+            return new ol.style.Style(styleOptions);
         }
 
         // For patterns, create a style function
@@ -652,7 +632,7 @@
                     color: function (pixelContext) {
                         const context = pixelContext.context;
                         const pattern = context.createPattern(patternCanvas, 'repeat');
-                        return pattern || styleConfig.fill;
+                        return pattern || 'rgba(0,0,0,0)';
                     }
                 }),
                 stroke: new ol.style.Stroke({
@@ -662,7 +642,6 @@
                 // Custom renderer for the pattern
                 renderer: function (coordinates, state) {
                     const context = state.context;
-                    const pixelRatio = state.pixelRatio;
 
                     // Save the current context
                     context.save();
@@ -738,10 +717,10 @@
         // Create extent hover style 
         const hoverStyle = new ol.style.Style({
             fill: new ol.style.Fill({
-                color: 'rgba(0, 48, 120, 0.8)' // GOVUK Link Hover Blue fill
+                color: 'rgba(0,48,120,0.3)' // GOVUK Link hover blue translucent fill
             }),
             stroke: new ol.style.Stroke({
-                color: '#ffdd00', // GOVUK Focus Yellow border
+                color: '#003078', // GOVUK Link hover blue opaque
                 width: 2
             })
         });
