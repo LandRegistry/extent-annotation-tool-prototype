@@ -16,13 +16,13 @@
         <h1 class="govuk-heading-l">Reassign title {{ data['titleID'] }}</h1>
         <div class="govuk-inset-text">
           <h2 class="govuk-heading-s">Current annotator</h2>
-          {{ data['AV59722-user'] or "Annotator 1" }}
+          {{ data['KP92143-user'] or "Annotator 1" }}
         </div>
         <form class="form" action="/admin/check-status/titles-list?titleReassignType=success" method="post">
   
           {{ govukRadios({
             classes: "govuk-radios--small",
-            name: 'AV59722-user',
+            name: 'KP92143-user',
             fieldset: {
               legend: {
                 text: "Select the Annotator to reassign to",

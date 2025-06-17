@@ -16,7 +16,7 @@ router.post('/annotators/your-jobs-route', function(request, response) {
     if (jobsRoute == "V2"){
         response.redirect("/ new page ")
     } else {
-        response.redirect("/annotators/assignments/AV57267/entry-1/extent-1")
+        response.redirect("/annotators/assignments/QR84291/entry-1/extent-1")
     }
 })
 

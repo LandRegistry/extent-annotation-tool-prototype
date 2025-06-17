@@ -5,9 +5,9 @@ module.exports = {
     WMTS_URL: process.env.WMTS_URL,
 
 
-    'AV225733Status': 'started',
-    'AV178903Status': 'complete',
-    'AV172146Status': 'complete',
+    'BN78354Status': 'started',
+    'YE37261Status': 'complete',
+    'LV95472Status': 'complete',
 
 }
 
