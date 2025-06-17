@@ -8,6 +8,14 @@ Title AV57267 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
 
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back to Title AV57267",
+href: "/annotators/v2/titles/AV57267/entries-task-list"
+}) }}
+{% endblock %}
 
 {% block content %}
 
