@@ -15,18 +15,18 @@ href: "/annotators/v2/jobs-list.html"
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     {% include "app/includes/alerts/inc_entry-saved.html" %}
-    <div class="govuk-inset-text">
-      <h1 class="govuk-heading-l">Job 1</h1>
-      <h2 class="govuk-heading-m">Title QR84291</h2>
-    </div>
-    <h2 class="govuk-heading-m">Entries</h2>
+
+    <h1 class="govuk-heading-l">Task overview</h1>
+
+    <h2 class="govuk-heading-m">QR84291</h2>
+
     <form action="/annotators/v2/jobs-list?QR84291Status=complete" method="post">
       <ul class="govuk-task-list">
         <li class="govuk-task-list__item govuk-task-list__item--with-link">
           <div class="govuk-task-list__name-and-hint">
-            <a class="govuk-link govuk-task-list__link"
-              href="/annotators/v2/extent-1-os-map" aria-describedby=" task-list-1-status">
-              A3
+            <a class="govuk-link govuk-task-list__link" href="/annotators/v2/extent-1-os-map"
+              aria-describedby=" task-list-1-status">
+              [Entry 1]
             </a>
           </div>
           {% if KP92143A3Status == 'started' %}
@@ -50,7 +50,7 @@ href: "/annotators/v2/jobs-list.html"
         <li class="govuk-task-list__item govuk-task-list__item--with-link">
           <div class="govuk-task-list__name-and-hint">
             <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
-              A4
+              [Entry 2]
             </a>
           </div>
           <div class="govuk-task-list__status" id="task-list-1-status">
@@ -61,7 +61,7 @@ href: "/annotators/v2/jobs-list.html"
         <li class="govuk-task-list__item govuk-task-list__item--with-link">
           <div class="govuk-task-list__name-and-hint">
             <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
-              C4
+              [Entry 3]
             </a>
           </div>
           <div class="govuk-task-list__status" id="task-list-1-status">
@@ -72,7 +72,7 @@ href: "/annotators/v2/jobs-list.html"
         <li class="govuk-task-list__item govuk-task-list__item--with-link">
           <div class="govuk-task-list__name-and-hint">
             <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
-              C5
+              [Entry 4]
             </a>
           </div>
           <div class="govuk-task-list__status" id="task-list-1-status">
@@ -82,7 +82,7 @@ href: "/annotators/v2/jobs-list.html"
       </ul>
       <div class="govuk-button-group">
         <button type="submit" class="govuk-button" data-module="govuk-button">
-          Submit title
+          Submit task
         </button>
       </div>
   </div>
