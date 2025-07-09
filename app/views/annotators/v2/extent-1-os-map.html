@@ -3,7 +3,7 @@
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% block pageTitle %}
- QR84291 – {{ serviceName }} – GOV.UK Prototype Kit
+QR84291 – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
@@ -27,6 +27,14 @@ href: "/annotators/v2/titles/QR84291/entries-task-list"
       <span>Shape</span>
       <span id="counter">1 of 14</span>
     </h2>
+
+    <div class="govuk-checkboxes__item">
+      <div class="govuk-checkboxes__input" style="cursor: default;"></div>
+      <div class="govuk-label govuk-checkboxes__label" style="cursor: default;">
+        Style
+      </div>
+    </div>
+    
     <div>
       <div class="zoom-controls">
         <button id="zoom-in" class="zoom ol-zoom-in zoom-in" type="button" title="Zoom in">+<span
@@ -171,7 +179,6 @@ href: "/annotators/v2/titles/QR84291/entries-task-list"
   let count = 0;
   let style_count = 3;
 
-
   MAP_HELPERS.init_controls(map, controls);
 
   // use this to prepopulate with an extent
@@ -241,9 +248,9 @@ href: "/annotators/v2/titles/QR84291/entries-task-list"
     function updateButtonText() {
       const nextBtn = document.getElementById('nextBtn');
       if (count === extents.length - 1) {
-        nextBtn.textContent = 'Save entry';
+        nextBtn.textContent = 'Save text';
       } else {
-        nextBtn.textContent = 'Save and next text';
+        nextBtn.textContent = 'Save and next shape';
       }
     }
 
