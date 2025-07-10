@@ -41,7 +41,7 @@ var MAP_HELPERS = {};
           map.addControl(controls);
           map.addControl(new ol.control.Zoom());
         }
-        map.addControl(new ol.control.ScaleLine());
+        //map.addControl(new ol.control.ScaleLine());
         map.addControl(new ol.control.Attribution({collapsed: false, collapsible: false}));
     };
 

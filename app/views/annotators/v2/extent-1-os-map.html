@@ -3,7 +3,7 @@
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% block pageTitle %}
-Title QR84291 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
+QR84291 – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
@@ -12,25 +12,29 @@ Title QR84291 Entry A3 – {{ serviceName }} – GOV.UK Prototype Kit
 
 {% block beforeContent %}
 {{ govukBackLink({
-text: "Back to Title QR84291",
+text: "Back to Task overview",
 href: "/annotators/v2/titles/QR84291/entries-task-list"
 }) }}
 {% endblock %}
 
 {% block content %}
 
-<div class="govuk-inset-text">
-  <h1 class="govuk-heading-l">Title QR84291</h1>
-</div>
-
 <div class="govuk-grid-row">
 
   <!-- MAP  -->
   <div class="govuk-grid-column-one-half">
     <h2 class="govuk-heading-m">
-      <span>Extent</span>
+      <span>Shape</span>
       <span id="counter">1 of 14</span>
     </h2>
+
+    <div class="govuk-checkboxes__item">
+      <div class="govuk-checkboxes__input" style="cursor: default;"></div>
+      <div class="govuk-label govuk-checkboxes__label" style="cursor: default;">
+        Style
+      </div>
+    </div>
+    
     <div>
       <div class="zoom-controls">
         <button id="zoom-in" class="zoom ol-zoom-in zoom-in" type="button" title="Zoom in">+<span
@@ -59,7 +63,7 @@ href: "/annotators/v2/titles/QR84291/entries-task-list"
   <!--  ENTRY AND EXTENT NAVIGATION  -->
   <div class="govuk-grid-column-one-third">
     <div>
-      <h2 class="govuk-heading-m">Entry A3</h2>
+      <h2 class="govuk-heading-m">Text 1 of 4</h2>
 
       <div class="entry-container">
         {% include "app/includes/entries/QR84291/inc_QR84291-entry-1.html" %}
@@ -69,11 +73,11 @@ href: "/annotators/v2/titles/QR84291/entries-task-list"
 
       <div class="govuk-button-group">
         <button id="prevBtn" class="govuk-button govuk-button--secondary" data-module="govuk-button">
-          Previous extent
+          Previous shape
         </button>
         <br />
         <button id="nextBtn" class="govuk-button govuk-button--primary" data-module="govuk-button">
-          Save and next extent
+          Save and next shape
         </button>
         <input="hidden" name="QR84291Status" value="started">
           <br />
@@ -175,7 +179,6 @@ href: "/annotators/v2/titles/QR84291/entries-task-list"
   let count = 0;
   let style_count = 3;
 
-
   MAP_HELPERS.init_controls(map, controls);
 
   // use this to prepopulate with an extent
@@ -204,7 +207,7 @@ href: "/annotators/v2/titles/QR84291/entries-task-list"
   $(document).ready(function () {
 
     // cycle the extents 
-    MAP_CONFIG.base_layer.setOpacity(0.6);
+    MAP_CONFIG.base_layer.setOpacity(0.1);
 
     document.getElementById('prevBtn').onclick = function () {
       count--;
@@ -245,9 +248,9 @@ href: "/annotators/v2/titles/QR84291/entries-task-list"
     function updateButtonText() {
       const nextBtn = document.getElementById('nextBtn');
       if (count === extents.length - 1) {
-        nextBtn.textContent = 'Save entry';
+        nextBtn.textContent = 'Save text';
       } else {
-        nextBtn.textContent = 'Save and next extent';
+        nextBtn.textContent = 'Save and next shape';
       }
     }
 
