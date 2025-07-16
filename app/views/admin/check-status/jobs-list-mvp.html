@@ -16,59 +16,65 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
 {{ govukPhaseBanner({
-  tag: {
-  text: "Prototype"
-  },
-  html: 'This is not a production service.'
-  }) }}
+tag: {
+text: "Prototype"
+},
+html: 'This is not a production service.'
+}) }}
 
 {{ govukBackLink({
-  text: "Back to admin",
-  href: "/admin/landing?alertType"
+text: "Back to admin",
+href: "/admin/landing?alertType"
 }) }}
 {% endblock %}
 
 {% block content %}
 
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            {% include "app/includes/alerts/inc_job-reassign-success.html" %}
-            {% include "app/includes/alerts/inc_job-archive-success.html" %}
-        </div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {% include "app/includes/alerts/inc_job-reassign-success.html" %}
+        {% include "app/includes/alerts/inc_job-archive-success.html" %}
     </div>
+</div>
 
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-l">Jobs</h1>
-            <ul class="govuk-summary-list__actions-list">
-                <li class="govuk-summary-list__actions-list-item">
-                    <p class="govuk-body-m">Active<span class="govuk-visually-hidden">Current page active jobs</span></p>
-                </li>
-                <li class="govuk-summary-list__actions-list-item">
-                    <a class="govuk-link govuk-body-m govuk-link--no-visited-state"
-                    href="/admin/check-status/archived-jobs-list-mvp">Archived<span class="govuk-visually-hidden">Go to archived jobs</span></a>
-                </li>
-              </ul>
-        </div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">Jobs</h1>
+        <ul class="govuk-summary-list__actions-list">
+            <li class="govuk-summary-list__actions-list-item">
+                <p class="govuk-body-m">Active<span class="govuk-visually-hidden">Current page active jobs</span></p>
+            </li>
+            <li class="govuk-summary-list__actions-list-item">
+                <a class="govuk-link govuk-body-m govuk-link--no-visited-state"
+                    href="/admin/check-status/archived-jobs-list-mvp">Archived<span class="govuk-visually-hidden">Go to
+                        archived jobs</span></a>
+            </li>
+        </ul>
     </div>
+</div>
 
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            {% include "app/includes/jobs/inc_sort-horizontal.html" %}
-        </div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {% include "app/includes/jobs/inc_sort-horizontal.html" %}
     </div>
+</div>
 
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-three-quarters">
-            {% include "app/includes/jobs/inc_jobs-table-mvp.html" %}
-        </div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        {% include "app/includes/jobs/inc_jobs-table-mvp.html" %}
     </div>
+</div>
 
 {% endblock %}
 
 {% block pageScripts %}
 
 <script>
+    // State variable to track the current sort column and direction
+    let sortState = {
+        column: null,
+        direction: 'asc' // 'asc' or 'desc'
+    };
 
     // Function to sort the table
     function sortTable() {
@@ -83,80 +89,87 @@
             return;
         }
         const sortBy = sortSelect.value;
-        // Get all rows, excluding the header row
+
+        // Determine sort direction
+        if (sortState.column === sortBy) {
+            // If sorting the same column, flip the direction
+            sortState.direction = sortState.direction === 'asc' ? 'desc' : 'asc';
+        } else {
+            // If sorting a new column, set it and default to ascending
+            sortState.column = sortBy;
+            sortState.direction = 'asc';
+        }
+
         const tbody = table.querySelector('tbody');
         if (!tbody) {
             console.error('Table body not found');
             return;
         }
-        // Convert NodeList to Array for easier manipulation
+
         const rows = Array.from(tbody.getElementsByTagName('tr'));
-        // Define column indices for sorting
+
         const columnMap = {
-            'job': 0,       // Job ID column
-            'annotator': 1, // Annotator column
-            'assigned': 2,  // Assigned on column
-            'status': 3     // Status column
+            'job': 0,
+            'jobType': 1,
+            'annotator': 2,
+            'assigned': 3,
+            'status': 4
         };
         const columnIndex = columnMap[sortBy];
-        // Sort function for rows
+
+        // Sort function for rows (always sorts ascending initially)
         rows.sort((rowA, rowB) => {
-            // Get cells from the rows
             const cellsA = rowA.getElementsByTagName('td');
             const cellsB = rowB.getElementsByTagName('td');
-            // Check if we have valid cells
             if (cellsA.length <= columnIndex || cellsB.length <= columnIndex) {
-                return 0; // Can't compare if cells don't exist
+                return 0;
             }
             const cellA = cellsA[columnIndex];
             const cellB = cellsB[columnIndex];
-            // Special handling for Job ID column
+
             if (sortBy === 'job') {
-                // Get text considering links
                 const getJobText = (cell) => {
                     const link = cell.querySelector('a');
                     return link ? link.textContent.trim() : cell.textContent.trim();
                 };
-                const textA = getJobText(cellA);
-                const textB = getJobText(cellB);
-                // Extract job number using regex
                 const getJobNumber = (text) => {
-                    // Match any digits that follow "Job" (with optional space)
                     const match = text.match(/Job\s*(\d+)/i);
-                    return match ? parseInt(match[1], 10) : Infinity; // Use Infinity for missing numbers
+                    return match ? parseInt(match[1], 10) : Infinity;
                 };
-                const numA = getJobNumber(textA);
-                const numB = getJobNumber(textB);
-                console.log(`Comparing: "${textA}" (${numA}) vs "${textB}" (${numB})`);
+                const numA = getJobNumber(getJobText(cellA));
+                const numB = getJobNumber(getJobText(cellB));
                 return numA - numB;
             }
-            // Get text content safely for other columns
+
             const valueA = cellA.textContent.trim();
             const valueB = cellB.textContent.trim();
-            // Special handling for dates
+
             if (sortBy === 'assigned') {
-                // Simple approach: just do string comparison for dates
                 return valueA.localeCompare(valueB);
             }
-            // Default: alphabetical sorting
+
             return valueA.localeCompare(valueB);
         });
+
+        // Reverse the order if direction is descending
+        if (sortState.direction === 'desc') {
+            rows.reverse();
+        }
+
         // Reattach sorted rows
         rows.forEach(row => {
             tbody.appendChild(row);
         });
     }
+
     // Add event listener when DOM is fully loaded
     document.addEventListener('DOMContentLoaded', function () {
-        // Find the sort button
         const sortForm = document.querySelector('.govuk-form-group');
         const sortButton = sortForm ? sortForm.querySelector('button[type="submit"]') : null;
         if (sortButton) {
-            // Make sure we don't duplicate handlers if inline onclick exists
             sortButton.removeAttribute('onclick');
-            // Add click event listener
             sortButton.addEventListener('click', function (event) {
-                event.preventDefault(); // Prevent form submission
+                event.preventDefault();
                 sortTable();
             });
             console.log('Sort button event listener attached');

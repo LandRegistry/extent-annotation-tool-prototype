@@ -2,6 +2,7 @@
     <thead class="govuk-table__head">
         <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header">Job ID</th>
+            <th scope="col" class="govuk-table__header">Job type</th>
             <th scope="col" class="govuk-table__header">Annotator</th>
             <th scope="col" class="govuk-table__header">Assigned on</th>
             <th scope="col" class="govuk-table__header">Status</th>
@@ -11,11 +12,14 @@
     <tbody class="govuk-table__body">
         {% if job1Archived == 'yes' %}
         <tr class="govuk-table__row">
-            </tr>
+        </tr>
         {% else %}
         <tr class="govuk-table__row">
             <td class="govuk-table__cell">
                 <a href="/admin/check-status/titles-list-mvp?jobID=1&user=Annotator%201" class="govuk-link">Job 1</a>
+            </td>
+            <td class="govuk-table__cell">
+                Annotator
             </td>
             <td class="govuk-table__cell" id="job1-user">
                 {{ data['KP92143-user'] or "Annotator 1" }}
@@ -46,6 +50,9 @@
             <td class="govuk-table__cell">
                 Job 9
             </td>
+            <td class="govuk-table__cell">
+                Annotator
+            </td>
             <td class="govuk-table__cell">Annotator 2</td>
             <td class="govuk-table__cell">
                 {% if data['jobID'] == 9 and data['jobReassignType'] == 'success' %}
@@ -71,6 +78,9 @@
         <tr class="govuk-table__row">
             <td class="govuk-table__cell">
                 Job 2
+            </td>
+            <td class="govuk-table__cell">
+                Annotator
             </td>
             <td class="govuk-table__cell">Annotator 4</td>
             <td class="govuk-table__cell">
@@ -98,6 +108,9 @@
             <td class="govuk-table__cell">
                 Job 3
             </td>
+            <td class="govuk-table__cell">
+                Supervisor
+            </td>
             <td class="govuk-table__cell">Annotator 5</td>
             <td class="govuk-table__cell">
                 {% if data['jobID'] == 3 and data['jobReassignType'] == 'success' %}
@@ -123,6 +136,9 @@
         <tr class="govuk-table__row">
             <td class="govuk-table__cell">
                 Job 4
+            </td>
+            <td class="govuk-table__cell">
+                QA
             </td>
             <td class="govuk-table__cell">Annotator 6</td>
             <td class="govuk-table__cell">
@@ -150,6 +166,9 @@
             <td class="govuk-table__cell">
                 Job 5
             </td>
+            <td class="govuk-table__cell">
+                Annotator
+            </td>
             <td class="govuk-table__cell">Annotator 1</td>
             <td class="govuk-table__cell">
                 {% if data['jobID'] == 5 and data['jobReassignType'] == 'success' %}
@@ -175,6 +194,9 @@
         <tr class="govuk-table__row">
             <td class="govuk-table__cell">
                 Job 6
+            </td>
+            <td class="govuk-table__cell">
+                Supervisor
             </td>
             <td class="govuk-table__cell">Annotator 2</td>
             <td class="govuk-table__cell">
@@ -202,6 +224,9 @@
             <td class="govuk-table__cell">
                 Job 7
             </td>
+            <td class="govuk-table__cell">
+                Annotator
+            </td>
             <td class="govuk-table__cell">Annotator 4</td>
             <td class="govuk-table__cell">
                 {% if data['jobID'] == 7 and data['jobReassignType'] == 'success' %}
@@ -227,6 +252,9 @@
         <tr class="govuk-table__row">
             <td class="govuk-table__cell">
                 Job 8
+            </td>
+            <td class="govuk-table__cell">
+                Supervisor
             </td>
             <td class="govuk-table__cell">Annotator 5</td>
             <td class="govuk-table__cell">

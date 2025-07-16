@@ -3,7 +3,7 @@
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
 {% set html %}
-  <p class="govuk-body">Job assigned to <strong>{{ data['selectAnnotator'] }}</strong></p>
+  <p class="govuk-body">{{ data['jobType'] }} job assigned to <strong>{{ data['selectAnnotator'] }}</strong></p>
 {% endset %}
 
 {{ govukNotificationBanner({

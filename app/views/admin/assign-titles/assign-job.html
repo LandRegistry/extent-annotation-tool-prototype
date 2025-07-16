@@ -5,7 +5,7 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
 {% block pageTitle %}
-  Select an annotator – {{ serviceName }} – GOV.UK Prototype Kit
+  Assign job – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block beforeContent %}
@@ -29,7 +29,35 @@ html: 'This is not a production service.'
 
 {% block content %}
 
+<h1 class="govuk-heading-l">Assign job</h1>
+
   <form class="form" action="/admin/landing?alertType=success" method="post">
+
+      {{ govukRadios({
+    classes: "govuk-radios--small",
+    name: "jobType",
+    value: data['jobType'],
+    fieldset: {
+      legend: {
+        text: "Job type",
+        classes: "govuk-fieldset__legend--m"
+      }
+    },
+    items: [
+      {
+        value: "Annotation",
+        text: "Annotation"
+      },
+      {
+        value: "Supervisor",
+        text: "Supervisor"
+      },
+      {
+        value: "QA",
+        text: "Quality Assurance"
+      }
+    ]
+  }) }}
   
   {{ govukRadios({
     classes: "govuk-radios--small",
@@ -37,8 +65,7 @@ html: 'This is not a production service.'
     value: data['selectAnnotator'],
     fieldset: {
       legend: {
-        text: "Select an annotator to assign the job to",
-        isPageHeading: true,
+        text: "Annotator name",
         classes: "govuk-fieldset__legend--m"
       }
     },
