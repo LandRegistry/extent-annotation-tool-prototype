@@ -1,113 +1,49 @@
 {% extends "app/views/layouts/hmlr-admin.html" %}
 
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
-{% block pageTitle %}
-  Assign job – {{ serviceName }} – GOV.UK Prototype Kit
-{% endblock %}
-
-{% block beforeContent %}
-
-{{ govukPhaseBanner({
-tag: {
-text: "Prototype"
-},
-html: 'This is not a production service.'
-
-}) }}
-
-{% include "app/includes/inc_admin-nav-bar.html" %}
-
-{{ govukBackLink({
-  text: "Back to upload a job",
-  href: "/admin/assign-titles/upload-csv"
-}) }}
-
-{% endblock %}
+{% block pageTitle %}Assign Job – {{ serviceName }}{% endblock %}
 
 {% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
 
-<h1 class="govuk-heading-l">Assign job</h1>
+    <h1 class="govuk-heading-l">Assign job</h1>
 
-  <form class="form" action="/admin/landing?alertType=success" method="post">
+    <form class="form" action="/admin/assign-titles/assign-job" method="post">
 
       {{ govukRadios({
-    classes: "govuk-radios--small",
-    name: "jobType",
-    value: data['jobType'],
-    fieldset: {
-      legend: {
-        text: "Job type",
-        classes: "govuk-fieldset__legend--m"
-      }
-    },
-    items: [
-      {
-        value: "Annotation",
-        text: "Annotation"
+      name: "jobType",
+      fieldset: {
+      legend: { text: "Job type", classes: "govuk-fieldset__legend--m" }
       },
-      {
-        value: "Supervisor",
-        text: "Supervisor"
+      items: [
+      { value: "Annotator", text: "Annotation" },
+      { value: "Supervisor", text: "Supervisor" },
+      { value: "QA", text: "Quality Assurance" }
+      ]
+      }) }}
+
+      {% set radioItems = [] %}
+      {% for person in annotators %}
+      {% set radioItems = (radioItems.push({
+      text: person.text,
+      value: loop.index0
+      }), radioItems) %}
+      {% endfor %}
+
+      {{ govukRadios({
+      name: "selectAnnotator",
+      fieldset: {
+      legend: { text: "Annotator name", classes: "govuk-fieldset__legend--m" }
       },
-      {
-        value: "QA",
-        text: "Quality Assurance"
-      }
-    ]
-  }) }}
-  
-  {{ govukRadios({
-    classes: "govuk-radios--small",
-    name: "selectAnnotator",
-    value: data['selectAnnotator'],
-    fieldset: {
-      legend: {
-        text: "Annotator name",
-        classes: "govuk-fieldset__legend--m"
-      }
-    },
-    items: [
-      {
-        value: "Annotator 1",
-        text: "Annotator 1"
-      },
-      {
-        value: "Annotator 2",
-        text: "Annotator 2"
-      },
-      {
-        value: "Annotator 3",
-        text: "Annotator 3"
-      },
-      {
-        value: "Annotator 4",
-        text: "Annotator 4"
-      },
-      {
-        value: "Annotator 5",
-        text: "Annotator 5"
-      },
-      {
-        value: "Annotator 6",
-        text: "Annotator 6"
-      }
-    ]
-  }) }}
+      items: radioItems
+      }) }}
 
-  {{ govukButton({
-    text: "Assign job"
-  }) }}
+      {{ govukButton({ text: "Assign job" }) }}
 
-  {% set assignDate= "today" %}
-  <p>
-
-</p>
-
-
-
-</form>
-
+    </form>
+  </div>
+</div>
 {% endblock %}

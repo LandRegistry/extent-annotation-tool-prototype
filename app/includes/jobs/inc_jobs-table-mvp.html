@@ -1,4 +1,4 @@
-<table id="dataTable" class="govuk-table govuk-table--small-text-until-tablet">
+<table id="dataTable" class="govuk-table">
     <thead class="govuk-table__head">
         <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header">Job ID</th>
@@ -10,273 +10,52 @@
         </tr>
     </thead>
     <tbody class="govuk-table__body">
-        {% if job1Archived == 'yes' %}
+        {# Loop through each 'job' in the 'jobs' array passed from routes.js #}
+        {% for job in jobs %}
+        {% if job.status !== 'Archived' %}
         <tr class="govuk-table__row">
-        </tr>
-        {% else %}
-        <tr class="govuk-table__row">
             <td class="govuk-table__cell">
-                <a href="/admin/check-status/titles-list-mvp?jobID=1&user=Annotator%201" class="govuk-link">Job 1</a>
+                <a href="/admin/check-status/titles-list-mvp?jobID={{ job.jobIdQuery }}" class="govuk-link">{{ job.id
+                    }}</a>
             </td>
             <td class="govuk-table__cell">
-                Annotator
-            </td>
-            <td class="govuk-table__cell" id="job1-user">
-                {{ data['KP92143-user'] or "Annotator 1" }}
+                {{ job.type }}
             </td>
             <td class="govuk-table__cell">
-                {% if data['jobID'] == 1 and data['alertType'] == 'reassign-success' %}
-                {{ "now" | govukDateTime }}
+                {{ annotators[job.annotatorIndex].text }}
+            </td>
+            <td class="govuk-table__cell">
+                {{ job.assignedOn }}
+            </td>
+            <td class="govuk-table__cell">
+                {% if job.status == 'In progress' %}
+                <strong class="govuk-tag govuk-tag--yellow">
+                    In progress
+                </strong>
+                {% elseif job.status == 'Submitted' %}
+                Submitted
                 {% else %}
-                10 Febraury 2025 at 9:45am
+                <strong class="govuk-tag govuk-tag--blue">
+                    To do
+                </strong>
                 {% endif %}
             </td>
             <td class="govuk-table__cell">
-                {% include "app/includes/status-tags/inc_job1-status.html" %}
-            </td>
-            <td class="govuk-table__cell">
                 <ul class="govuk-summary-list__actions-list">
+                    {% if job.status !== 'Submitted' %}
                     <li class="govuk-summary-list__actions-list-item">
-                        <a class="govuk-link" href="/admin/check-status/reassign-job-mvp?jobID=1">Reassign</a>
+                        <a class="govuk-link"
+                            href="/admin/check-status/reassign-job-mvp?jobID={{ job.jobIdQuery }}">Reassign</a>
                     </li>
+                    {% endif %}
                     <li class="govuk-summary-list__actions-list-item">
-                        <a class="govuk-link" href="/admin/check-status/confirm-archive-mvp?jobID=1">Archive</a>
+                        <a class="govuk-link"
+                            href="/admin/check-status/confirm-archive-mvp?jobID={{ job.jobIdQuery }}">Archive</a>
                     </li>
                 </ul>
             </td>
         </tr>
         {% endif %}
-        <tr class="govuk-table__row">
-            <td class="govuk-table__cell">
-                Job 9
-            </td>
-            <td class="govuk-table__cell">
-                Annotator
-            </td>
-            <td class="govuk-table__cell">Annotator 2</td>
-            <td class="govuk-table__cell">
-                {% if data['jobID'] == 9 and data['jobReassignType'] == 'success' %}
-                {{ "now" | govukDateTime }}
-                {% else %}
-                10 Febraury 2025 at 9:45am
-                {% endif %}
-            </td>
-            <td class="govuk-table__cell">
-                {% include "app/includes/status-tags/inc_QR84291-status.html" %}
-            </td>
-            <td class="govuk-table__cell">
-                <ul class="govuk-summary-list__actions-list">
-                    <li class="govuk-summary-list__actions-list-item">
-                        Reassign</span>
-                    </li>
-                    <li class="govuk-summary-list__actions-list-item">
-                        Archive</span>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-        <tr class="govuk-table__row">
-            <td class="govuk-table__cell">
-                Job 2
-            </td>
-            <td class="govuk-table__cell">
-                Annotator
-            </td>
-            <td class="govuk-table__cell">Annotator 4</td>
-            <td class="govuk-table__cell">
-                {% if data['jobID'] == 4 and data['jobReassignType'] == 'success' %}
-                {{ "now" | govukDateTime }}
-                {% else %}
-                10 Febraury 2025 at 9:45am
-                {% endif %}
-            </td>
-            <td class="govuk-table__cell">
-                {% include "app/includes/status-tags/inc_FH36758-status.html" %}
-            </td>
-            <td class="govuk-table__cell">
-                <ul class="govuk-summary-list__actions-list">
-                    <li class="govuk-summary-list__actions-list-item">
-                        Reassign</span>
-                    </li>
-                    <li class="govuk-summary-list__actions-list-item">
-                        Archive</span>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-        <tr class="govuk-table__row">
-            <td class="govuk-table__cell">
-                Job 3
-            </td>
-            <td class="govuk-table__cell">
-                Supervisor
-            </td>
-            <td class="govuk-table__cell">Annotator 5</td>
-            <td class="govuk-table__cell">
-                {% if data['jobID'] == 3 and data['jobReassignType'] == 'success' %}
-                {{ "now" | govukDateTime }}
-                {% else %}
-                10 Febraury 2025 at 9:45am
-                {% endif %}
-            </td>
-            <td class="govuk-table__cell">
-                {% include "app/includes/status-tags/inc_BN78354-status.html" %}
-            </td>
-            <td class="govuk-table__cell">
-                <ul class="govuk-summary-list__actions-list">
-                    <li class="govuk-summary-list__actions-list-item">
-                        Reassign</span>
-                    </li>
-                    <li class="govuk-summary-list__actions-list-item">
-                        Archive</span>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-        <tr class="govuk-table__row">
-            <td class="govuk-table__cell">
-                Job 4
-            </td>
-            <td class="govuk-table__cell">
-                QA
-            </td>
-            <td class="govuk-table__cell">Annotator 6</td>
-            <td class="govuk-table__cell">
-                {% if data['jobID'] == 4 and data['jobReassignType'] == 'success' %}
-                {{ "now" | govukDateTime }}
-                {% else %}
-                10 Febraury 2025 at 9:45am
-                {% endif %}
-            </td>
-            <td class="govuk-table__cell">
-                {% include "app/includes/status-tags/inc_YE37261-status.html" %}
-            </td>
-            <td class="govuk-table__cell">
-                <ul class="govuk-summary-list__actions-list">
-                    <li class="govuk-summary-list__actions-list-item">
-                        Reassign</span>
-                    </li>
-                    <li class="govuk-summary-list__actions-list-item">
-                        Archive</span>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-        <tr class="govuk-table__row">
-            <td class="govuk-table__cell">
-                Job 5
-            </td>
-            <td class="govuk-table__cell">
-                Annotator
-            </td>
-            <td class="govuk-table__cell">Annotator 1</td>
-            <td class="govuk-table__cell">
-                {% if data['jobID'] == 5 and data['jobReassignType'] == 'success' %}
-                {{ "now" | govukDateTime }}
-                {% else %}
-                10 Febraury 2025 at 9:45am
-                {% endif %}
-            </td>
-            <td class="govuk-table__cell">
-                {% include "app/includes/status-tags/inc_FH36758-status.html" %}
-            </td>
-            <td class="govuk-table__cell">
-                <ul class="govuk-summary-list__actions-list">
-                    <li class="govuk-summary-list__actions-list-item">
-                        Reassign</span>
-                    </li>
-                    <li class="govuk-summary-list__actions-list-item">
-                        Archive</span>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-        <tr class="govuk-table__row">
-            <td class="govuk-table__cell">
-                Job 6
-            </td>
-            <td class="govuk-table__cell">
-                Supervisor
-            </td>
-            <td class="govuk-table__cell">Annotator 2</td>
-            <td class="govuk-table__cell">
-                {% if data['jobID'] == 5 and data['jobReassignType'] == 'success' %}
-                {{ "now" | govukDateTime }}
-                {% else %}
-                13 Febraury 2025 at 4:27pm
-                {% endif %}
-            </td>
-            <td class="govuk-table__cell">
-                {% include "app/includes/status-tags/inc_LV95472-status.html" %}
-            </td>
-            <td class="govuk-table__cell">
-                <ul class="govuk-summary-list__actions-list">
-                    <li class="govuk-summary-list__actions-list-item">
-                        Reassign</span>
-                    </li>
-                    <li class="govuk-summary-list__actions-list-item">
-                        Archive</span>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-        <tr class="govuk-table__row">
-            <td class="govuk-table__cell">
-                Job 7
-            </td>
-            <td class="govuk-table__cell">
-                Annotator
-            </td>
-            <td class="govuk-table__cell">Annotator 4</td>
-            <td class="govuk-table__cell">
-                {% if data['jobID'] == 7 and data['jobReassignType'] == 'success' %}
-                {{ "now" | govukDateTime }}
-                {% else %}
-                13 Febraury 2025 at 4:27pm
-                {% endif %}
-            </td>
-            <td class="govuk-table__cell">
-                {% include "app/includes/status-tags/inc_DJ54780-status.html" %}
-            </td>
-            <td class="govuk-table__cell">
-                <ul class="govuk-summary-list__actions-list">
-                    <li class="govuk-summary-list__actions-list-item">
-                        Reassign</span>
-                    </li>
-                    <li class="govuk-summary-list__actions-list-item">
-                        Archive</span>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-        <tr class="govuk-table__row">
-            <td class="govuk-table__cell">
-                Job 8
-            </td>
-            <td class="govuk-table__cell">
-                Supervisor
-            </td>
-            <td class="govuk-table__cell">Annotator 5</td>
-            <td class="govuk-table__cell">
-                {% if data['jobID'] == 8 and data['jobReassignType'] == 'success' %}
-                {{ "now" | govukDateTime }}
-                {% else %}
-                13 Febraury 2025 at 4:27pm
-                {% endif %}
-            </td>
-            <td class="govuk-table__cell">
-                {% include "app/includes/status-tags/inc_DJ54780-status.html" %}
-            </td>
-            <td class="govuk-table__cell">
-                <ul class="govuk-summary-list__actions-list">
-                    <li class="govuk-summary-list__actions-list-item">
-                        Reassign</span>
-                    </li>
-                    <li class="govuk-summary-list__actions-list-item">
-                        Archive</span>
-                    </li>
-                </ul>
-            </td>
-        </tr>
+        {% endfor %}
     </tbody>
 </table>
