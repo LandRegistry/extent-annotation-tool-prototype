@@ -22,7 +22,9 @@ href: "/admin/check-status/jobs-list-mvp"
       <h1 class="govuk-heading-l">Reassign {{ job.id }}</h1>
 
       {{ govukInsetText({
-      html: '<h2 class="govuk-heading-s">Current annotator</h2>' + annotators[job.annotatorIndex].text
+      html: '<p class="govuk-body">Annotator: <strong>' + annotators[job.annotatorIndex].text + '</strong></p>' +
+      '<p class="govuk-body">Job type: <strong>' + job.type + '</strong></p>' +
+      '<p class="govuk-body">Job status: <strong>' + job.status + '</strong></p>'
       }) }}
 
       <form class="form" action="/admin/check-status/reassign-job-mvp" method="post">
@@ -39,7 +41,6 @@ href: "/admin/check-status/jobs-list-mvp"
         {% endfor %}
 
         {{ govukRadios({
-        classes: "govuk-radios--small",
         name: 'newAnnotator',
         fieldset: {
         legend: {
