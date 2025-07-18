@@ -17,16 +17,15 @@ href: "/admin/check-status/jobs-list-mvp"
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <h1 class="govuk-heading-l">Confirm job to archive</h1>
+    <h1 class="govuk-heading-l">Archive {{ job.id }}</h1>
 
     <form class="form" action="/admin/check-status/confirm-archive-mvp" method="post">
 
       <input type="hidden" name="jobID" value="{{ job.jobIdQuery }}">
 
       {{ govukInsetText({
-      html: '<p class="govuk-body">Job ID: <strong>' + job.id + '</strong></p>' +
+      html: '<p class="govuk-body">Annotator: <strong>' + annotators[job.annotatorIndex].text + '</strong></p>' +
       '<p class="govuk-body">Job type: <strong>' + job.type + '</strong></p>' +
-      '<p class="govuk-body">Annotator: <strong>' + annotators[job.annotatorIndex].text + '</strong></p>' +
       '<p class="govuk-body">Job status: <strong>' + job.status + '</strong></p>'
       }) }}
 

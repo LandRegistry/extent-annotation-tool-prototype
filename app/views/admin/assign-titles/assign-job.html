@@ -2,26 +2,52 @@
 
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block pageTitle %}Assign Job – {{ serviceName }}{% endblock %}
+
+{% block beforeContent %}
+
+{{ govukPhaseBanner({
+tag: {
+text: "Prototype"
+},
+html: 'This is not a production service.'
+}) }}
+
+{{ govukBackLink({
+text: "Back to Upload a job",
+href: "/admin/assign-titles/upload-csv"
+}) }}
+
+{% endblock %}
 
 {% block content %}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+
+    {% if errorList and errorList.length > 0 %}
+    {{ govukErrorSummary({
+    titleText: "There is a problem",
+    errorList: errorList
+    }) }}
+    {% endif %}
 
     <h1 class="govuk-heading-l">Assign job</h1>
 
     <form class="form" action="/admin/assign-titles/assign-job" method="post">
 
       {{ govukRadios({
+      id: "jobType",
       name: "jobType",
       fieldset: {
       legend: { text: "Job type", classes: "govuk-fieldset__legend--m" }
       },
+      errorMessage: errors.jobType,
       items: [
-      { value: "Annotator", text: "Annotation" },
-      { value: "Supervisor", text: "Supervisor" },
-      { value: "QA", text: "Quality Assurance" }
+      { value: "Annotator", text: "Annotation", checked: data.jobType == "Annotator" },
+      { value: "Supervisor", text: "Supervisor", checked: data.jobType == "Supervisor" },
+      { value: "QA", text: "Quality Assurance", checked: data.jobType == "QA" }
       ]
       }) }}
 
@@ -29,15 +55,18 @@
       {% for person in annotators %}
       {% set radioItems = (radioItems.push({
       text: person.text,
-      value: loop.index0
+      value: loop.index0,
+      checked: data.selectAnnotator == loop.index0
       }), radioItems) %}
       {% endfor %}
 
       {{ govukRadios({
+      id: "selectAnnotator",
       name: "selectAnnotator",
       fieldset: {
       legend: { text: "Annotator name", classes: "govuk-fieldset__legend--m" }
       },
+      errorMessage: errors.selectAnnotator,
       items: radioItems
       }) }}
 

@@ -31,20 +31,40 @@ router.get('/admin/assign-titles/assign-job', function (req, res) {
 
 // POST for assigning a job
 router.post('/admin/assign-titles/assign-job', function (req, res) {
+    const selectedJobType = req.body.jobType;
+    const selectedAnnotator = req.body.selectAnnotator;
+    const errors = {};
+    const errorList = [];
+    if (!selectedJobType) {
+        const jobTypeError = { text: "Select a job type" };
+        errors.jobType = jobTypeError;
+        errorList.push({ text: jobTypeError.text, href: "#jobType" });
+    }
+    if (selectedAnnotator === undefined) {
+        const annotatorError = { text: "Select an annotator" };
+        errors.selectAnnotator = annotatorError;
+        errorList.push({ text: annotatorError.text, href: "#selectAnnotator" });
+    }
+    if (errorList.length > 0) {
+        res.render('admin/assign-titles/assign-job', {
+            annotators: annotatorNames,
+            errorList: errorList,
+            errors: errors,
+            data: req.body
+        });
+        return;
+    }
     if (!req.session.data.jobs) { req.session.data.jobs = jobs; }
     const sessionJobs = req.session.data.jobs;
     const newIdNumber = Math.max(...sessionJobs.map(j => j.jobIdQuery)) + 1;
-    const jobType = req.body.jobType;
-    const annotatorIndex = parseInt(req.body.selectAnnotator, 10);
+    const annotatorIndex = parseInt(selectedAnnotator, 10);
     const annotatorName = annotatorNames[annotatorIndex].text;
     const assignedOn = new Date().toLocaleString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true }).replace(',', '');
-    const newJob = { id: 'Job ' + newIdNumber, jobIdQuery: newIdNumber, type: jobType, annotatorIndex: annotatorIndex, assignedOn: assignedOn, status: 'To do', originalStatus: null };
+    const newJob = { id: 'Job ' + newIdNumber, jobIdQuery: newIdNumber, type: selectedJobType, annotatorIndex: annotatorIndex, assignedOn: assignedOn, status: 'To do', originalStatus: null };
     sessionJobs.unshift(newJob);
-    req.session.data.flashMessage = {
-        type: 'assign-success',
-        jobType: jobType,
-        annotatorName: annotatorName
-    };
+    req.session.data.flashMessage = { type: 'assign-success', jobType: selectedJobType, annotatorName: annotatorName };
+    delete req.session.data['jobType'];
+    delete req.session.data['selectAnnotator'];
     res.redirect('/admin/landing');
 });
 
