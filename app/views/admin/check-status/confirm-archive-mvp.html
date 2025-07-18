@@ -1,43 +1,41 @@
 {% extends "app/views/layouts/hmlr-admin.html" %}
-{% set currentPage="check" %}
 
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
-{% block pageTitle %}
-Unbranded page template – {{ serviceName }} – GOV.UK Prototype Kit
-{% endblock %}
+{% block pageTitle %}Confirm Archive – {{ serviceName }}{% endblock %}
 
 {% block beforeContent %}
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-
-{{ govukPhaseBanner({
-  tag: {
-  text: "Prototype"
-  },
-  html: 'This is not a production service.'
-  }) }}
-
 {{ govukBackLink({
-  text: "Back to jobs",
-  href: "/admin/check-status/jobs-list-mvp"
+text: "Back to jobs",
+href: "/admin/check-status/jobs-list-mvp"
 }) }}
 {% endblock %}
 
 {% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
 
-<h1 class="govuk-heading-l">Confirm job to archive</h1>
+    <h1 class="govuk-heading-l">Confirm job to archive</h1>
 
-<form class="form" action="/admin/check-status/jobs-list-mvp?alertType=archive-success" method="post">
-  <div class="govuk-inset-text">
-    <p>Job <strong>{{ data['jobID'] }}</strong> </p>
-    <p>Annotator <strong>{{ data['job1-user'] or "1" }}</strong> </p>
+    <form class="form" action="/admin/check-status/confirm-archive-mvp" method="post">
+
+      <input type="hidden" name="jobID" value="{{ job.jobIdQuery }}">
+
+      {{ govukInsetText({
+      html: '<p class="govuk-body">Job ID: <strong>' + job.id + '</strong></p>' +
+      '<p class="govuk-body">Job type: <strong>' + job.type + '</strong></p>' +
+      '<p class="govuk-body">Annotator: <strong>' + annotators[job.annotatorIndex].text + '</strong></p>' +
+      '<p class="govuk-body">Job status: <strong>' + job.status + '</strong></p>'
+      }) }}
+
+      {{ govukButton({
+      text: "Archive job"
+      }) }}
+
+    </form>
+
   </div>
-
-
-{{ govukButton({
-text: "Archive"
-}) }}
-
-</form>
-
+</div>
 {% endblock %}

@@ -1,15 +1,17 @@
-{% if data['alertType'] == 'archive-success' %}
+{# Check for the 'message' variable passed from the route, not the old 'data' object #}
+{% if message and message.type == 'archive-success' %}
 
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
 {% set html %}
-
-  <p class="govuk-body">Job <strong>{{ data['jobID'] }}</strong> archived.</p>
+  {# Use the properties from the message object #}
+  <p class="govuk-body">Job <strong>{{ message.jobId }}</strong> archived.</p>
 {% endset %}
 
 {{ govukNotificationBanner({
   html: html,
-  type: "success"
+  type: "success",
+  titleText: "Success"
 }) }}
 
 {% endif %}

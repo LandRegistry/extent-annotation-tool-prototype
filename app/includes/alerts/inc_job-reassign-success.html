@@ -1,15 +1,17 @@
-{% if data['alertType'] == 'reassign-success' %}
+{# Check for the 'message' variable passed from the route #}
+{% if message and message.type == 'reassign-success' %}
 
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
 {% set html %}
-
-  <p class="govuk-body"><strong>Job {{ data['jobID'] }}</strong> reassigned to <strong>{{ data['KP92143-user'] }}</strong></p>
+  {# Use the properties from the message object #}
+  <p class="govuk-body"><strong>Job {{ message.jobId }}</strong> reassigned to <strong>{{ message.annotatorName }}</strong></p>
 {% endset %}
 
 {{ govukNotificationBanner({
   html: html,
-  type: "success"
+  type: "success",
+  titleText: "Success"
 }) }}
 
 {% endif %}

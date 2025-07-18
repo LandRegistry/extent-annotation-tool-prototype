@@ -23,6 +23,21 @@ figure {
     padding: 0px;
 }
 
+.govuk-table__header,
+.govuk-table__cell {
+    white-space: nowrap;
+}
+
+.govuk-table .govuk-summary-list__actions-list {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.govuk-table .govuk-summary-list__actions-list-item:last-child {
+  margin-left: auto;
+}
+
 .sort-pannel {
     box-shadow: inset 0 0 0 1px #b1b4b6;
     border-width: 1px;
@@ -52,4 +67,3 @@ figure {
     margin-left: 20px;
     margin-right: 20px;
 }
-

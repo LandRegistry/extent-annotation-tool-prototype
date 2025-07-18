@@ -1,83 +1,61 @@
 {% extends "app/views/layouts/hmlr-admin.html" %}
-{% set currentPage="check" %}
+
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
-{% block pageTitle %}
-{{ serviceName }} – GOV.UK Prototype Kit
-{% endblock %}
+{% block pageTitle %}Reassign Job – {{ serviceName }}{% endblock %}
 
 {% block beforeContent %}
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-
-{{ govukPhaseBanner({
-  tag: {
-  text: "Prototype"
-  },
-  html: 'This is not a production service.'
-  }) }}
-
 {{ govukBackLink({
-  text: "Back to jobs",
-  href: "/admin/check-status/jobs-list-mvp"
+text: "Back to jobs",
+href: "/admin/check-status/jobs-list-mvp"
 }) }}
 {% endblock %}
 
 {% block content %}
 <div class="govuk-width-container">
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l">Reassign job {{ data['jobID'] }}</h1>
-        <div class="govuk-inset-text">
-          <h2 class="govuk-heading-s">Current annotator</h2>
-          {{ data['job1-user'] or "Annotator 1" }}
-        </div>
-        <form class="form" action="/admin/check-status/jobs-list-mvp?alertType=reassign-success" method="post">
-  
-          {{ govukRadios({
-            classes: "govuk-radios--small",
-            name: 'KP92143-user',
-            fieldset: {
-              legend: {
-                text: "Select the Annotator to reassign to",
-                classes: "govuk-fieldset__legend--s"
-              }
-            },
-            items: [
-              {
-                value: "Annotator 1",
-                text: "Annotator 1"
-              },
-              {
-                value: "Annotator 2",
-                text: "Annotator 2"
-              },
-              {
-                value: "Annotator 3",
-                text: "Annotator 3"
-              },
-              {
-                value: "Annotator 4",
-                text: "Annotator 4"
-              },
-              {
-                value: "Annotator 5",
-                text: "Annotator 5"
-              },
-              {
-                value: "Annotator 6",
-                text: "Annotator 6"
-              }
-            ]
-          }) }}
-        
-          {{ govukButton({
-            text: "Reassign"
-          }) }}
-        
-        </form>
-      </div>
-    </div>
-</div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
 
+      <h1 class="govuk-heading-l">Reassign {{ job.id }}</h1>
+
+      {{ govukInsetText({
+      html: '<h2 class="govuk-heading-s">Current annotator</h2>' + annotators[job.annotatorIndex].text
+      }) }}
+
+      <form class="form" action="/admin/check-status/reassign-job-mvp" method="post">
+
+        <input type="hidden" name="jobID" value="{{ job.jobIdQuery }}">
+
+        {% set radioItems = [] %}
+        {% for person in annotators %}
+        {% set radioItems = (radioItems.push({
+        text: person.text,
+        value: loop.index0,
+        checked: person.text == annotators[job.annotatorIndex].text
+        }), radioItems) %}
+        {% endfor %}
+
+        {{ govukRadios({
+        classes: "govuk-radios--small",
+        name: 'newAnnotator',
+        fieldset: {
+        legend: {
+        text: "Select the annotator to reassign to",
+        classes: "govuk-fieldset__legend--m"
+        }
+        },
+        items: radioItems
+        }) }}
+
+        {{ govukButton({
+        text: "Reassign"
+        }) }}
+
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}
