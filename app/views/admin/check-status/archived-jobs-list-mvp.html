@@ -21,6 +21,14 @@ href: "/admin/landing.html"
 {% endblock %}
 
 {% block content %}
+
+{% set archivedJobs = [] %}
+{% for job in jobs %}
+{% if job.status == 'Archived' %}
+{% set archivedJobs = (archivedJobs.push(job), archivedJobs) %}
+{% endif %}
+{% endfor %}
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-l">Jobs</h1>
@@ -36,6 +44,8 @@ href: "/admin/landing.html"
     </div>
 </div>
 
+{% if archivedJobs | length %}
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         {% include "app/includes/jobs/inc_sort-horizontal.html" %}
@@ -44,53 +54,16 @@ href: "/admin/landing.html"
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
-        <table class="govuk-table" id="dataTable">
-            <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header">Job ID</th>
-                    <th scope="col" class="govuk-table__header">Job type</th>
-                    <th scope="col" class="govuk-table__header">Annotator</th>
-                    <th scope="col" class="govuk-table__header">Assigned on</th>
-                    <th scope="col" class="govuk-table__header">Status</th>
-                </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-                {% for job in jobs %}
-                {% if job.status == 'Archived' %}
-                <tr class="govuk-table__row">
-                    <td class="govuk-table__cell">
-                        <a class="govuk-link"
-                            href="/admin/check-status/archived-titles-list-mvp?jobID={{ job.jobIdQuery }}&user={{ annotators[job.annotatorIndex].text | urlencode }}">{{
-                            job.id }}</a>
-                    </td>
-                    <td class="govuk-table__cell">
-                        {{ job.type }}
-                    </td>
-                    <td class="govuk-table__cell">
-                        {{ annotators[job.annotatorIndex].text }}
-                    </td>
-                    <td class="govuk-table__cell">
-                        {{ job.assignedOn }}
-                    </td>
-                    <td class="govuk-table__cell">
-                        {# Show the original status tag #}
-                        {% if job.originalStatus == 'In progress' %}
-                        <strong class="govuk-tag govuk-tag--yellow">In progress</strong>
-                        {% elseif job.originalStatus == 'Submitted' %}
-                        Submitted
-                        {% else %}
-                        <strong class="govuk-tag govuk-tag--blue">To do</strong>
-                        {% endif %}
-                        {# Show the Archived tag #}
-                        <strong class="govuk-tag govuk-tag--grey">Archived</strong>
-                    </td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
+        {% include "app/includes/jobs/inc_archived-jobs-table-mvp.html" %}
     </div>
 </div>
+
+{% else %}
+
+<p class="govuk-body">There are no archived jobs.</p>
+
+{% endif %}
+
 {% endblock %}
 
 {% block pageScripts %}

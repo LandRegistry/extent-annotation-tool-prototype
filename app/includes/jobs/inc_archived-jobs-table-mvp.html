@@ -1,39 +1,42 @@
-<table id="archived Table" class="govuk-table govuk-table--small-text-until-tablet">
+<table class="govuk-table" id="dataTable">
     <thead class="govuk-table__head">
         <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header">Job ID</th>
+            <th scope="col" class="govuk-table__header">Job type</th>
             <th scope="col" class="govuk-table__header">Annotator</th>
             <th scope="col" class="govuk-table__header">Assigned on</th>
             <th scope="col" class="govuk-table__header">Status</th>
-            <th scope="col" class="govuk-table__header"></th>
-        </tr>
         </tr>
     </thead>
     <tbody class="govuk-table__body">
+
+        {% for job in archivedJobs %}
         <tr class="govuk-table__row">
             <td class="govuk-table__cell">
-                <a href="/admin/check-status/archived-titles-list-mvp?jobID=1&user=Annotator%201" class="govuk-link">Job 1</a>
-            </td>
-            <td class="govuk-table__cell" id="job1-user">
-                {{ data['KP92143-user'] or "Annotator 1" }}
+                <a class="govuk-link"
+                    href="/admin/check-status/archived-titles-list-mvp?jobID={{ job.jobIdQuery }}&user={{ annotators[job.annotatorIndex].text | urlencode }}">{{
+                    job.id }}</a>
             </td>
             <td class="govuk-table__cell">
-                {% if data['jobID'] == 1 and data['alertType'] == 'reassign-success' %}
-                {{ "now" | govukDateTime }}
+                {{ job.type }}
+            </td>
+            <td class="govuk-table__cell">
+                {{ annotators[job.annotatorIndex].text }}
+            </td>
+            <td class="govuk-table__cell">
+                {{ job.assignedOn }}
+            </td>
+            <td class="govuk-table__cell">
+                {% if job.originalStatus == 'In progress' %}
+                <strong class="govuk-tag govuk-tag--yellow">In progress</strong>
+                {% elseif job.originalStatus == 'Submitted' %}
+                Submitted
                 {% else %}
-                10 Febraury 2025 at 9:45am
+                <strong class="govuk-tag govuk-tag--blue">To do</strong>
                 {% endif %}
-            </td>
-            <td class="govuk-table__cell">
-                {% include "app/includes/status-tags/inc_job1-status.html" %}
-            </td>
-            <td class="govuk-table__cell">
-                <ul class="govuk-summary-list__actions-list">
-                    <li class="govuk-summary-list__actions-list-item">
-                        <a class="govuk-link" href="/admin/check-status/reassign-job-mvp?jobID=1">Reassign</a>
-                    </li>
-                </ul>
+                <strong class="govuk-tag govuk-tag--grey">Archived</strong>
             </td>
         </tr>
+        {% endfor %}
     </tbody>
 </table>
