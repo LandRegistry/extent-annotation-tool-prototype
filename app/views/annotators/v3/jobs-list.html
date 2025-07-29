@@ -1,0 +1,125 @@
+{% extends "app/views/layouts/your-jobs.html" %}
+
+{% block pageTitle %}
+Assignments – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {% include "app/includes/alerts/inc_title-complete.html" %}
+    <h1 class="govuk-heading-l">
+      <span class="govuk-caption-l">Welcome Wall, Nick</span>
+      Your jobs
+    </h1>
+    <h2 class="govuk-heading-m">Job 1</h2>
+    <ul class="govuk-task-list">
+      {% if data['QR84291Status'] != 'complete' %}
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="/annotators/v3/titles/QR84291/entries-task-list">
+            QR84291
+          </a>
+        </div>
+        {% include "app/includes/status-tags/inc_QR84291-status.html" %}
+      </li>
+      {% endif %}
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="/annotators/v3/titles/KP92143/entries-task-list" aria-describedby="task-list-1-status">
+            KP92143
+          </a>
+        </div>
+        {% include "app/includes/status-tags/inc_KP92143-status.html" %}
+      </li>
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            TM65087
+          </a>
+        </div>
+        {% include "app/includes/status-tags/inc_TM65087-status.html" %}
+      </li>
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            WX41629
+          </a>
+        </div>
+        {% include "app/includes/status-tags/inc_WX41629-status.html" %}
+      </li>
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            BN78354
+          </a>
+        </div>
+        {% include "app/includes/status-tags/inc_BN78354-status.html" %}
+      </li>
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            GS23916
+          </a>
+        </div>
+        {% include "app/includes/status-tags/inc_GS23916-status.html" %}
+      </li>
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            FH36758
+          </a>
+        </div>
+        {% include "app/includes/status-tags/inc_FH36758-status.html" %}
+      </li>
+
+      <!--
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+            LV95472
+        </div>
+        {% include "app/includes/status-tags/inc_LV95472-status.html" %}
+      </li>
+    -->
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            CZ16835
+          </a>
+        </div>
+        {% include "app/includes/status-tags/inc_CZ16835-status.html" %}
+      </li>
+
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+          <a class="govuk-link govuk-task-list__link" href="#" aria-describedby="task-list-1-status">
+            DJ54780
+          </a>
+        </div>
+        {% include "app/includes/status-tags/inc_DJ54780-status.html" %}
+      </li>
+
+      <!--
+      <li class="govuk-task-list__item govuk-task-list__item--with-link">
+        <div class="govuk-task-list__name-and-hint">
+            YE37261
+        </div>
+        {% include "app/includes/status-tags/inc_YE37261-status.html" %}
+      </li>
+      -->
+
+    </ul>
+  </div>
+</div>
+
+
+
+{% endblock %}

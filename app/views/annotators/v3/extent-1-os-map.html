@@ -58,30 +58,33 @@ href: "/annotators/v2/titles/QR84291/entries-task-list"
   </div>
 
   <div class="govuk-grid-column-one-third">
-    <div>
-      <h2 class="govuk-heading-m">Text 1 of 4</h2>
+    <form action="/annotators/v3/titles/QR84291/entries-task-list" method="post" novalidate>
+      <div>
+        <h2 class="govuk-heading-m">Text 1 of 4</h2>
 
-      <div class="entry-container">
-        {% include "app/includes/entries/QR84291/inc_QR84291-entry-1.html" %}
-      </div>
+        <div class="entry-container">
+          {% include "app/includes/entries/QR84291/inc_QR84291-entry-1.html" %}
+        </div>
 
-      {% include "app/includes/annotators/entry-extent-match-radios.html" %}
+        {% include "app/includes/annotators/entry-extent-match-radios.html" %}
 
-      <div class="govuk-button-group">
-        <button id="prevBtn" class="govuk-button govuk-button--secondary" data-module="govuk-button">
-          Previous shape
-        </button>
-        <br />
-        <button id="nextBtn" class="govuk-button govuk-button--primary" data-module="govuk-button">
-          Save and next shape
-        </button>
-        <input="hidden" name="QR84291Status" value="started">
+        <div id="hidden-answers-container"></div>
+
+        <div class="govuk-button-group">
+          <button id="prevBtn" class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button">
+            Previous shape
+          </button>
           <br />
+          <button id="nextBtn" class="govuk-button govuk-button--primary" data-module="govuk-button" type="submit">
+            Save and next shape
+          </button>
+          <input type="hidden" name="QR84291Status" value="started">
+          <br />
+        </div>
       </div>
-
-    </div>
-    <div style="height:480px;">
-    </div>
+      <div style="height:480px;">
+      </div>
+    </form>
   </div>
 
 </div>
@@ -165,12 +168,12 @@ href: "/annotators/v2/titles/QR84291/entries-task-list"
   ///////////////////////////////////////////////
   $(document).ready(function () {
 
-    // This single function now handles all styling for polygons and annotations
+    let answers = new Array(extents.length).fill(null);
+
     const styleFunction = function (feature) {
       const featureType = feature.get('type');
       const currentExtentId = extents[count].features[0].properties.id;
 
-      // Style for Polygons
       if (featureType === 'polygon') {
         const isActive = (feature.getId() === currentExtentId);
         if (isActive) {
@@ -186,27 +189,18 @@ href: "/annotators/v2/titles/QR84291/entries-task-list"
         }
       }
 
-      // Style for Annotations - NOW ALWAYS BLUE
       if (featureType === 'annotation') {
         const annotationLabel = feature.get('label');
-        const styleColor = 'rgba(0, 102, 204, 1)'; // Set color to blue permanently
-
+        const styleColor = 'rgba(0, 102, 204, 1)';
         const style = new ol.style.Style({
-          stroke: new ol.style.Stroke({
-            color: styleColor,
-            width: 4
-          })
+          stroke: new ol.style.Stroke({ color: styleColor, width: 4 })
         });
-
-        // ONLY add text if the feature is a Point
         if (feature.getGeometry().getType() === 'Point') {
           style.setText(new ol.style.Text({
-            text: annotationLabel,
-            font: 'bold 20px Arial',
+            text: annotationLabel, font: 'bold 20px Arial',
             fill: new ol.style.Fill({ color: styleColor }),
             stroke: new ol.style.Stroke({ color: 'white', width: 3 }),
-            offsetX: 20,
-            textAlign: 'left'
+            offsetX: 20, textAlign: 'left'
           }));
         }
         return style;
@@ -273,18 +267,87 @@ href: "/annotators/v2/titles/QR84291/entries-task-list"
       const styleBox = document.getElementById('style-box');
       const descriptionLabel = document.getElementById('style-description');
       if (!styleBox || !descriptionLabel) return;
-
       const currentId = extents[count].features[0].properties.id;
-
       styleBox.style.setProperty('background-color', 'rgba(0, 102, 204, 0.4)', 'important');
       styleBox.style.setProperty('border', '2px solid rgba(0, 102, 204, 1)', 'important');
-
       let description = "Edged and tinted blue";
       if (currentId === 1000) {
         description += " and numbered 2";
       }
-
       descriptionLabel.textContent = description;
+    }
+
+    function saveAnswerState() {
+      const selectedRadio = document.querySelector('input[name="defineRelationship"]:checked');
+      if (selectedRadio) { answers[count] = selectedRadio.value; }
+      else { answers[count] = null; }
+    }
+
+    function restoreAnswerState() {
+      const savedAnswer = answers[count];
+      const radios = document.querySelectorAll('input[name="defineRelationship"]');
+      radios.forEach(radio => {
+        radio.checked = (radio.value === savedAnswer);
+      });
+    }
+
+    // Error handling
+    function clearError() {
+      const summary = document.querySelector('.govuk-error-summary');
+      if (summary) summary.remove();
+
+      const inlineError = document.getElementById('radio-error-message');
+      if (inlineError) inlineError.remove();
+
+      const formGroup = document.querySelector('.govuk-radios').closest('.govuk-form-group');
+      if (formGroup) {
+        formGroup.classList.remove('govuk-form-group--error');
+      }
+    }
+
+    function showError(message) {
+      clearError();
+
+      // Add error class to the radio group
+      const formGroup = document.querySelector('.govuk-radios').closest('.govuk-form-group');
+      if (formGroup) {
+        formGroup.classList.add('govuk-form-group--error');
+        const errorMessage = document.createElement('p');
+        errorMessage.id = 'radio-error-message';
+        errorMessage.className = 'govuk-error-message';
+        errorMessage.innerHTML = `<span class="govuk-visually-hidden">Error:</span> ${message}`;
+        formGroup.insertBefore(errorMessage, formGroup.querySelector('.govuk-fieldset'));
+      }
+
+      // Create and display the error summary box at the top of the page
+      const errorSummary = document.createElement('div');
+      errorSummary.className = 'govuk-error-summary';
+      errorSummary.setAttribute('role', 'alert');
+      errorSummary.setAttribute('tabindex', '-1');
+      errorSummary.innerHTML = `
+        <h2 class="govuk-error-summary__title" id="error-summary-title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            <li><a href="#defineRelationship">${message}</a></li>
+          </ul>
+        </div>
+      `;
+
+      const mainContent = document.querySelector('.govuk-grid-row');
+      if (mainContent) {
+        mainContent.parentElement.insertBefore(errorSummary, mainContent);
+      }
+      errorSummary.focus();
+    }
+
+    const radiosContainer = document.querySelector('.govuk-radios');
+    if (radiosContainer) {
+      radiosContainer.addEventListener('change', () => {
+        saveAnswerState();
+        clearError(); // Clear error as soon as a selection is made
+      });
     }
 
     map.once('postrender', function (event) {
@@ -298,21 +361,37 @@ href: "/annotators/v2/titles/QR84291/entries-task-list"
     }
 
     document.getElementById('prevBtn').onclick = function () {
+      clearError();
+      saveAnswerState();
       count--;
       if (count < 0) { count = totalPages - 1; }
+      restoreAnswerState();
       updateNavigationButtons(); updateCounter(); updateStyleDescription();
       MAP_CONFIG.draw_source.changed(); zoomToCurrentExtent();
     };
 
-    document.getElementById('nextBtn').onclick = function () {
-      if (count === totalPages - 1) {
-        window.location.href = '/annotators/v2/titles/QR84291/entries-task-list?KP92143A3Status=complete';
+    document.getElementById('nextBtn').addEventListener('click', function (event) {
+      const selectedRadio = document.querySelector('input[name="defineRelationship"]:checked');
+      if (!selectedRadio) {
+        event.preventDefault();
+        showError("Select if the shape is included in the text");
         return;
       }
-      count++;
-      updateNavigationButtons(); updateCounter(); updateStyleDescription();
-      MAP_CONFIG.draw_source.changed(); zoomToCurrentExtent();
-    };
+
+      clearError();
+      saveAnswerState();
+
+      if (count === totalPages - 1) {
+        console.log('Final answers:', answers);
+        // Let the form submit
+      } else {
+        event.preventDefault();
+        count++;
+        restoreAnswerState();
+        updateNavigationButtons(); updateCounter(); updateStyleDescription();
+        MAP_CONFIG.draw_source.changed(); zoomToCurrentExtent();
+      }
+    });
 
     function updateNavigationButtons() {
       const nextBtn = document.getElementById('nextBtn');
@@ -330,7 +409,7 @@ href: "/annotators/v2/titles/QR84291/entries-task-list"
     zoomToCurrentExtent();
   });
 
-  // Using the clean array with 9 extents
+  // Extents array
   let extents = [
     { "features": [{ "geometry": { "coordinates": [[[532042.65, 181758.8], [532046.85, 181752.4], [532047.15, 181751.9], [532047.5, 181751.45], [532048.3, 181750.1], [532051.95, 181752.55], [532052.25, 181752.75], [532051.5, 181754.0], [532050.8, 181755.0], [532046.45, 181761.45], [532042.65, 181758.8]]], "type": "Polygon" }, "properties": { "id": 1000 }, "type": "Feature" }], "type": "FeatureCollection" },
     { "features": [{ "geometry": { "coordinates": [[[532032.2, 181739.4], [532036.2, 181734.35], [532042.7, 181739.1], [532046.3, 181741.7], [532048.35, 181743.2], [532053.1, 181736.4], [532060.45, 181740.65], [532051.95, 181752.55], [532048.3, 181750.1], [532047.5, 181751.45], [532046.85, 181752.4], [532042.65, 181758.8], [532036.3, 181754.65], [532040.7, 181747.9], [532032.7, 181742.95], [532034.1, 181740.7], [532032.2, 181739.4]]], "type": "Polygon" }, "properties": { "id": 1001 }, "type": "Feature" }], "type": "FeatureCollection" },
