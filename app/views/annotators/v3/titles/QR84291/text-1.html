@@ -1,4 +1,8 @@
 {% extends "app/views/layouts/entry-annotation.html" %}
+
+{% set backLinkText = "Back to Task overview" %}
+{% set backLinkHref = "/annotators/v3/titles/QR84291/entries-task-list" %} 
+
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 
@@ -11,10 +15,13 @@ QR84291 – {{ serviceName }} – GOV.UK Prototype Kit
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
 {% block beforeContent %}
+
+{{ super() }}
 {{ govukBackLink({
-text: "Back to Task overview",
-href: "/annotators/v2/titles/QR84291/entries-task-list"
+text: backLinkText,
+href: backLinkHref
 }) }}
+
 {% endblock %}
 
 {% block content %}
@@ -260,7 +267,7 @@ href: "/annotators/v2/titles/QR84291/entries-task-list"
           ol.extent.extend(extentToFit, arrowPart.getGeometry().getExtent());
         });
       }
-      map.getView().fit(extentToFit, { padding: [80, 80, 80, 80], duration: 500, maxZoom: 18 });
+      map.getView().fit(extentToFit, { padding: [80, 80, 80, 80], maxZoom: 18 });
     }
 
     function updateStyleDescription() {
@@ -401,6 +408,23 @@ href: "/annotators/v2/titles/QR84291/entries-task-list"
       if (count === 0) { prevBtn.style.display = 'none'; }
       else { prevBtn.style.display = 'inline-block'; }
     }
+
+    // --- Add event listeners for custom zoom buttons ---
+    document.getElementById('zoom-in').addEventListener('click', function () {
+      const view = map.getView();
+      view.animate({
+        zoom: view.getZoom() + 1,
+        duration: 250
+      });
+    });
+
+    document.getElementById('zoom-out').addEventListener('click', function () {
+      const view = map.getView();
+      view.animate({
+        zoom: view.getZoom() - 1,
+        duration: 250
+      });
+    });
 
     loadAllExtents();
     updateNavigationButtons();

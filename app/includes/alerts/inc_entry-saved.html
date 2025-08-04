@@ -1,27 +1,15 @@
-{% if data['KP92143A3Status'] == 'complete' %}
-
-{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-
-{% set html %}
-  <p class="govuk-body"><strong>Text 1</strong> marked as done.</p> 
-{% endset %}
-
-{{ govukNotificationBanner({
-  html: html,
-  type: "success"
-}) }}
-
-{% elseif data['FH36758A1Status'] == 'complete' %}
-
-{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-
-{% set html %}
-  <p class="govuk-body">Entry <strong>A1</strong> saved.</p> 
-{% endset %}
-
-{{ govukNotificationBanner({
-  html: html,
-  type: "success"
-}) }}
-
+{% if data['annotationComplete'] == 'true' %}
+<div class="govuk-notification-banner govuk-notification-banner--success" role="alert"
+  aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+  <div class="govuk-notification-banner__header">
+    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+      Success
+    </h2>
+  </div>
+  <div class="govuk-notification-banner__content">
+    <p class="govuk-body">
+      <strong>{{ data['completedText'] | safe }}</strong> has been marked as done.
+    </p>
+  </div>
+</div>
 {% endif %}

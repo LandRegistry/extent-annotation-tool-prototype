@@ -149,3 +149,23 @@ router.get('/admin/check-status/archived-jobs-list-mvp', function (req, res) {
         jobs: req.session.data.jobs
     });
 });
+
+// Success for marking an entry as done
+router.post('/annotators/v3/save-answers', function (req, res) {
+    const titleNumber = req.body.titleNumber;
+    const completedText = req.body.completedTextTitle;
+    req.session.data['annotationComplete'] = 'true';
+    req.session.data['completedText'] = completedText;
+    res.redirect(`/annotators/v3/titles/${titleNumber}/entries-task-list`);
+
+})
+router.get('/annotators/v3/titles/:titleNumber/entries-task-list', function (req, res) {
+    const annotationComplete = req.session.data['annotationComplete'];
+    const completedText = req.session.data['completedText'];
+    delete req.session.data['annotationComplete'];
+    delete req.session.data['completedText'];
+    res.render(`annotators/v3/titles/${req.params.titleNumber}/entries-task-list`, {
+        annotationComplete: annotationComplete,
+        completedText: completedText
+    });
+});

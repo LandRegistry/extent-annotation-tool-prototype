@@ -1,6 +1,10 @@
 {% extends "app/views/layouts/entry-annotation.html" %}
+
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% set backLinkText = "Back to Task overview" %}
+{% set backLinkHref = "/annotators/v3/titles/KP92143/entries-task-list" %} 
 
 {% block pageTitle %}
 KP92143 – {{ serviceName }} – GOV.UK Prototype Kit
@@ -11,10 +15,13 @@ KP92143 – {{ serviceName }} – GOV.UK Prototype Kit
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
 {% block beforeContent %}
+
+{{ super() }}
 {{ govukBackLink({
-text: "Back to Task overview",
-href: "/annotators/v3/titles/KP92143/entries-task-list"
+text: backLinkText,
+href: backLinkHref
 }) }}
+
 {% endblock %}
 
 {% block content %}
@@ -58,9 +65,13 @@ href: "/annotators/v3/titles/KP92143/entries-task-list"
   </div>
 
   <div class="govuk-grid-column-one-third">
-    <form action="/annotators/v3/titles/QR84291/entries-task-list" method="post" novalidate>
+    <form action="/annotators/v3/save-answers" method="post" novalidate>
+
+      <input type="hidden" name="titleNumber" value="KP92143">
+      <input type="hidden" name="completedTextTitle" id="completed-text-title">
+
       <div>
-        <h2 class="govuk-heading-m">Text 1 of 4</h2>
+        <h2 class="govuk-heading-m">Text 1</h2>
 
         <div class="entry-container">
           {% include "app/includes/entries/QR84291/inc_QR84291-entry-1.html" %}
@@ -170,7 +181,7 @@ href: "/annotators/v3/titles/KP92143/entries-task-list"
 
     let answers = new Array(extents.length).fill(null);
 
-    // Function now returns the map pattern and a URL for CSS style box
+    // Function to return the map pattern and a URL for CSS style box
     function createHatch(type, color = 'black', spacing = 10) {
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
@@ -221,8 +232,8 @@ href: "/annotators/v3/titles/KP92143/entries-task-list"
     });
 
     const inactiveStyle = new ol.style.Style({
-      fill: new ol.style.Fill({ color: 'rgba(100, 100, 100, 0.3)' }),
-      stroke: new ol.style.Stroke({ color: 'rgba(100, 100, 100, 0.2)', width: 1 })
+            fill: new ol.style.Fill({ color: 'rgba(100, 100, 100, 0.1)' }),
+            stroke: new ol.style.Stroke({ color: 'rgba(100, 100, 100, 0.2)', width: 2 })
     });
 
     const styleFunction = function (feature) {
@@ -253,7 +264,7 @@ href: "/annotators/v3/titles/KP92143/entries-task-list"
       const currentFeature = MAP_CONFIG.draw_source.getFeatureById(currentExtentId);
       if (currentFeature) {
         const extent = currentFeature.getGeometry().getExtent();
-        map.getView().fit(extent, { padding: [80, 80, 80, 80], duration: 500, maxZoom: 18 });
+        map.getView().fit(extent, { padding: [80, 80, 80, 80], maxZoom: 18 });
       }
     }
 
@@ -392,6 +403,23 @@ href: "/annotators/v3/titles/KP92143/entries-task-list"
       else { prevBtn.style.display = 'inline-block'; }
     }
 
+    //  Event listeners for custom zoom buttons 
+    document.getElementById('zoom-in').addEventListener('click', function () {
+      const view = map.getView();
+      view.animate({
+        zoom: view.getZoom() + 1,
+        duration: 250
+      });
+    });
+
+    document.getElementById('zoom-out').addEventListener('click', function () {
+      const view = map.getView();
+      view.animate({
+        zoom: view.getZoom() - 1,
+        duration: 250
+      });
+    });
+
     loadAllExtents();
     updateNavigationButtons();
     updateCounter();
@@ -420,6 +448,14 @@ href: "/annotators/v3/titles/KP92143/entries-task-list"
       }], "type": "FeatureCollection"
     }
   ]
+</script>
+
+<script type="text/javascript">
+  // This script gets the title of the text and puts it in the hidden input
+  $(document).ready(function () {
+    const textTitle = document.querySelector('.govuk-grid-column-one-third h2.govuk-heading-m').textContent.trim();
+    document.getElementById('completed-text-title').value = textTitle;
+  });
 </script>
 
 {% endblock %}
