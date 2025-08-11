@@ -1,0 +1,100 @@
+{% extends "app/views/layouts/your-jobs.html" %}
+
+{% set backLinkText = "Back to your jobs" %}
+{% set backLinkHref = "/annotators/v3/jobs-list" %}
+
+{% block pageTitle %}
+Assignments – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+
+{{ super() }}
+{{ govukBackLink({
+text: backLinkText,
+href: backLinkHref
+}) }}
+
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {% include "app/includes/alerts/inc_entry-saved.html" %}
+
+    <h1 class="govuk-heading-l">Task overview</h1>
+
+    <h2 class="govuk-heading-m">BN78354</h2>
+
+    <form action="/annotators/3/jobs-list?QR84291Status=complete" method="post">
+      <ul class="govuk-task-list">
+        <li class="govuk-task-list__item govuk-task-list__item--with-link">
+          <div class="govuk-task-list__name-and-hint">
+            <a class="govuk-link govuk-task-list__link" href="/annotators/v3/titles/BN78354/text-1"
+              aria-describedby=" task-list-1-status">
+              Text 1
+            </a>
+          </div>
+          {% if KP92143A3Status == 'started' %}
+          <div class="govuk-task-list__status" id="task-list-1-status">
+            <strong class="govuk-tag govuk-tag--yellow">
+              In progress
+            </strong>
+          </div>
+          {% elseif data['KP92143A3Status'] == 'complete' %}
+          <div class="govuk-task-list__status" id="task-list-1-status">
+            Done
+          </div>
+          {% else %}
+          <div class="govuk-task-list__status" id="task-list-1-status">
+            <strong class="govuk-tag govuk-tag--blue">
+              To do
+            </strong>
+          </div>
+          {% endif %}
+        </li>
+        <li class="govuk-task-list__item govuk-task-list__item--with-link">
+          <div class="govuk-task-list__name-and-hint">
+            <a class="govuk-link govuk-task-list__link" href="/annotators/v3/titles/BN78354/text-2" aria-describedby="task-list-1-status">
+              Text 2
+            </a>
+          </div>
+          <div class="govuk-task-list__status" id="task-list-1-status">
+            Done
+          </div>
+        </li>
+
+        <li class="govuk-task-list__item govuk-task-list__item--with-link">
+          <div class="govuk-task-list__name-and-hint">
+            <a class="govuk-link govuk-task-list__link" href="/annotators/v3/titles/BN78354/text-3" aria-describedby="task-list-1-status">
+              Text 3
+            </a>
+          </div>
+          <div class="govuk-task-list__status" id="task-list-1-status">
+            Done
+          </div>
+        </li>
+
+                <li class="govuk-task-list__item govuk-task-list__item--with-link">
+          <div class="govuk-task-list__name-and-hint">
+            <a class="govuk-link govuk-task-list__link" href="/annotators/v3/titles/BN78354/text-4" aria-describedby="task-list-1-status">
+              Text 4
+            </a>
+          </div>
+          <div class="govuk-task-list__status" id="task-list-1-status">
+            Done
+          </div>
+        </li>
+
+      </ul>
+      <div class="govuk-button-group">
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Submit task
+        </button>
+      </div>
+  </div>
+  </form>
+
+
+
+  {% endblock %}

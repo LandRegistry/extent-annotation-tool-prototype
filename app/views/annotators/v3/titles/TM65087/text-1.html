@@ -1,0 +1,387 @@
+{% extends "app/views/layouts/entry-annotation.html" %}
+
+{% set backLinkText = "Back to Task overview" %}
+{% set backLinkHref = "/annotators/v3/titles/TM65087/entries-task-list" %} 
+
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% block pageTitle %}
+TM65087 – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block beforeContent %}
+
+{{ super() }}
+{{ govukBackLink({
+text: backLinkText,
+href: backLinkHref
+}) }}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-one-half">
+    <h2 class="govuk-heading-m">
+      <span>Shape</span>
+      <span id="counter">1 of 5</span>
+    </h2>
+
+    <div class="style-container">
+      <div id="style-box"></div>
+      <div id="style-description" class="govuk-label">Style</div>
+    </div>
+
+    <div>
+      <div class="zoom-controls">
+        <button id="zoom-in" class="zoom ol-zoom-in zoom-in" type="button" title="Zoom in">+<span
+            class="govuk-visually-hidden">Zoom in</span></button>
+        <button id="zoom-out" class="zoom ol-zoom-out zoom-out" type="button" title="Zoom out">-
+          <span class="govuk-visually-hidden">Zoom out</span>
+        </button>
+      </div>
+    </div>
+    <div id="map" class="maintain-llc-map" tabindex="0" aria-label="Image showing search extent">
+      <noscript>
+        <div id="nojs" class="nojs-content">
+          <div id="nojs-message" class="notification-summary">
+            <p>
+              You need to turn on JavaScript to use this service. Or, for assistance, please use the
+              following link -
+              <a id="“assistance-link”"
+                href="https://customerhelp.landregistry.gov.uk/local-land-charges">https://customerhelp.landregistry.gov.uk/local-land-charges</a>
+            </p>
+          </div>
+        </div>
+      </noscript>
+    </div>
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+    <form action="/annotators/v3/save-answers" method="post" novalidate>
+
+      <input type="hidden" name="titleNumber" value="TM65087">
+      <input type="hidden" name="completedTextTitle" id="completed-text-title">
+
+      <div>
+        <h2 class="govuk-heading-m">Text 1</h2>
+
+        <div class="entry-container">
+          {% include "app/includes/entries/QR84291/inc_QR84291-entry-1.html" %}
+        </div>
+
+        {% include "app/includes/annotators/entry-extent-match-radios.html" %}
+
+        <div id="hidden-answers-container"></div>
+
+        <div class="govuk-button-group">
+          <button id="prevBtn" class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button">
+            Previous shape
+          </button>
+          <br />
+          <button id="nextBtn" class="govuk-button govuk-button--primary" data-module="govuk-button" type="submit">
+            Save and next shape
+          </button>
+          <input type="hidden" name="QR84291Status" value="started">
+          <br />
+        </div>
+      </div>
+      <div style="height:480px;">
+      </div>
+    </form>
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block pageScripts %}
+
+<link rel="stylesheet" href="/public/map/css/map-styles.css">
+
+<script src="/public/map/jquery.min.js"></script>
+<script src="/public/map/ol.js"></script>
+<script src="/public/map/proj4.js"></script>
+
+<script type="text/javascript">
+
+  // ===================================================================
+  // PART 1: PAGE-SPECIFIC CONFIGURATION
+  // ===================================================================
+
+  function createHatch(type, color = 'black', spacing = 10, angle = 45) {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    const pixelRatio = 1;
+    const size = spacing * pixelRatio;
+    canvas.width = size; canvas.height = size;
+    context.strokeStyle = color;
+    context.lineWidth = pixelRatio * 2;
+    context.save();
+
+    if (type === 'right-diagonal') {
+      context.translate(size / 2, size / 2);
+      context.rotate(angle * Math.PI / 180);
+      context.translate(-size / 2, -size / 2);
+    }
+
+    if (type === 'right-diagonal') {
+      context.moveTo(0, size); context.lineTo(size, 0);
+    }
+
+    context.stroke();
+    context.restore();
+    return {
+      pattern: context.createPattern(canvas, 'repeat'),
+      dataURL: canvas.toDataURL()
+    };
+  }
+
+  const styleDefinitions = [
+    { type: 'solid', fill: 'rgba(255, 255, 126, 0.8)', stroke: 'rgba(74, 178, 0, 1)', description: "Edged and tinted" },
+    { type: 'solid', fill: 'rgba(255, 202, 211, 0.8)', stroke: 'rgba(74, 178, 0, 1)', description: "Edged and tinted" },
+    { type: 'solid', fill: 'rgba(255, 202, 211, 0.8)', stroke: 'rgba(74, 178, 0, 1)', description: "Edged and tinted" },
+    { type: 'hatch', pattern: 'right-diagonal', color: 'rgb(0, 51, 255)', stroke: 'rgba(0, 51, 255, 1)', description: "Edged and hatched" },
+    { type: 'solid', fill: 'rgba(214, 144, 103, 0.8)', stroke: 'rgba(74, 178, 0, 1)', description: "Edged and tinted" }
+  ];
+
+  const generatedHatches = {};
+  styleDefinitions.forEach((def, index) => {
+    if (def.type === 'hatch') {
+      generatedHatches[index] = createHatch(def.pattern, def.color, 10);
+    }
+  });
+
+  const activeStyles = styleDefinitions.map((def, index) => {
+    if (def.type === 'solid') {
+      return new ol.style.Style({
+        fill: new ol.style.Fill({ color: def.fill }),
+        stroke: new ol.style.Stroke({ color: def.stroke, width: 2.5 })
+      });
+    } else { // 'hatch'
+      return new ol.style.Style({
+        fill: new ol.style.Fill({ color: generatedHatches[index].pattern }),
+        stroke: new ol.style.Stroke({ color: def.stroke, width: 2.5 })
+      });
+    }
+  });
+
+  const inactiveStyle = new ol.style.Style({
+            fill: new ol.style.Fill({ color: 'rgba(100, 100, 100, 0.1)' }),
+            stroke: new ol.style.Stroke({ color: 'rgba(100, 100, 100, 0.2)', width: 2 })
+  });
+
+  let extents = [
+    { "features": [{ "geometry": { "coordinates": [[[359886.84, 175969.94], [359879.86, 175975.83], [359876.665, 175978.52], [359879.035, 175974.847], [359880.522, 175972.601], [359884.66, 175966.15], [359886.84, 175969.94]]], "type": "Polygon" }, "properties": { "id": 1000 }, "type": "Feature" }], "type": "FeatureCollection" },
+    { "features": [{ "geometry": { "coordinates": [[[359870.49, 175978.08], [359869.961, 175978.953], [359869.402, 175978.342], [359870.182, 175977.686], [359870.49, 175978.08]]], "type": "Polygon" }, "properties": { "id": 1001 }, "type": "Feature" }], "type": "FeatureCollection" },
+    { "features": [{ "geometry": { "coordinates": [[[359869.311, 175979.722], [359869.645, 175979.442], [359868.807, 175980.737], [359868.035, 175980.144], [359868.958, 175979.367], [359869.311, 175979.722]]], "type": "Polygon" }, "properties": { "id": 1002 }, "type": "Feature" }], "type": "FeatureCollection" },
+    { "features": [{ "geometry": { "coordinates": [[[359880.522, 175972.601], [359879.035, 175974.847], [359879.86, 175975.83], [359876.665, 175978.52], [359873.27, 175981.38], [359871.505, 175982.866], [359868.807, 175980.737], [359869.645, 175979.442], [359870.077, 175979.079], [359869.961, 175978.953], [359870.49, 175978.08], [359877.09, 175972.53], [359884.66, 175966.15], [359880.522, 175972.601]]], "type": "Polygon" }, "properties": { "id": 1003 }, "type": "Feature" }], "type": "FeatureCollection" },
+    { "features": [{ "geometry": { "coordinates": [[[359892.59, 175989.09], [359892.65, 175989.12], [359892.73, 175989.15], [359892.79, 175989.16], [359897.49, 175990.04], [359897.04, 175992.49], [359890.5, 175991.29], [359890.32, 175991.29], [359890.29, 175991.3], [359890.24, 175991.308], [359892.464, 175988.929], [359892.545, 175988.839], [359892.5, 175988.917], [359892.5, 175988.97], [359892.52, 175989.02], [359892.59, 175989.09]]], "type": "Polygon" }, "properties": { "id": 1004 }, "type": "Feature" }], "type": "FeatureCollection" }
+  ];
+
+  // ===================================================================
+  // PART 2: MAIN APPLICATION LOGIC
+  // ===================================================================
+  $(window).on('load', function () {
+    let count = 0;
+    let answers = new Array(extents.length).fill(null);
+
+    const styleFunction = function (feature) {
+      const currentExtentId = extents[count].features[0].properties.id;
+      if (feature.getId() === currentExtentId) {
+        const styleIndex = feature.get('style_index') || 0;
+        return activeStyles[styleIndex];
+      }
+      return inactiveStyle;
+    };
+
+    proj4.defs("EPSG:27700", "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +datum=OSGB36 +units=m +no_defs");
+    ol.proj.proj4.register(proj4);
+    const projection = ol.proj.get('EPSG:27700');
+
+    const vectorSource = new ol.source.Vector();
+    const vectorLayer = new ol.layer.Vector({ source: vectorSource, style: styleFunction });
+    const baseLayer = new ol.layer.Tile({ source: new ol.source.OSM() });
+
+    const map = new ol.Map({
+      target: 'map',
+      layers: [baseLayer, vectorLayer],
+      view: new ol.View({
+        projection: projection,
+        center: [359880, 175980],
+        zoom: 18
+      }),
+      controls: []
+    });
+
+    function loadAllExtents() {
+      vectorSource.clear();
+      const format = new ol.format.GeoJSON();
+      extents.forEach((extentData, index) => {
+        const feature = format.readFeatures(extentData, {
+          dataProjection: 'EPSG:27700',
+          featureProjection: 'EPSG:27700'
+        })[0];
+        feature.setId(feature.get('id'));
+        feature.set('style_index', index);
+        vectorSource.addFeature(feature);
+      });
+    }
+
+    function zoomToCurrentExtent() {
+      const currentFeature = vectorSource.getFeatureById(extents[count].features[0].properties.id);
+      if (currentFeature) {
+        const view = map.getView();
+        const extent = currentFeature.getGeometry().getExtent();
+        view.fit(extent, { padding: [20, 20, 20, 20], duration: 0 }); // Fit instantly with less padding
+
+        // After fitting, zoom out by one level
+        const fittedZoom = view.getZoom();
+        if (fittedZoom > view.getMinZoom()) {
+          view.setZoom(fittedZoom - 2);
+        }
+      }
+    }
+
+    function updateStyleDescription() {
+      const styleBox = document.getElementById('style-box');
+      const descriptionLabel = document.getElementById('style-description');
+      if (!styleBox || !descriptionLabel) return;
+
+      const styleDef = styleDefinitions[count];
+
+      styleBox.style.backgroundImage = 'none';
+      styleBox.style.backgroundColor = 'transparent';
+      styleBox.style.border = '2px solid #b1b4b6';
+      descriptionLabel.textContent = styleDef.description;
+
+      if (styleDef.type === 'solid') {
+        styleBox.style.backgroundColor = styleDef.fill;
+        styleBox.style.border = `2px solid ${styleDef.stroke}`;
+      } else { // 'hatch'
+        styleBox.style.border = `2px solid ${styleDef.stroke}`;
+        styleBox.style.backgroundColor = ol.color.asString(styleDef.stroke); // Use solid color for swatch
+      }
+    }
+
+    function saveAnswerState() {
+      const selectedRadio = document.querySelector('input[name="defineRelationship"]:checked');
+      if (selectedRadio) { answers[count] = selectedRadio.value; }
+      else { answers[count] = null; }
+    }
+
+    function restoreAnswerState() {
+      const savedAnswer = answers[count];
+      const radios = document.querySelectorAll('input[name="defineRelationship"]');
+      radios.forEach(radio => { radio.checked = (radio.value === savedAnswer); });
+    }
+
+    function clearError() {
+      const summary = document.querySelector('.govuk-error-summary');
+      if (summary) summary.remove();
+      const inlineError = document.getElementById('radio-error-message');
+      if (inlineError) inlineError.remove();
+      const formGroup = document.querySelector('.govuk-radios').closest('.govuk-form-group');
+      if (formGroup) formGroup.classList.remove('govuk-form-group--error');
+    }
+
+    function showError(message) {
+      clearError();
+      const formGroup = document.querySelector('.govuk-radios').closest('.govuk-form-group');
+      if (formGroup) {
+        formGroup.classList.add('govuk-form-group--error');
+        const errorMessage = document.createElement('p');
+        errorMessage.id = 'radio-error-message';
+        errorMessage.className = 'govuk-error-message';
+        errorMessage.innerHTML = `<span class="govuk-visually-hidden">Error:</span> ${message}`;
+        formGroup.insertBefore(errorMessage, formGroup.querySelector('.govuk-fieldset'));
+      }
+      const errorSummary = document.createElement('div');
+      errorSummary.className = 'govuk-error-summary';
+      errorSummary.setAttribute('role', 'alert');
+      errorSummary.setAttribute('tabindex', '-1');
+      errorSummary.innerHTML = `<h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2><div class="govuk-error-summary__body"><ul class="govuk-list govuk-error-summary__list"><li><a href="#defineRelationship">${message}</a></li></ul></div>`;
+      const mainContent = document.querySelector('.govuk-grid-row');
+      if (mainContent) mainContent.parentElement.insertBefore(errorSummary, mainContent);
+      errorSummary.focus();
+    }
+
+    const radiosContainer = document.querySelector('.govuk-radios');
+    if (radiosContainer) {
+      radiosContainer.addEventListener('change', () => {
+        saveAnswerState();
+        clearError();
+      });
+    }
+
+    const totalPages = extents.length;
+    const counterElement = document.getElementById('counter');
+    function updateCounter() {
+      counterElement.textContent = (count + 1) + " of " + totalPages;
+    }
+
+    document.getElementById('prevBtn').onclick = function () {
+      clearError(); saveAnswerState();
+      count--;
+      if (count < 0) { count = totalPages - 1; }
+      restoreAnswerState();
+      updateNavigationButtons(); updateCounter(); updateStyleDescription();
+      vectorSource.changed(); zoomToCurrentExtent();
+    };
+
+    document.getElementById('nextBtn').addEventListener('click', function (event) {
+      const selectedRadio = document.querySelector('input[name="defineRelationship"]:checked');
+      if (!selectedRadio) {
+        event.preventDefault(); showError("Select if the shape is included in the text");
+        return;
+      }
+      clearError(); saveAnswerState();
+      if (count === totalPages - 1) {
+        console.log('Final answers:', answers);
+      } else {
+        event.preventDefault();
+        count++;
+        restoreAnswerState();
+        updateNavigationButtons(); updateCounter(); updateStyleDescription();
+        vectorSource.changed(); zoomToCurrentExtent();
+      }
+    });
+
+    function updateNavigationButtons() {
+      const nextBtn = document.getElementById('nextBtn');
+      const prevBtn = document.getElementById('prevBtn');
+      if (count === totalPages - 1) { nextBtn.textContent = 'Mark text as done'; }
+      else { nextBtn.textContent = 'Save and next shape'; }
+      if (count === 0) { prevBtn.style.display = 'none'; }
+      else { prevBtn.style.display = 'inline-block'; }
+    }
+
+    document.getElementById('zoom-in').addEventListener('click', function () {
+      map.getView().animate({ zoom: map.getView().getZoom() + 1, duration: 250 });
+    });
+
+    document.getElementById('zoom-out').addEventListener('click', function () {
+      map.getView().animate({ zoom: map.getView().getZoom() - 1, duration: 250 });
+    });
+
+    // --- UPDATED: Initialization sequence ---
+    loadAllExtents();
+    updateNavigationButtons();
+    updateCounter();
+    updateStyleDescription();
+
+    map.once('postrender', function () {
+      baseLayer.setOpacity(0.1);
+      zoomToCurrentExtent(); // Call initial zoom only after the first render
+    });
+  });
+</script>
+
+{% endblock %}

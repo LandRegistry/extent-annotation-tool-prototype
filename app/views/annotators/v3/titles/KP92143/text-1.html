@@ -1,0 +1,461 @@
+{% extends "app/views/layouts/entry-annotation.html" %}
+
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% set backLinkText = "Back to Task overview" %}
+{% set backLinkHref = "/annotators/v3/titles/KP92143/entries-task-list" %} 
+
+{% block pageTitle %}
+KP92143 – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block beforeContent %}
+
+{{ super() }}
+{{ govukBackLink({
+text: backLinkText,
+href: backLinkHref
+}) }}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+
+  <div class="govuk-grid-column-one-half">
+    <h2 class="govuk-heading-m">
+      <span>Shape</span>
+      <span id="counter">1 of 3</span>
+    </h2>
+
+    <div class="style-container">
+      <div id="style-box"></div>
+      <div id="style-description" class="govuk-label">Style</div>
+    </div>
+
+    <div>
+      <div class="zoom-controls">
+        <button id="zoom-in" class="zoom ol-zoom-in zoom-in" type="button" title="Zoom in">+<span
+            class="govuk-visually-hidden">Zoom in</span></button>
+        <button id="zoom-out" class="zoom ol-zoom-out zoom-out" type="button" title="Zoom out">-
+          <span class="govuk-visually-hidden">Zoom out</span>
+        </button>
+      </div>
+    </div>
+    <div id="map" class="maintain-llc-map" tabindex="0" aria-label="Image showing search extent">
+      <noscript>
+        <div id="nojs" class="nojs-content">
+          <div id="nojs-message" class="notification-summary">
+            <p>
+              You need to turn on JavaScript to use this service. Or, for assistance, please use the
+              following link -
+              <a id="“assistance-link”"
+                href="https://customerhelp.landregistry.gov.uk/local-land-charges">https://customerhelp.landregistry.gov.uk/local-land-charges</a>
+            </p>
+          </div>
+        </div>
+      </noscript>
+    </div>
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+    <form action="/annotators/v3/save-answers" method="post" novalidate>
+
+      <input type="hidden" name="titleNumber" value="KP92143">
+      <input type="hidden" name="completedTextTitle" id="completed-text-title">
+
+      <div>
+        <h2 class="govuk-heading-m">Text 1</h2>
+
+        <div class="entry-container">
+          {% include "app/includes/entries/QR84291/inc_QR84291-entry-1.html" %}
+        </div>
+
+        {% include "app/includes/annotators/entry-extent-match-radios.html" %}
+
+        <div id="hidden-answers-container"></div>
+
+        <div class="govuk-button-group">
+          <button id="prevBtn" class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button">
+            Previous shape
+          </button>
+          <br />
+          <button id="nextBtn" class="govuk-button govuk-button--primary" data-module="govuk-button" type="submit">
+            Save and next shape
+          </button>
+          <input type="hidden" name="QR84291Status" value="started">
+          <br />
+        </div>
+      </div>
+      <div style="height:480px;">
+      </div>
+    </form>
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block pageScripts %}
+
+<link rel="stylesheet" href="/public/map/css/map-styles.css">
+
+<script src="/public/map/jquery.min.js"></script>
+
+<script src="/public/map/ol.js"></script>
+<script src="/public/map/proj4.js"></script>
+<script src="/public/map/union.js"></script>
+<script src="/public/map/draw_hole.js"></script>
+
+<script src="/public/map/hatching_style.js"></script>
+<script src="/public/map/map_styles.js"></script>
+
+<script src="/public/map/master_map_vector_layer_fixed.js"></script>
+<script src="/public/map/snap_to_vector_layer.js"></script>
+
+<script src="/public/map/map_undo_v1.js"></script>
+<script src="/public/map/map_controls.js"></script>
+<script src="/public/map/map_helpers_v1.js"></script>
+
+<script src="/public/map/map_config.js"></script>
+
+<script type="text/javascript">
+  var termsLink = "";
+  var mastermap_api_key = "{{ data.API_KEY }}";
+  var map_base_layer_view_name = "m0100";
+  var wfs_server_url = "{{ data.WFS_URL }}";
+  var wmts_server_url = "{{ data.WMTS_URL }}";
+
+  MAP_CONFIG.setBaseLayer(MAP_CONFIG.base_layer_zindex, MAP_CONFIG.mastermapResolutions, MAP_CONFIG.projection, termsLink, false);
+</script>
+
+<script src="/public/map/map.js"></script>
+<script src="/public/map/save_geometries.js"></script>
+
+<script src="/public/map/keyboard_panning.js"></script>
+<script src="/public/map/postcode_actions.js"></script>
+<!-- <script src="/public/map/custom_controls.js"></script> -->
+<script>
+  // Initialize the extent counter
+  let currentPage = 1;
+  const totalPages = 14;
+  const counterElement = document.getElementById('counter');
+  const nextButton = document.getElementById('nextBtn');
+  const prevButton = document.getElementById('prevBtn');
+  // Update extent counter function
+  function updateCounter() {
+    counterElement.textContent = currentPage + " of " + totalPages;
+  }
+  // Next button click handler
+  nextButton.addEventListener('click', function () {
+    currentPage = (currentPage % totalPages) + 1; // Loop back to 1 after reaching 14
+    updateCounter();
+  });
+  // Previous button click handler
+  prevButton.addEventListener('click', function () {
+    currentPage = currentPage - 1;
+    if (currentPage < 1) {
+      currentPage = totalPages; // Loop back to 14 if going below 1
+    }
+    updateCounter();
+  });
+</script>
+
+<script type="text/javascript">
+  // Add open layers map controls
+  var controls;
+  var center = [];
+  let count = 0;
+  MAP_HELPERS.init_controls(map, controls);
+
+  ///////////////////////////////////////////////
+  // initialise 
+  ///////////////////////////////////////////////
+  $(document).ready(function () {
+
+    let answers = new Array(extents.length).fill(null);
+
+    // Function to return the map pattern and a URL for CSS style box
+    function createHatch(type, color = 'black', spacing = 10) {
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      const pixelRatio = window.devicePixelRatio;
+      const size = spacing * pixelRatio;
+      canvas.width = size; canvas.height = size;
+      context.strokeStyle = color;
+      context.lineWidth = pixelRatio * 3;
+
+      if (type === 'vertical') {
+        context.moveTo(size / 2, 0); context.lineTo(size / 2, size);
+      }
+      context.stroke();
+      return {
+        pattern: context.createPattern(canvas, 'repeat'),
+        dataURL: canvas.toDataURL() // Create an image URL from the canvas for the style box
+      };
+    }
+
+    // Extent style definitions
+    const styleDefinitions = [
+      { type: 'solid', fill: 'rgba(214, 144, 103, 0.6)', stroke: 'rgba(87, 82, 76, 1)', description: "Edged and tinted" },
+      { type: 'hatch', pattern: 'vertical', color: 'rgb(102, 51, 0)', stroke: 'rgba(62, 62, 60, 1)', description: "Edged and hatched" },
+      { type: 'hatch', pattern: 'vertical', color: 'rgb(102, 51, 0)', stroke: 'rgba(62, 62, 60, 1)', description: "Edged and hatched" }
+    ];
+
+    // Pre-generate hatch patterns to use in the map and the style box
+    const generatedHatches = {};
+    styleDefinitions.forEach((def, index) => {
+      if (def.type === 'hatch') {
+        generatedHatches[index] = createHatch(def.pattern, def.color, 10);
+      }
+    });
+
+    // Create the OpenLayers styles from the definitions
+    const activeStyles = styleDefinitions.map((def, index) => {
+      if (def.type === 'solid') {
+        return new ol.style.Style({
+          fill: new ol.style.Fill({ color: def.fill }),
+          stroke: new ol.style.Stroke({ color: def.stroke, width: 2.5 })
+        });
+      } else { // 'hatch'
+        return new ol.style.Style({
+          fill: new ol.style.Fill({ color: generatedHatches[index].pattern }),
+          stroke: new ol.style.Stroke({ color: def.stroke, width: 2.5 })
+        });
+      }
+    });
+
+    const inactiveStyle = new ol.style.Style({
+            fill: new ol.style.Fill({ color: 'rgba(100, 100, 100, 0.1)' }),
+            stroke: new ol.style.Stroke({ color: 'rgba(100, 100, 100, 0.2)', width: 2 })
+    });
+
+    const styleFunction = function (feature) {
+      const currentExtentId = extents[count].features[0].properties.id;
+      if (feature.getId() === currentExtentId) {
+        const styleIndex = feature.get('style_index') || 0;
+        return activeStyles[styleIndex];
+      }
+      return inactiveStyle;
+    };
+
+    MAP_CONFIG.draw_layer.setStyle(styleFunction);
+
+    function loadAllExtents() {
+      MAP_CONFIG.draw_source.clear();
+      const format = new ol.format.GeoJSON();
+      extents.forEach((extentData, index) => {
+        const feature = format.readFeatures(extentData)[0];
+        feature.setId(feature.get('id'));
+        const styleIndex = (index === 0) ? 0 : 1;
+        feature.set('style_index', styleIndex);
+        MAP_CONFIG.draw_source.addFeature(feature);
+      });
+    }
+
+    function zoomToCurrentExtent() {
+      const currentExtentId = extents[count].features[0].properties.id;
+      const currentFeature = MAP_CONFIG.draw_source.getFeatureById(currentExtentId);
+      if (currentFeature) {
+        const extent = currentFeature.getGeometry().getExtent();
+        map.getView().fit(extent, { padding: [80, 80, 80, 80], maxZoom: 18 });
+      }
+    }
+
+    // Function to render hatches in the style box
+    function updateStyleDescription() {
+      const styleBox = document.getElementById('style-box');
+      const descriptionLabel = document.getElementById('style-description');
+      if (!styleBox || !descriptionLabel) return;
+
+      const styleIndex = (count === 0) ? 0 : 1;
+      const styleDef = styleDefinitions[styleIndex];
+
+      // Reset box style
+      styleBox.style.backgroundImage = 'none';
+      styleBox.style.backgroundColor = 'transparent';
+      styleBox.style.border = '2px solid #b1b4b6';
+
+      descriptionLabel.textContent = styleDef.description;
+
+      if (styleDef.type === 'solid') {
+        styleBox.style.backgroundColor = styleDef.fill;
+        styleBox.style.border = `2px solid ${styleDef.stroke}`;
+      } else { // 'hatch'
+        styleBox.style.border = `2px solid ${styleDef.stroke}`;
+        styleBox.style.backgroundColor = 'white'; // Add a white background for the hatch
+        styleBox.style.backgroundImage = `url(${generatedHatches[styleIndex].dataURL})`;
+      }
+    }
+
+    function saveAnswerState() {
+      const selectedRadio = document.querySelector('input[name="defineRelationship"]:checked');
+      if (selectedRadio) { answers[count] = selectedRadio.value; }
+      else { answers[count] = null; }
+    }
+
+    function restoreAnswerState() {
+      const savedAnswer = answers[count];
+      const radios = document.querySelectorAll('input[name="defineRelationship"]');
+      radios.forEach(radio => {
+        radio.checked = (radio.value === savedAnswer);
+      });
+    }
+
+    function clearError() {
+      const summary = document.querySelector('.govuk-error-summary');
+      if (summary) summary.remove();
+      const inlineError = document.getElementById('radio-error-message');
+      if (inlineError) inlineError.remove();
+      const formGroup = document.querySelector('.govuk-radios').closest('.govuk-form-group');
+      if (formGroup) {
+        formGroup.classList.remove('govuk-form-group--error');
+      }
+    }
+
+    function showError(message) {
+      clearError();
+      const formGroup = document.querySelector('.govuk-radios').closest('.govuk-form-group');
+      if (formGroup) {
+        formGroup.classList.add('govuk-form-group--error');
+        const errorMessage = document.createElement('p');
+        errorMessage.id = 'radio-error-message';
+        errorMessage.className = 'govuk-error-message';
+        errorMessage.innerHTML = `<span class="govuk-visually-hidden">Error:</span> ${message}`;
+        formGroup.insertBefore(errorMessage, formGroup.querySelector('.govuk-fieldset'));
+      }
+      const errorSummary = document.createElement('div');
+      errorSummary.className = 'govuk-error-summary';
+      errorSummary.setAttribute('role', 'alert');
+      errorSummary.setAttribute('tabindex', '-1');
+      errorSummary.innerHTML = `
+        <h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2>
+        <div class="govuk-error-summary__body"><ul class="govuk-list govuk-error-summary__list">
+            <li><a href="#defineRelationship">${message}</a></li>
+        </ul></div>`;
+      const mainContent = document.querySelector('.govuk-grid-row');
+      if (mainContent) {
+        mainContent.parentElement.insertBefore(errorSummary, mainContent);
+      }
+      errorSummary.focus();
+    }
+
+    const radiosContainer = document.querySelector('.govuk-radios');
+    if (radiosContainer) {
+      radiosContainer.addEventListener('change', () => {
+        saveAnswerState();
+        clearError();
+      });
+    }
+
+    map.once('postrender', function (event) {
+      MAP_CONFIG.base_layer.setOpacity(0.1);
+    });
+
+    const totalPages = extents.length;
+    const counterElement = document.getElementById('counter');
+    function updateCounter() {
+      counterElement.textContent = (count + 1) + " of " + totalPages;
+    }
+
+    document.getElementById('prevBtn').onclick = function () {
+      clearError();
+      saveAnswerState();
+      count--;
+      if (count < 0) { count = totalPages - 1; }
+      restoreAnswerState();
+      updateNavigationButtons(); updateCounter(); updateStyleDescription();
+      MAP_CONFIG.draw_source.changed(); zoomToCurrentExtent();
+    };
+
+    document.getElementById('nextBtn').addEventListener('click', function (event) {
+      const selectedRadio = document.querySelector('input[name="defineRelationship"]:checked');
+      if (!selectedRadio) {
+        event.preventDefault();
+        showError("Select if the shape is included in the text");
+        return;
+      }
+      clearError();
+      saveAnswerState();
+      if (count === totalPages - 1) {
+        console.log('Final answers:', answers);
+      } else {
+        event.preventDefault();
+        count++;
+        restoreAnswerState();
+        updateNavigationButtons(); updateCounter(); updateStyleDescription();
+        MAP_CONFIG.draw_source.changed(); zoomToCurrentExtent();
+      }
+    });
+
+    function updateNavigationButtons() {
+      const nextBtn = document.getElementById('nextBtn');
+      const prevBtn = document.getElementById('prevBtn');
+      if (count === totalPages - 1) { nextBtn.textContent = 'Mark text as done'; }
+      else { nextBtn.textContent = 'Save and next shape'; }
+      if (count === 0) { prevBtn.style.display = 'none'; }
+      else { prevBtn.style.display = 'inline-block'; }
+    }
+
+    //  Event listeners for custom zoom buttons 
+    document.getElementById('zoom-in').addEventListener('click', function () {
+      const view = map.getView();
+      view.animate({
+        zoom: view.getZoom() + 1,
+        duration: 250
+      });
+    });
+
+    document.getElementById('zoom-out').addEventListener('click', function () {
+      const view = map.getView();
+      view.animate({
+        zoom: view.getZoom() - 1,
+        duration: 250
+      });
+    });
+
+    loadAllExtents();
+    updateNavigationButtons();
+    updateCounter();
+    updateStyleDescription();
+    zoomToCurrentExtent();
+  });
+
+  // Array of 3 extents
+  let extents = [
+    {
+      "features": [{
+        "geometry": { "coordinates": [[[359547.15, 175151.8], [359542.65, 175148], [359541.887, 175147.353], [359538.05, 175144.1], [359539.878, 175141.062], [359540.05, 175138.824], [359545.359, 175133.834], [359545.832, 175133.303], [359553.889, 175125.601], [359564.64, 175114.519], [359566.4, 175112.15], [359568.254, 175113.768], [359568.355, 175113.856], [359564, 175119], [359563.5, 175119.7], [359549.192, 175136.569], [359548.078, 175137.882], [359543.245, 175143.565], [359543.305, 175143.675], [359544.273, 175144.512], [359548.947, 175148.555], [359554.082, 175152.251], [359555.248, 175153.19], [359554.6, 175153.95], [359554.463, 175153.888], [359554.342, 175153.841], [359554.219, 175153.798], [359554.095, 175153.76], [359553.968, 175153.728], [359553.841, 175153.7], [359547.15, 175151.8]]], "type": "Polygon" },
+        "properties": { "id": 1000 }, "type": "Feature"
+      }], "type": "FeatureCollection"
+    },
+    {
+      "features": [{
+        "geometry": { "coordinates": [[[359569.55, 175114.9], [359564, 175119], [359568.355, 175113.856], [359569.55, 175114.9]]], "type": "Polygon" },
+        "properties": { "id": 1001 }, "type": "Feature"
+      }], "type": "FeatureCollection"
+    },
+    {
+      "features": [{
+        "geometry": { "coordinates": [[[359556.67, 175149.372], [359557.95, 175149.95], [359560.2, 175151.75], [359562.05, 175153.2], [359568.05, 175157.85], [359574.2, 175162.6], [359579.2, 175166.5], [359584.458, 175170.563], [359590.2, 175175.0], [359594.75, 175176.9], [359604.2, 175173.5], [359605.7, 175173.45], [359623.35, 175166.75], [359637.7, 175161.35], [359640.4, 175160.3], [359646.324, 175157.501], [359649.5, 175156.0], [359652.25, 175154.35], [359652.4, 175154.3], [359652.6, 175154.15], [359652.8, 175153.95], [359652.95, 175153.9], [359653.15, 175153.65], [359653.55, 175153.25], [359653.8, 175152.5], [359653.95, 175152.25], [359654.15, 175151.6], [359654.2, 175151.25], [359654.35, 175150.75], [359654.4, 175150.4], [359654.4, 175149.8], [359654.5, 175149.1], [359654.4, 175148.8], [359654.3, 175148.65], [359651.15, 175138.65], [359651.0, 175138.3], [359650.9, 175137.95], [359650.7, 175137.4], [359650.55, 175137.0], [359650.4, 175136.7], [359650.3, 175136.4], [359649.95, 175135.9], [359649.75, 175135.5], [359649.5, 175135.2], [359649.3, 175134.8], [359649.05, 175134.6], [359648.95, 175134.3], [359648.8, 175134.0], [359648.6, 175133.8], [359648.2, 175133.0], [359647.95, 175131.8], [359647.9, 175131.5], [359647.8, 175131.0], [359647.7, 175130.3], [359647.6, 175130.0], [359647.6, 175129.65], [359647.5, 175128.95], [359647.4, 175128.6], [359647.4, 175128.25], [359647.2, 175127.5], [359646.8, 175126.3], [359646.0, 175124.25], [359643.15, 175116.224], [359637.942, 175100.03], [359636.704, 175097.691], [359636.279, 175096.888], [359635.6, 175094.6], [359631.772, 175096.037], [359631.539, 175096.118], [359631.31, 175096.209], [359631.084, 175096.309], [359630.863, 175096.418], [359630.646, 175096.537], [359630.435, 175096.664], [359627.15, 175101.5], [359620.55, 175097.7], [359622.907, 175094.833], [359624.75, 175095.95], [359628.55, 175092.75], [359633.2, 175088.85], [359635.332, 175087.088], [359635.5, 175087.3], [359637.05, 175089.25], [359637.346, 175089.623], [359637.6, 175089.5], [359639.8, 175094.1], [359641.479, 175099.677], [359642.521, 175102.751], [359642.9, 175102.7], [359643.7, 175105.1], [359644.2, 175106.6], [359646.1, 175111.7], [359652.0, 175127.9], [359654.0, 175133.75], [359654.1, 175133.7], [359655.05, 175137.1], [359655.42, 175138.33], [359655.6, 175138.9], [359656.34, 175141.417], [359656.015, 175141.751], [359657.4, 175144.95], [359659.35, 175150.5], [359659.5, 175150.9], [359660.35, 175153.423], [359661.4, 175156.4], [359662.15, 175158.45], [359663.05, 175161.1], [359662.135, 175163.027], [359659.774, 175168.0], [359657.039, 175161.167], [359656.068, 175159.952], [359654.628, 175159.613], [359653.125, 175159.788], [359652.454, 175159.866], [359650.182, 175160.743], [359649.506, 175161.005], [359649.0, 175161.2], [359647.156, 175161.907], [359642.35, 175163.75], [359636.4, 175166.0], [359633.7, 175167.0], [359630.248, 175168.335], [359624.0, 175170.75], [359621.35, 175171.8], [359616.2, 175173.7], [359612.2, 175175.15], [359608.4, 175176.5], [359607.9, 175176.75], [359603.2, 175178.25], [359602.71, 175178.43], [359602.7, 175178.4], [359601.7, 175178.8], [359597.2, 175180.25], [359596.15, 175180.65], [359591.8, 175182.4], [359589.95, 175183.15], [359585.0, 175185.1], [359584.0, 175185.5], [359575.27, 175192.021], [359571.75, 175194.65], [359570.707, 175192.863], [359570.331, 175192.219], [359571.137, 175191.686], [359571.462, 175191.471], [359575.547, 175188.769], [359580.761, 175184.344], [359583.754, 175182.289], [359584.548, 175181.477], [359584.932, 175180.326], [359585.124, 175179.367], [359584.356, 175177.64], [359581.966, 175174.977], [359581.583, 175174.569], [359580.452, 175173.654], [359576.093, 175170.126], [359562.049, 175158.712], [359558.934, 175156.158], [359555.248, 175153.19], [359554.082, 175152.251], [359548.947, 175148.555], [359549.486, 175147.964], [359549.707, 175147.722], [359552.05, 175145.155], [359556.67, 175149.372]]], "type": "Polygon" },
+        "properties": { "id": 1002 }, "type": "Feature"
+      }], "type": "FeatureCollection"
+    }
+  ]
+</script>
+
+<script type="text/javascript">
+  // This script gets the title of the text and puts it in the hidden input
+  $(document).ready(function () {
+    const textTitle = document.querySelector('.govuk-grid-column-one-third h2.govuk-heading-m').textContent.trim();
+    document.getElementById('completed-text-title').value = textTitle;
+  });
+</script>
+
+{% endblock %}
