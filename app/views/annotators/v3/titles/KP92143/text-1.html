@@ -35,8 +35,26 @@ href: backLinkHref
     </h2>
 
     <div class="style-container">
-      <div id="style-box"></div>
-      <div id="style-description" class="govuk-label">Style</div>
+      <dl class="govuk-summary-list govuk-summary-list--no-border">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Edged
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <span id="stroke-description"></span>
+            <span id="stroke-box" class="style-preview-box"></span>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Fill
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <span id="fill-description"></span>
+            <span id="fill-box" class="style-preview-box"></span>
+          </dd>
+        </div>
+      </dl>
     </div>
 
     <div>
@@ -49,18 +67,6 @@ href: backLinkHref
       </div>
     </div>
     <div id="map" class="maintain-llc-map" tabindex="0" aria-label="Image showing search extent">
-      <noscript>
-        <div id="nojs" class="nojs-content">
-          <div id="nojs-message" class="notification-summary">
-            <p>
-              You need to turn on JavaScript to use this service. Or, for assistance, please use the
-              following link -
-              <a id="“assistance-link”"
-                href="https://customerhelp.landregistry.gov.uk/local-land-charges">https://customerhelp.landregistry.gov.uk/local-land-charges</a>
-            </p>
-          </div>
-        </div>
-      </noscript>
     </div>
   </div>
 
@@ -104,6 +110,29 @@ href: backLinkHref
 
 {% block pageScripts %}
 
+<style>
+  .style-container .govuk-summary-list__row {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  .style-container .govuk-summary-list__key {
+    width: 10%;
+  }
+  .style-container .govuk-summary-list__value {
+    width: 30%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  .style-preview-box {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #b1b4b6;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+</style>
 <link rel="stylesheet" href="/public/map/css/map-styles.css">
 
 <script src="/public/map/jquery.min.js"></script>
@@ -134,38 +163,11 @@ href: backLinkHref
 
   MAP_CONFIG.setBaseLayer(MAP_CONFIG.base_layer_zindex, MAP_CONFIG.mastermapResolutions, MAP_CONFIG.projection, termsLink, false);
 </script>
-
 <script src="/public/map/map.js"></script>
 <script src="/public/map/save_geometries.js"></script>
 
 <script src="/public/map/keyboard_panning.js"></script>
 <script src="/public/map/postcode_actions.js"></script>
-<!-- <script src="/public/map/custom_controls.js"></script> -->
-<script>
-  // Initialize the extent counter
-  let currentPage = 1;
-  const totalPages = 14;
-  const counterElement = document.getElementById('counter');
-  const nextButton = document.getElementById('nextBtn');
-  const prevButton = document.getElementById('prevBtn');
-  // Update extent counter function
-  function updateCounter() {
-    counterElement.textContent = currentPage + " of " + totalPages;
-  }
-  // Next button click handler
-  nextButton.addEventListener('click', function () {
-    currentPage = (currentPage % totalPages) + 1; // Loop back to 1 after reaching 14
-    updateCounter();
-  });
-  // Previous button click handler
-  prevButton.addEventListener('click', function () {
-    currentPage = currentPage - 1;
-    if (currentPage < 1) {
-      currentPage = totalPages; // Loop back to 14 if going below 1
-    }
-    updateCounter();
-  });
-</script>
 
 <script type="text/javascript">
   // Add open layers map controls
@@ -201,14 +203,14 @@ href: backLinkHref
       };
     }
 
-    // Extent style definitions
+    // Extent style definitions (Original restored)
     const styleDefinitions = [
       { type: 'solid', fill: 'rgba(214, 144, 103, 0.6)', stroke: 'rgba(87, 82, 76, 1)', description: "Edged and tinted" },
       { type: 'hatch', pattern: 'vertical', color: 'rgb(102, 51, 0)', stroke: 'rgba(62, 62, 60, 1)', description: "Edged and hatched" },
       { type: 'hatch', pattern: 'vertical', color: 'rgb(102, 51, 0)', stroke: 'rgba(62, 62, 60, 1)', description: "Edged and hatched" }
     ];
 
-    // Pre-generate hatch patterns to use in the map and the style box
+    // Pre-generate hatch patterns to use in the map and the style box (Original restored)
     const generatedHatches = {};
     styleDefinitions.forEach((def, index) => {
       if (def.type === 'hatch') {
@@ -216,7 +218,7 @@ href: backLinkHref
       }
     });
 
-    // Create the OpenLayers styles from the definitions
+    // Create the OpenLayers styles from the definitions (Original restored)
     const activeStyles = styleDefinitions.map((def, index) => {
       if (def.type === 'solid') {
         return new ol.style.Style({
@@ -268,31 +270,63 @@ href: backLinkHref
       }
     }
 
-    // Function to render hatches in the style box
+    // START: REWRITTEN FUNCTION TO UPDATE STYLE DESCRIPTION
     function updateStyleDescription() {
-      const styleBox = document.getElementById('style-box');
-      const descriptionLabel = document.getElementById('style-description');
-      if (!styleBox || !descriptionLabel) return;
+      // Mappings from the style data to the text descriptions you provided
+      const colorMap = {
+        'rgba(214, 144, 103, 0.6)': 'Copperfield',
+        'rgb(102, 51, 0)': 'Nutmeg wood finish',
+        'rgba(87, 82, 76, 1)': 'Grey', // Placeholder, as this was not in your list
+        'rgba(62, 62, 60, 1)': 'Grey'   // Placeholder, as this was not in your list
+      };
+      const hatchStyleMap = {
+        'vertical': 'Wide vertical hatching'
+      };
+
+      const strokeDescEl = document.getElementById('stroke-description');
+      const strokeBoxEl = document.getElementById('stroke-box');
+      const fillDescEl = document.getElementById('fill-description');
+      const fillBoxEl = document.getElementById('fill-box');
+
+      if (!strokeDescEl || !strokeBoxEl || !fillDescEl || !fillBoxEl) return;
 
       const styleIndex = (count === 0) ? 0 : 1;
       const styleDef = styleDefinitions[styleIndex];
 
-      // Reset box style
-      styleBox.style.backgroundImage = 'none';
-      styleBox.style.backgroundColor = 'transparent';
-      styleBox.style.border = '2px solid #b1b4b6';
+      // --- Update Stroke Row ---
+      if (styleDef.stroke) {
+        strokeDescEl.textContent = colorMap[styleDef.stroke] || 'none';
+        strokeBoxEl.style.backgroundColor = styleDef.stroke;
+        strokeBoxEl.style.backgroundImage = 'none';
+        strokeBoxEl.style.border = '1px solid #b1b4b6';
+      } else {
+        strokeDescEl.textContent = 'none';
+        strokeBoxEl.style.backgroundColor = 'transparent';
+        strokeBoxEl.style.backgroundImage = 'none';
+        strokeBoxEl.style.border = '1px dashed #b1b4b6';
+      }
 
-      descriptionLabel.textContent = styleDef.description;
+      // --- Update Fill Row ---
+      fillBoxEl.style.backgroundColor = 'transparent';
+      fillBoxEl.style.backgroundImage = 'none';
+      fillBoxEl.style.border = '1px solid #b1b4b6';
 
       if (styleDef.type === 'solid') {
-        styleBox.style.backgroundColor = styleDef.fill;
-        styleBox.style.border = `2px solid ${styleDef.stroke}`;
+        fillDescEl.textContent = 'Solid ' + (colorMap[styleDef.fill] || '');
+        fillBoxEl.style.backgroundColor = styleDef.fill;
       } else { // 'hatch'
-        styleBox.style.border = `2px solid ${styleDef.stroke}`;
-        styleBox.style.backgroundColor = 'white'; // Add a white background for the hatch
-        styleBox.style.backgroundImage = `url(${generatedHatches[styleIndex].dataURL})`;
+        const hatchText = hatchStyleMap[styleDef.pattern] || '';
+        const colorText = colorMap[styleDef.color] || '';
+        fillDescEl.textContent = `${hatchText} ${colorText}`.trim();
+
+        const hatchData = generatedHatches[styleIndex];
+        if (hatchData) {
+          fillBoxEl.style.backgroundImage = `url(${hatchData.dataURL})`;
+          fillBoxEl.style.backgroundColor = 'white';
+        }
       }
     }
+    // END: REWRITTEN FUNCTION
 
     function saveAnswerState() {
       const selectedRadio = document.querySelector('input[name="defineRelationship"]:checked');
