@@ -13,12 +13,110 @@ BN78354 – {{ serviceName }} – GOV.UK Prototype Kit
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
+{% set detailsHtml %}
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+      <h3 class="govuk-fieldset__heading">
+        Dark mode
+      </h3>
+    </legend>
+    <div class="govuk-radios govuk-radios--small govuk-radios--inline" data-module="govuk-radios">
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="darkModeOn" name="darkModeControl" type="radio" value="on">
+        <label class="govuk-label govuk-radios__label" for="darkModeOn">
+          On
+        </label>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="darkModeOff" name="darkModeControl" type="radio" value="off" checked>
+        <label class="govuk-label govuk-radios__label" for="darkModeOff">
+          Off
+        </label>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+<h3 class="govuk-heading-s">Opacity</h3>
+
+<div class="govuk-button-group">
+  <button id="opacityDown" class="ol-zoom-out" data-module="govuk-button" title="Decrease opacity">-</button>
+  &nbsp;&nbsp;&nbsp;
+  <button id="opacityUp" class="ol-zoom-in" data-module="govuk-button" title="Increase opacity">+</button>
+</div>
+&nbsp;&nbsp;&nbsp;
+
+<div class="govuk-button-group">
+  <button id="resetControls" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+    Reset base map
+  </button>
+</div>
+{% endset %}
+
 {% block content %}
 
 <div class="govuk-grid-row">
 
-    <div class="govuk-grid-column-one-third" style="width: 10%;">
-    controls
+  <div class="govuk-grid-column-one-third" style="width: 10%;">
+
+    <h2 class="govuk-heading-s">Matches</h2>
+
+    <p class="govuk-body" id="matches-counter"></p>
+
+    <button class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1" data-module="govuk-button">
+      Deselect all
+    </button>
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+          <h3 class="govuk-fieldset__heading">
+            Layers
+          </h3>
+        </legend>
+        <div id="layer-radios-container" class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+        </div>
+      </fieldset>
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+          <h3 class="govuk-fieldset__heading">
+            Labels
+          </h3>
+        </legend>
+        <div class="govuk-radios govuk-radios--small govuk-radios--inline" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="labelsOn" name="labelsControl" type="radio" value="on" checked>
+            <label class="govuk-label govuk-radios__label" for="labelsOn">
+              On
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="labelsOff" name="labelsControl" type="radio" value="off">
+            <label class="govuk-label govuk-radios__label" for="labelsOff">
+              Off
+            </label>
+          </div>
+
+        </div>
+      </fieldset>
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+
+    {{ govukDetails({
+    summaryText: "Base map settings",
+    html: detailsHtml
+    }) }}
+
   </div>
 
   <div class="govuk-grid-column-one-half" style="width: 50%;">
@@ -35,7 +133,7 @@ BN78354 – {{ serviceName }} – GOV.UK Prototype Kit
     </div>
   </div>
 
-    <div class="govuk-grid-column-one-third" style="width: 30%;">
+  <div class="govuk-grid-column-one-third" style="width: 30%;">
     <form action="/annotators/v3/save-answers" method="post" novalidate>
 
       <input type="hidden" name="titleNumber" value="BN78354">
@@ -83,55 +181,132 @@ BN78354 – {{ serviceName }} – GOV.UK Prototype Kit
   // ===================================================================
 
   const groupStyles = [
-    { color: 'rgba(51, 102, 51, 1)', description: "Group 1 Style" },
-    { color: 'rgba(51, 102, 51, 1)', description: "Group 2 Style" },
-    { color: 'rgba(51, 102, 51, 1)', description: "Group 3 Style" }
+    { color: 'rgba(0, 51, 255, 1)', description: "Group 1 Style" }
   ];
 
+  // START: Extents data
   const extents = [
-    // --- GROUP 1 ---
     {
       "type": "FeatureCollection",
       "properties": { "id": "group1" },
+      "crs": { "type": "name", "properties": { "name": "EPSG:27700" } },
       "features": [
-        {
-          "type": "Feature", "properties": { "featureType": "shape_polygon", "matchable": true },
-          "geometry": {
-            "type": "Polygon", "coordinates": [[[360255.416, 174262.873], [360256.886, 174266.78], [360257.708, 174268.964], [360259.727, 174274.331], [360261.809, 174279.865], [360262.559, 174281.859], [360264.2, 174286.22], [360266.256, 174285.502], [360267.55, 174285.05], [360271.5, 174283.7], [360277, 174281.75], [360279.907, 174289.777], [360280.342, 174290.978], [360280.431, 174290.918], [360280.35, 174291], [360274.2, 174297.35], [360272.804, 174298.791], [360272.147, 174299.437], [360269.975, 174301.572], [360267.975, 174303.539], [360267.15, 174304.35], [360263.1, 174308.85], [360262.815, 174308.039], [360261.55, 174304.45], [360258.55, 174296.1], [360258.1, 174294.65], [360256.023, 174288.752], [360255.01, 174285.873], [360251.099, 174274.767], [360248.904, 174268.533], [360247.822, 174265.461], [360247.319, 174264.033], [360245.832, 174259.809], [360245.595, 174259.136], [360249.973, 174257.627], [360253.044, 174256.568], [360255.416, 174262.873]]]
-          }
-        },
-        { "type": "Feature", "properties": { "featureType": "arrow_line" }, "geometry": { "type": "LineString", "coordinates": [[360259.813, 174291.088], [360299.34, 174276.952]] } },
-        { "type": "Feature", "properties": { "featureType": "arrow_head" }, "geometry": { "type": "Polygon", "coordinates": [[[360299.141, 174276.395], [360300.099, 174276.682], [360299.54, 174277.511], [360299.34, 174276.952], [360299.141, 174276.395]]] } },
-        { "type": "Feature", "properties": { "featureType": "label", "text": "BL124172" }, "geometry": { "type": "Point", "coordinates": [360310.759, 174275.494] } }
-      ]
-    },
-    // --- GROUP 2 ---
-    {
-      "type": "FeatureCollection",
-      "properties": { "id": "group2" },
-      "features": [
-        {
-          "type": "Feature", "properties": { "featureType": "shape_polygon", "matchable": true },
-          "geometry": {
-            "type": "Polygon", "coordinates": [[[360293.301, 174258.003], [360294.9, 174263.4], [360293.7, 174263.756], [360293.55, 174263.8], [360290.5, 174264.75], [360291, 174266.2], [360291.6, 174267.9], [360287.7, 174269.45], [360286.8, 174267.3], [360286.35, 174266.05], [360286, 174265.25], [360284.75, 174262.35], [360284.4, 174261.45], [360284.144, 174260.794], [360283.645, 174259.471], [360283.565, 174259.321], [360281.55, 174254.15], [360291.3, 174251.25], [360293.276, 174257.895], [360293.301, 174258.003]]]
-          }
-        },
-        { "type": "Feature", "properties": { "featureType": "arrow_line" }, "geometry": { "type": "LineString", "coordinates": [[360287.55, 174254.644], [360299.33, 174272.099], [360298.839, 174272.431], [360299.781, 174272.768], [360299.82, 174271.768], [360299.33, 174272.099]] } },
-        { "type": "Feature", "properties": { "featureType": "label", "text": "BL124172" }, "geometry": { "type": "Point", "coordinates": [360310.759, 174275.494] } }
-      ]
-    },
-    // --- GROUP 3 ---
-    {
-      "type": "FeatureCollection",
-      "properties": { "id": "group3" },
-      "features": [
-        {
-          "type": "Feature", "properties": { "featureType": "shape_polygon", "matchable": true },
-          "geometry": { "type": "Polygon", "coordinates": [[[360278.75, 174275.65], [360279.693, 174278.132], [360279.7, 174278.15], [360276, 174279.45], [360275.411, 174279.658], [360275.014, 174278.586], [360273.185, 174273.649], [360272.343, 174271.378], [360267.565, 174258.484], [360269.65, 174257.75], [360271.75, 174257.05], [360272, 174257.75], [360274.73, 174264.98], [360275.753, 174267.649], [360278.75, 174275.65]]] }
-        },
-        { "type": "Feature", "properties": { "featureType": "arrow_line" }, "geometry": { "type": "LineString", "coordinates": [[360272.373, 174264.222], [360299.173, 174274.253], [360298.965, 174274.807], [360299.927, 174274.535], [360299.38, 174273.699], [360299.173, 174274.253]] } },
-        { "type": "Feature", "properties": { "featureType": "arrow_head" }, "geometry": { "type": "Polygon", "coordinates": [[[360299.38, 174273.699], [360299.927, 174274.535], [360298.965, 174274.807], [360299.173, 174274.253], [360299.38, 174273.699]]] } },
-        { "type": "Feature", "properties": { "featureType": "label", "text": "BL124172" }, "geometry": { "type": "Point", "coordinates": [360310.759, 174275.494] } }
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359778.636, 175581.318] }, "properties": { "text": "1", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359782.946, 175590.562] }, "properties": { "text": "11", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359787.118, 175584.806] }, "properties": { "text": "10", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359786.71, 175596.632] }, "properties": { "text": "7", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359785.065, 175598.587] }, "properties": { "text": "5", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359790.814, 175590.176] }, "properties": { "text": "4", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359783.731, 175601.032] }, "properties": { "text": "3", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359789.514, 175592.032] }, "properties": { "text": "2", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359787.118, 175584.806] }, "properties": { "text": "10", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359797.374, 175611.056] }, "properties": { "text": "17", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359789.182, 175563.489] }, "properties": { "text": "13", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359788.512, 175582.19] }, "properties": { "text": "14", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359808.266, 175553.932] }, "properties": { "text": "12", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359822.533, 175630.586] }, "properties": { "text": "34", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359790.898, 175603.522], [359795.133, 175606.346], [359794.537, 175607.236], [359794.07, 175607.905], [359789.841, 175605.079], [359790.898, 175603.522]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359793.108, 175570.051], [359789.394, 175575.61], [359787.597, 175574.411], [359786.312, 175573.55], [359785.637, 175574.56], [359786.922, 175575.421], [359787.961, 175576.113], [359787.624, 175576.618], [359788.381, 175577.125], [359781.061, 175588.079], [359779.233, 175586.857], [359777.986, 175586.023], [359777.311, 175587.031], [359778.558, 175587.864], [359779.631, 175588.581], [359779.294, 175589.085], [359780.05, 175589.591], [359777.804, 175592.956], [359776.739, 175594.55], [359776.587, 175594.777], [359765.681, 175587.52], [359766.288, 175586.611], [359767.404, 175584.941], [359782.216, 175562.773], [359793.108, 175570.051]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359783.301, 175587.712], [359787.487, 175590.463], [359786.152, 175592.459], [359781.967, 175589.708], [359783.301, 175587.712]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359787.302, 175581.725], [359791.491, 175584.479], [359790.156, 175586.473], [359785.968, 175583.72], [359787.302, 175581.725]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359781.967, 175589.708], [359786.152, 175592.459], [359784.817, 175594.453], [359780.634, 175591.704], [359781.43, 175590.513], [359781.967, 175589.708]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359780.634, 175591.704], [359784.817, 175594.453], [359783.482, 175596.449], [359779.301, 175593.7], [359780.634, 175591.704]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359785.968, 175583.72], [359790.156, 175586.473], [359788.822, 175588.468], [359784.635, 175585.716], [359785.968, 175583.72]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359779.301, 175593.7], [359783.482, 175596.449], [359783.088, 175597.038], [359782.132, 175598.466], [359777.97, 175595.697], [359778.065, 175595.554], [359779.12, 175593.973], [359779.301, 175593.7]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359784.635, 175585.716], [359788.822, 175588.468], [359787.487, 175590.463], [359783.301, 175587.712], [359784.635, 175585.716]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359787.302, 175581.725], [359791.491, 175584.479], [359790.156, 175586.473], [359785.968, 175583.72], [359787.302, 175581.725]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359792.826, 175582.483], [359791.491, 175584.479], [359787.302, 175581.725], [359788.636, 175579.729], [359792.826, 175582.483]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359796.617, 175556.88], [359799.859, 175559.047], [359798.582, 175560.959], [359798.748, 175561.07], [359792.86, 175569.884], [359792.692, 175569.773], [359789.45, 175567.607], [359783.297, 175563.495], [359790.464, 175552.769], [359796.617, 175556.88]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359810.346, 175537.684], [359811.733, 175538.274], [359812.558, 175538.572], [359813.394, 175538.836], [359814.24, 175539.066], [359815.095, 175539.262], [359815.957, 175539.423], [359820.649, 175564.746], [359813.852, 175566.04], [359814.069, 175567.224], [359810.834, 175567.792], [359810.647, 175566.672], [359809.662, 175566.861], [359809.593, 175566.877], [359806.939, 175567.369], [359805.828, 175561.371], [359805.063, 175557.242], [359804.972, 175556.75], [359802.47, 175555.139], [359800.581, 175557.966], [359798.17, 175556.355], [359792.022, 175552.246], [359792.573, 175551.412], [359791.742, 175550.857], [359799.131, 175539.798], [359803.742, 175532.897], [359804.579, 175533.741], [359805.226, 175534.334], [359805.896, 175534.899], [359806.589, 175535.437], [359807.303, 175535.947], [359808.036, 175536.427], [359808.789, 175536.877], [359809.559, 175537.297], [359810.346, 175537.684]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359832.347, 175632.827], [359833.032, 175636.526], [359833.095, 175636.867], [359833.15, 175637.136], [359833.171, 175637.278], [359833.185, 175637.422], [359833.194, 175637.565], [359833.196, 175637.709], [359833.193, 175637.853], [359833.184, 175637.997], [359833.168, 175638.14], [359833.147, 175638.282], [359833.108, 175638.476], [359833.073, 175638.615], [359833.032, 175638.753], [359832.985, 175638.889], [359832.933, 175639.023], [359832.875, 175639.155], [359832.812, 175639.284], [359832.743, 175639.411], [359832.606, 175639.59], [359832.272, 175640.024], [359829.333, 175643.854], [359819.98, 175636.676], [359819.269, 175633.937], [359817.301, 175623.314], [359816.919, 175621.253], [359816.757, 175620.428], [359820.486, 175619.74], [359820.504, 175619.737], [359822.338, 175619.379], [359829.611, 175618.028], [359829.762, 175618.874], [359832.347, 175632.827]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359790.988, 175597.102] }, "properties": { "text": "23", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359807.298, 175588.336] }, "properties": { "text": "26", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359802.515, 175631.797] }, "properties": { "text": "38", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359814.569, 175632.101] }, "properties": { "text": "33", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359810.103, 175612.679] }, "properties": { "text": "35", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359804.456, 175624.71] }, "properties": { "text": "31", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359811.46, 175615.906] }, "properties": { "text": "36", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359812.935, 175577.617] }, "properties": { "text": "15", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359816.686, 175599.761] }, "properties": { "text": "29", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359820.207, 175614.947] }, "properties": { "text": "27", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359822.533, 175630.586] }, "properties": { "text": "34", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359789.182, 175563.489] }, "properties": { "text": "13", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359788.512, 175582.19] }, "properties": { "text": "14", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359796.743, 175581.559] }, "properties": { "text": "6", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359801.645, 175583.435] }, "properties": { "text": "25", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359793.022, 175585.655] }, "properties": { "text": "16", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359796.529, 175589.323] }, "properties": { "text": "40", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359793.159, 175588.572] }, "properties": { "text": "9", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359796.692, 175594.782] }, "properties": { "text": "8", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359789.897, 175599.213] }, "properties": { "text": "24", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359779.699, 175603.581] }, "properties": { "text": "28", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359784.891, 175607.986] }, "properties": { "text": "37", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359791.777, 175595.457] }, "properties": { "text": "39", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359788.874, 175603.307], [359787.869, 175604.389], [359787.435, 175603.987], [359787.321, 175604.98], [359788.303, 175604.792], [359787.869, 175604.389]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359788.303, 175604.792], [359787.321, 175604.98], [359787.435, 175603.987], [359787.869, 175604.389], [359788.303, 175604.792]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359787.513, 175600.64], [359788.156, 175601.073], [359788.874, 175601.565], [359789.67, 175602.106], [359791.23, 175603.149], [359791.149, 175603.267], [359789.887, 175605.121], [359788.585, 175604.239], [359788.23, 175604], [359786.255, 175602.666], [359785.72, 175602.304], [359785.711, 175602.29], [359786.745, 175600.767], [359787.053, 175600.323], [359787.513, 175600.64]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359796.638, 175595.257], [359795.287, 175597.229], [359791.068, 175594.408], [359792.405, 175592.434], [359796.638, 175595.257]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359760.037, 175578.997], [359761.2, 175580.1], [359763.477, 175581.873], [359767.404, 175584.941], [359777.804, 175592.956], [359779.12, 175593.973], [359779.301, 175593.7], [359783.482, 175596.449], [359783.088, 175597.038], [359787.148, 175600.174], [359787.165, 175600.187], [359787.647, 175600.559], [359788.032, 175600.856], [359789.394, 175601.909], [359789.67, 175602.106], [359791.23, 175603.149], [359791.301, 175603.197], [359795.398, 175605.95], [359795.133, 175606.346], [359799.621, 175609.816], [359800.7, 175610.65], [359801.151, 175611.001], [359801.926, 175611.605], [359804.1, 175613.3], [359804.819, 175613.846], [359812.481, 175619.658], [359814.087, 175620.876], [359817.301, 175623.314], [359817.582, 175623.527], [359824.922, 175629.176], [359828.75, 175632.1], [359829.4, 175632.65], [359830.1, 175633], [359830.6, 175633.15], [359831.4, 175633.15], [359831.8, 175633.1], [359832.347, 175632.827], [359832.4, 175632.8], [359833, 175632.15], [359833.4, 175630.95], [359833.4, 175630], [359834.048, 175633.888], [359834.156, 175634.538], [359834.348, 175637.065], [359834.233, 175640.129], [359834.103, 175641.343], [359833.885, 175643.392], [359833.44, 175646.014], [359833.24, 175647.188], [359831.198, 175645.615], [359830.4, 175645], [359823.6, 175639.85], [359819.778, 175636.939], [359816.513, 175634.453], [359810.683, 175630.012], [359808.966, 175628.699], [359807.661, 175627.701], [359807.37, 175627.478], [359807.177, 175627.331], [359807.109, 175627.279], [359793.912, 175617.234], [359783.75, 175609.5], [359772, 175600.55], [359762.375, 175593.226], [359765.244, 175589.4], [359756.14, 175582.415], [359756.281, 175580.923], [359756.315, 175580.56], [359756.462, 175578.998], [359757.933, 175578.752], [359758.785, 175578.561], [359759.336, 175578.413], [359759.402, 175578.395], [359760.037, 175578.997]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359811.751, 175607.346], [359812.15, 175607.95], [359811.816, 175608.169], [359804.646, 175612.937], [359801.661, 175610.655], [359801.214, 175610.313], [359801.249, 175610.29], [359803.455, 175608.84], [359802.75, 175607.652], [359802.383, 175607.006], [359805.964, 175604.494], [359806.629, 175604.023], [359808.719, 175605.381], [359809.9, 175604.6], [359811.751, 175607.346]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359798.367, 175605.804] }, "properties": { "text": "30", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359800.835, 175604.641] }, "properties": { "text": "18", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359801.109, 175602.044] }, "properties": { "text": "19", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359797.184, 175596.005] }, "properties": { "text": "32", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359804.755, 175598.089] }, "properties": { "text": "22", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359806.786, 175595.724] }, "properties": { "text": "21", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359808.653, 175604.587] }, "properties": { "text": "20", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359791.777, 175595.457] }, "properties": { "text": "39", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "Point", "coordinates": [359795.744, 175606.953] }, "properties": { "text": "41", "matchable": false, "featureType": "label" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359796.512, 175602.266], [359798.999, 175604.051], [359798.654, 175604.532], [359799.654, 175604.521], [359799.344, 175603.57], [359798.999, 175604.051]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359799.344, 175603.57], [359799.654, 175604.521], [359798.654, 175604.532], [359798.999, 175604.051], [359799.344, 175603.57]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359797.272, 175599.974], [359800.121, 175602.19], [359799.757, 175602.657], [359800.757, 175602.685], [359800.484, 175601.723], [359800.121, 175602.19]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359800.484, 175601.723], [359800.757, 175602.685], [359799.757, 175602.657], [359800.121, 175602.19], [359800.484, 175601.723]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359798.207, 175597.974], [359800.446, 175599.483], [359800.116, 175599.973], [359801.115, 175599.933], [359800.777, 175598.992], [359800.446, 175599.483]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359800.777, 175598.992], [359801.115, 175599.933], [359800.116, 175599.973], [359800.446, 175599.483], [359800.777, 175598.992]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359800.964, 175593.917], [359803.689, 175595.293], [359803.423, 175595.821], [359804.409, 175595.656], [359803.956, 175594.764], [359803.689, 175595.293]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359803.956, 175594.764], [359804.409, 175595.656], [359803.423, 175595.821], [359803.689, 175595.293], [359803.956, 175594.764]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359803.386, 175592.767], [359805.707, 175593.43], [359805.545, 175593.999], [359806.482, 175593.651], [359805.87, 175592.861], [359805.707, 175593.43]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359805.87, 175592.861], [359806.482, 175593.651], [359805.545, 175593.999], [359805.707, 175593.43], [359805.87, 175592.861]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359806.266, 175601.064], [359807.584, 175602.089], [359807.221, 175602.556], [359808.221, 175602.584], [359807.948, 175601.622], [359807.584, 175602.089]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359807.948, 175601.622], [359808.221, 175602.584], [359807.221, 175602.556], [359807.584, 175602.089], [359807.948, 175601.622]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359793.991, 175603.616], [359796.16, 175605.027], [359795.837, 175605.524], [359796.836, 175605.467], [359796.483, 175604.531], [359796.16, 175605.027]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359796.483, 175604.531], [359796.836, 175605.467], [359795.837, 175605.524], [359796.16, 175605.027], [359796.483, 175604.531]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359793.945, 175599.197], [359794.584, 175599.635], [359798.064, 175601.968], [359796.731, 175603.959], [359792.594, 175601.171], [359793.945, 175599.197]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359795.328, 175597.256], [359795.913, 175597.648], [359799.397, 175599.977], [359799.292, 175600.134], [359798.671, 175601.062], [359798.064, 175601.968], [359794.584, 175599.635], [359793.987, 175599.235], [359793.936, 175599.201], [359795.287, 175597.229], [359795.328, 175597.256]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359796.669, 175595.278], [359797.243, 175595.66], [359800.73, 175597.986], [359800.664, 175598.085], [359799.897, 175599.23], [359799.397, 175599.977], [359795.913, 175597.648], [359795.328, 175597.256], [359795.287, 175597.229], [359796.638, 175595.257], [359796.669, 175595.278]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359799.902, 175591.686], [359803.336, 175594.094], [359802.842, 175594.831], [359802.063, 175595.995], [359798.573, 175593.673], [359797.979, 175593.282], [359799.345, 175591.307], [359799.902, 175591.686]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359800.728, 175589.361], [359804.729, 175592.004], [359804.087, 175592.967], [359803.396, 175594.004], [359799.902, 175591.686], [359799.351, 175591.32], [359800.696, 175589.335], [359800.728, 175589.361]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359808.92, 175598.923], [359805.791, 175603.594], [359804.143, 175602.538], [359807.278, 175597.798], [359808.92, 175598.923]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359796.638, 175595.257], [359795.287, 175597.229], [359791.068, 175594.408], [359792.405, 175592.434], [359796.638, 175595.257]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359791.301, 175603.197], [359791.23, 175603.149], [359792.585, 175601.172], [359792.646, 175601.213], [359796.731, 175603.959], [359795.398, 175605.95], [359791.301, 175603.197]]] }, "properties": { "matchable": true, "featureType": "shape_polygon" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359783.303, 175592.474], [359785.518, 175593.811], [359785.212, 175594.317], [359786.208, 175594.227], [359785.824, 175593.304], [359785.518, 175593.811]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359785.824, 175593.304], [359786.208, 175594.227], [359785.212, 175594.317], [359785.518, 175593.811], [359785.824, 175593.304]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359781.325, 175593.807], [359784, 175595.765], [359783.65, 175596.243], [359784.65, 175596.241], [359784.35, 175595.287], [359784, 175595.765]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359784.35, 175595.287], [359784.65, 175596.241], [359783.65, 175596.243], [359784, 175595.765], [359784.35, 175595.287]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359786.86, 175585.952], [359789.712, 175587.595], [359789.416, 175588.108], [359790.41, 175587.997], [359790.007, 175587.082], [359789.712, 175587.595]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359790.007, 175587.082], [359790.41, 175587.997], [359789.416, 175588.108], [359789.712, 175587.595], [359790.007, 175587.082]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359781.098, 175596.281], [359782.999, 175597.88], [359782.618, 175598.333], [359783.616, 175598.399], [359783.38, 175597.427], [359782.999, 175597.88]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359783.38, 175597.427], [359783.616, 175598.399], [359782.618, 175598.333], [359782.999, 175597.88], [359783.38, 175597.427]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359786.191, 175588.21], [359788.598, 175589.741], [359788.28, 175590.241], [359789.278, 175590.174], [359788.916, 175589.242], [359788.598, 175589.741]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359788.916, 175589.242], [359789.278, 175590.174], [359788.28, 175590.241], [359788.598, 175589.741], [359788.916, 175589.242]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359793.234, 175606.44], [359796.503, 175608.438], [359796.194, 175608.943], [359797.191, 175608.858], [359796.812, 175607.932], [359796.503, 175608.438]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359796.812, 175607.932], [359797.191, 175608.858], [359796.194, 175608.943], [359796.503, 175608.438], [359796.812, 175607.932]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359808.631, 175588.458], [359805.615, 175589.05]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359808.631, 175588.458], [359808.576, 175588.639], [359809.143, 175588.81], [359808.809, 175587.867], [359808.01, 175588.468], [359808.576, 175588.639]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359808.01, 175588.468], [359808.809, 175587.867], [359809.143, 175588.81], [359808.576, 175588.639], [359808.01, 175588.468]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359808.097, 175629.759], [359809.913, 175627.545]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359808.097, 175629.759], [359806.479, 175630.026], [359806.383, 175629.442], [359805.684, 175630.157], [359806.575, 175630.61], [359806.479, 175630.026]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359806.575, 175630.61], [359805.684, 175630.157], [359806.383, 175629.442], [359806.479, 175630.026], [359806.575, 175630.61]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359811.462, 175625.795], [359815.24, 175628.553], [359814.891, 175629.031], [359815.891, 175629.028], [359815.589, 175628.074], [359815.24, 175628.553]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359815.589, 175628.074], [359815.891, 175629.028], [359814.891, 175629.031], [359815.24, 175628.553], [359815.589, 175628.074]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359807.817, 175615.861], [359810.178, 175613.5], [359810.597, 175613.919], [359810.748, 175612.93], [359809.759, 175613.081], [359810.178, 175613.5]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359809.759, 175613.081], [359810.748, 175612.93], [359810.597, 175613.919], [359810.178, 175613.5], [359809.759, 175613.081]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359808.967, 175617.943], [359806.88, 175620.826], [359806.4, 175620.478], [359806.407, 175621.478], [359807.359, 175621.173], [359806.88, 175620.826]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359807.359, 175621.173], [359806.407, 175621.478], [359806.4, 175620.478], [359806.88, 175620.826], [359807.359, 175621.173]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359811.253, 175618.95], [359812.737, 175616.577], [359813.239, 175616.89], [359813.164, 175615.893], [359812.235, 175616.263], [359812.737, 175616.577]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359812.235, 175616.263], [359813.164, 175615.893], [359813.239, 175616.89], [359812.737, 175616.577], [359812.235, 175616.263]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } },
+        { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [[359791.786, 175579.316], [359795.179, 175579.609], [359795.129, 175580.199], [359795.982, 175579.678], [359795.23, 175579.019], [359795.179, 175579.609]] }, "properties": { "matchable": false, "featureType": "arrow_line" } },
+        { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[359795.23, 175579.019], [359795.982, 175579.678], [359795.129, 175580.199], [359795.179, 175579.609], [359795.23, 175579.019]]] }, "properties": { "matchable": false, "featureType": "arrow_head" } }
       ]
     }
   ];
@@ -141,71 +316,86 @@ BN78354 – {{ serviceName }} – GOV.UK Prototype Kit
   // ===================================================================
   $(window).on('load', function () {
 
-    // Define colors for consistency
+    // --- Calculate total matchable features and get counter element ---
+    const counterElement = document.getElementById('matches-counter');
+    let totalMatchable = 0;
+    extents.forEach(groupData => {
+      groupData.features.forEach(feature => {
+        if (feature.properties.matchable === true) {
+          totalMatchable++;
+        }
+      });
+    });
+
+    // --- Initialize the counter text ---
+    counterElement.textContent = `0 of ${totalMatchable}`;
+
     const selectColor = 'rgba(0, 48, 120, 1)';
     const selectFillColor = 'rgba(0, 48, 120, 0.5)';
-    // A 50% lighter version of rgb(0, 48, 120) is rgb(107, 138, 214)
     const hoverColor = 'rgba(107, 138, 214, 1)';
-    const hoverFillColor = 'rgba(107, 138, 214, 0.5)'; // New color for the hover fill
+    const hoverFillColor = 'rgba(107, 138, 214, 0.5)';
 
     const selectStyle = new ol.style.Style({
       fill: new ol.style.Fill({ color: selectFillColor }),
-      stroke: new ol.style.Stroke({
-        color: selectColor, 
-        width: 3,
-        lineDash: [6, 6] 
-      }),
-      zIndex: 2 // Ensure select is on top
+      stroke: new ol.style.Stroke({ color: selectColor, width: 4, lineDash: [8, 8] }),
+      zIndex: 2
     });
 
-    // --- Interactions ---
-    // The selectClick interaction must be defined before selectHover so it can be referenced.
     const selectClick = new ol.interaction.Select({
       condition: ol.events.condition.click,
       filter: (feature) => feature.get('matchable') === true,
       style: selectStyle,
-      multi: true, // Allow multiple features to be selected
-      toggleCondition: ol.events.condition.click // Click a selected feature to deselect it
+      multi: true,
+      toggleCondition: ol.events.condition.click
     });
+
+    // ---  Add event listener to update the counter on selection change ---
+    const selectedFeatures = selectClick.getFeatures();
+    const deselectButton = document.querySelector('.govuk-button--secondary');
+    if (deselectButton) {
+      deselectButton.style.display = 'none';
+      deselectButton.addEventListener('click', function () {
+        selectedFeatures.clear();
+      });
+    }
+
+    function updateCounter() {
+      const selectedCount = selectedFeatures.getLength();
+      counterElement.textContent = `${selectedCount} of ${totalMatchable}`;
+      if (deselectButton) {
+        deselectButton.style.display = selectedCount >= 2 ? '' : 'none';
+      }
+    }
+    selectedFeatures.on('add', updateCounter);
+    selectedFeatures.on('remove', updateCounter);
 
     const selectHover = new ol.interaction.Select({
       condition: ol.events.condition.pointerMove,
       filter: (feature) => feature.get('matchable') === true,
-      style: function(feature) {
-        // This style now applies to any hovered feature, regardless of its selection state.
-        return new ol.style.Style({
-            stroke: new ol.style.Stroke({
-                color: hoverColor,
-                width: 3.5
-            }),
-            // Always apply the new light blue fill on hover
-            fill: new ol.style.Fill({ color: hoverFillColor }),
-            zIndex: 3 // Ensure hover style is drawn on top of everything else
-        });
-      }
+      style: new ol.style.Style({
+        stroke: new ol.style.Stroke({ color: hoverColor, width: 3.5 }),
+        fill: new ol.style.Fill({ color: hoverFillColor }),
+        zIndex: 3
+      })
     });
 
-    // --- Styling Logic ---
     function createActiveStyles(color) {
       return {
         shapePolygon: new ol.style.Style({
           stroke: new ol.style.Stroke({ color: color, width: 2.5 }),
           fill: new ol.style.Fill({ color: 'rgba(0,0,0,0)' })
         }),
-        arrowLine: new ol.style.Style({
-          stroke: new ol.style.Stroke({ color: color, width: 2.5 })
-        }),
+        arrowLine: new ol.style.Style({ stroke: new ol.style.Stroke({ color: color, width: 2.5 }) }),
         arrowHead: new ol.style.Style({
-          stroke: new ol.style.Stroke({ color: color, width: 2.5 })
+          stroke: new ol.style.Stroke({ color: color, width: 2.5 }),
+          fill: new ol.style.Fill({ color: color })
         }),
         label: new ol.style.Style({
           text: new ol.style.Text({
             font: '32px "Arial", arial, sans-serif',
             fill: new ol.style.Fill({ color: color }),
             stroke: new ol.style.Stroke({ color: 'white', width: 3 }),
-            offsetX: -50,
-            offsetY: -0,
-            textAlign: 'left'
+            textAlign: 'center'
           })
         })
       };
@@ -215,7 +405,7 @@ BN78354 – {{ serviceName }} – GOV.UK Prototype Kit
 
     const styleFunction = function (feature) {
       const featureGroupId = feature.get('groupId');
-      if (!featureGroupId) return null; 
+      if (!featureGroupId) return null;
       const groupIndex = parseInt(featureGroupId.replace('group', ''), 10) - 1;
 
       if (groupIndex >= 0 && groupIndex < groupStyles.length) {
@@ -228,14 +418,11 @@ BN78354 – {{ serviceName }} – GOV.UK Prototype Kit
         const activeStyles = styleCache[color];
 
         switch (featureType) {
-          case 'shape_polygon':
-            return activeStyles.shapePolygon;
-          case 'arrow_line':
-            return activeStyles.arrowLine;
-          case 'arrow_head':
-            return activeStyles.arrowHead;
+          case 'shape_polygon': return activeStyles.shapePolygon;
+          case 'arrow_line': return activeStyles.arrowLine;
+          case 'arrow_head': return activeStyles.arrowHead;
           case 'label':
-            const labelStyle = activeStyles.label;
+            const labelStyle = activeStyles.label.clone();
             labelStyle.getText().setText(feature.get('text'));
             return labelStyle;
         }
@@ -243,18 +430,51 @@ BN78354 – {{ serviceName }} – GOV.UK Prototype Kit
       return null;
     };
 
+    // ---  FOCUS STYLE FUNCTION ---
+    function applyFocusStyle(feature) {
+      if (!feature) return;
+      const selectedFeatures = selectClick.getFeatures();
+      const isSelected = selectedFeatures.getArray().includes(feature);
+      const baseStyle = isSelected ? selectStyle : styleFunction(feature);
+
+      if (baseStyle) {
+        const originalStyles = Array.isArray(baseStyle) ? baseStyle.map(s => s.clone()) : [baseStyle.clone()];
+        const mainStroke = originalStyles[0].getStroke();
+
+        if (mainStroke) {
+          const originalStrokeWidth = mainStroke.getWidth();
+
+          // Outermost yellow border
+          const outerFocusStyle = new ol.style.Style({
+            stroke: new ol.style.Stroke({
+              color: '#ffdd00',
+              width: originalStrokeWidth + 6 // Original + 3px on each side
+            })
+          });
+
+          // Inner dark blue border (
+          const innerFocusStyle = new ol.style.Style({
+            stroke: new ol.style.Stroke({
+              color: '#003078',
+              width: originalStrokeWidth + 2 // Sits on top of the yellow, inside it
+            })
+          });
+
+          // The order is important: outer, then inner, then the original style on top
+          feature.setStyle([outerFocusStyle, innerFocusStyle, ...originalStyles]);
+        }
+      }
+    }
+
     proj4.defs("EPSG:27700", "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +datum=OSGB36 +units=m +no_defs");
     ol.proj.proj4.register(proj4);
     const projection = ol.proj.get('EPSG:27700');
 
-    const vectorSource = new ol.source.Vector();
-    const vectorLayer = new ol.layer.Vector({ source: vectorSource, style: styleFunction });
     const baseLayer = new ol.layer.Tile({ source: new ol.source.OSM() });
 
-    //  MAP CONFIGURATION
     const map = new ol.Map({
       target: 'map',
-      layers: [baseLayer, vectorLayer],
+      layers: [baseLayer],
       view: new ol.View({
         projection: projection,
         center: [360350, 174350],
@@ -263,50 +483,126 @@ BN78354 – {{ serviceName }} – GOV.UK Prototype Kit
       controls: []
     });
 
-    // --- Focus style on click-and-hold ---
-    let focusedFeature = null;
+    let mapLayers = {};
+    let annotationsLayer = null;
+    let tabbableFeatures = [];
+    let currentFeatureIndex = -1;
+    let mouseFocusedFeature = null;
 
-    map.on('pointerdown', function (e) {
-      const feature = map.forEachFeatureAtPixel(e.pixel, f => (f.get('matchable') === true ? f : undefined));
-
-      if (feature) {
-        focusedFeature = feature;
-        const selectedFeatures = selectClick.getFeatures();
-        const isSelected = selectedFeatures.getArray().includes(feature);
-        const baseStyle = isSelected ? selectStyle : styleFunction(feature);
-
-        if (baseStyle) {
-          const styles = Array.isArray(baseStyle) ? baseStyle.map(s => s.clone()) : [baseStyle.clone()];
-          const mainStroke = styles[0].getStroke();
-
-          if (mainStroke) {
-            const focusBorderStyle = new ol.style.Style({
-              stroke: new ol.style.Stroke({
-                color: 'rgba(255, 221, 0, 1)',
-                width: mainStroke.getWidth() + 4 // Adds a 2px yellow border
-              })
-            });
-            // Apply styles in order: border first, then original style on top
-            feature.setStyle([focusBorderStyle, ...styles]);
-          }
+    function createMapStyleManager() {
+      let baseLayerEl = null;
+      let settings = { darkMode: false, greyscale: false, invert: false, contrast: 1.0, opacity: 0.4 };
+      function findBaseLayerElement() {
+        const mapLayers = document.querySelectorAll('.ol-layer');
+        if (mapLayers.length > 0) return mapLayers[0];
+        return null;
+      }
+      function updateMapStyle() {
+        if (!baseLayerEl) baseLayerEl = findBaseLayerElement();
+        if (!baseLayerEl) return;
+        let filterString = '';
+        if (settings.greyscale || settings.darkMode) filterString += 'grayscale(100%) ';
+        if (settings.invert || settings.darkMode) filterString += 'invert(1) ';
+        if (settings.contrast !== 1.0) filterString += `contrast(${settings.contrast}) `;
+        baseLayerEl.style.filter = filterString.trim() || 'none';
+        baseLayer.setOpacity(settings.opacity);
+      }
+      map.once('postrender', function () { updateMapStyle(); });
+      return {
+        updateSetting: function (setting, value) {
+          settings[setting] = value;
+          updateMapStyle();
         }
-      }
-    });
+      };
+    }
 
-    map.on('pointerup', function () {
-      if (focusedFeature) {
-        focusedFeature.setStyle(null); // Revert to default style management
-        focusedFeature = null;
+    function setupRadioControls(controlName, handler) {
+      const onButton = document.getElementById(`${controlName}On`);
+      const offButton = document.getElementById(`${controlName}Off`);
+      if (onButton && offButton) {
+        if (onButton.checked) handler(true); else handler(false);
+        onButton.addEventListener('change', () => { if (onButton.checked) handler(true); });
+        offButton.addEventListener('change', () => { if (offButton.checked) handler(false); });
       }
-    });
+    }
 
-    // Add Interactions to the map
+    function setupAdjustmentControl(property, initialValue, minValue, maxValue, step) {
+      const downButton = document.getElementById(`${property}Down`);
+      const upButton = document.getElementById(`${property}Up`);
+      let currentValue = initialValue;
+      function updateValue(newValue) {
+        currentValue = Math.max(minValue, Math.min(maxValue, newValue));
+        mapStyleManager.updateSetting(property, currentValue);
+      }
+      if (upButton && downButton) {
+        upButton.addEventListener('click', () => updateValue(currentValue + step));
+        downButton.addEventListener('click', () => updateValue(currentValue - step));
+      }
+    }
+
+    const mapStyleManager = createMapStyleManager();
+    setupRadioControls('darkMode', (isOn) => mapStyleManager.updateSetting('darkMode', isOn));
+    setupAdjustmentControl('opacity', 0.4, 0.1, 1.0, 0.1);
+
+    // --- NEW: Add event listener for the new labels radio buttons ---
+    const labelsOnButton = document.getElementById('labelsOn');
+    const labelsOffButton = document.getElementById('labelsOff');
+    labelsOnButton.addEventListener('change', () => annotationsLayer.setVisible(true));
+    labelsOffButton.addEventListener('change', () => annotationsLayer.setVisible(false));
+
+
+    const resetButton = document.getElementById('resetControls');
+    if (resetButton) {
+      resetButton.addEventListener('click', () => {
+        document.getElementById('darkModeOff').checked = true;
+        mapStyleManager.updateSetting('darkMode', false);
+        mapStyleManager.updateSetting('opacity', 0.4);
+      });
+    }
+
     map.addInteraction(selectHover);
     map.addInteraction(selectClick);
 
-    function loadAllExtents() {
-      vectorSource.clear();
+    function findOverlapGroups(matchableFeatures) {
+      const groups = [];
+      let visited = new Set();
+      for (let i = 0; i < matchableFeatures.length; i++) {
+        const featureA = matchableFeatures[i];
+        if (visited.has(featureA)) continue;
+        let currentGroup = [featureA];
+        visited.add(featureA);
+        for (let j = i + 1; j < matchableFeatures.length; j++) {
+          const featureB = matchableFeatures[j];
+          if (visited.has(featureB)) continue;
+          const extentA = featureA.getGeometry().getExtent();
+          const extentB = featureB.getGeometry().getExtent();
+          if (ol.extent.intersects(extentA, extentB)) {
+            let intersectsWithGroup = false;
+            for (const groupFeature of currentGroup) {
+              if (ol.extent.intersects(groupFeature.getGeometry().getExtent(), extentB)) {
+                intersectsWithGroup = true;
+                break;
+              }
+            }
+            if (intersectsWithGroup) {
+              currentGroup.push(featureB);
+              visited.add(featureB);
+              j = i;
+            }
+          }
+        }
+        if (currentGroup.length > 1) {
+          groups.push(currentGroup);
+        }
+      }
+      return groups;
+    }
+
+    function setupLayersAndControls() {
+      const matchableFeatures = [];
+      const nonMatchableFeatures = [];
       const format = new ol.format.GeoJSON();
+
       extents.forEach((groupData) => {
         const groupId = groupData.properties.id;
         const features = format.readFeatures(groupData, {
@@ -314,40 +610,136 @@ BN78354 – {{ serviceName }} – GOV.UK Prototype Kit
           featureProjection: 'EPSG:27700'
         });
         features.forEach(feature => {
-          feature.set('groupId', groupId); 
-          if (feature.get('featureType') === undefined && groupData.features.find(f => f.geometry === feature.getGeometry())) {
-              let originalFeature = groupData.features.find(f => f.geometry === feature.getGeometry());
-              if(originalFeature) {
-                feature.setProperties(originalFeature.properties);
-              }
+          feature.set('groupId', groupId);
+          if (feature.get('matchable') === true) {
+            matchableFeatures.push(feature);
+          } else {
+            nonMatchableFeatures.push(feature);
           }
-          vectorSource.addFeature(feature);
         });
+      });
+
+      tabbableFeatures = [...matchableFeatures].sort((a, b) => {
+        const aExtent = a.getGeometry().getExtent();
+        const bExtent = b.getGeometry().getExtent();
+        if (aExtent[3] > bExtent[3]) return -1;
+        if (aExtent[3] < bExtent[3]) return 1;
+        return aExtent[0] - bExtent[0];
+      });
+
+      const annotationsSource = new ol.source.Vector({ features: nonMatchableFeatures });
+      annotationsLayer = new ol.layer.Vector({ source: annotationsSource, style: styleFunction });
+      map.addLayer(annotationsLayer);
+
+      const allMatchableSource = new ol.source.Vector({ features: matchableFeatures });
+      mapLayers['all'] = new ol.layer.Vector({ source: allMatchableSource, style: styleFunction });
+      map.addLayer(mapLayers['all']);
+
+      const overlapGroups = findOverlapGroups(matchableFeatures);
+      overlapGroups.forEach((group, index) => {
+        const layerId = `overlap-${index}`;
+        const source = new ol.source.Vector({ features: group });
+        mapLayers[layerId] = new ol.layer.Vector({ source: source, style: styleFunction, visible: false });
+        map.addLayer(mapLayers[layerId]);
+      });
+
+      const radioContainer = $('#layer-radios-container');
+      radioContainer.empty();
+      radioContainer.append(`
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="layer-radio-all" name="layerControl" type="radio" value="all" checked>
+          <label class="govuk-label govuk-radios__label" for="layer-radio-all">All</label>
+        </div>
+      `);
+      overlapGroups.forEach((group, index) => {
+        radioContainer.append(`
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="layer-radio-${index}" name="layerControl" type="radio" value="overlap-${index}">
+            <label class="govuk-label govuk-radios__label" for="layer-radio-${index}">Layer ${index + 1}</label>
+          </div>
+        `);
+      });
+
+      $('input[name="layerControl"]').on('change', function () {
+        const selectedLayerId = $(this).val();
+        for (const layerId in mapLayers) {
+          mapLayers[layerId].setVisible(layerId === selectedLayerId);
+        }
       });
     }
 
-    function zoomToAllExtents() {
-      const extent = vectorSource.getExtent();
-      if (extent && ol.extent.getArea(extent) > 0) {
-        map.getView().fit(extent, { padding: [50, 50, 50, 50], duration: 0, maxZoom: 20 });
+    map.on('pointerdown', function (e) {
+      const feature = map.forEachFeatureAtPixel(e.pixel, f => (f.get('matchable') === true ? f : undefined));
+      if (feature) {
+        mouseFocusedFeature = feature;
+        applyFocusStyle(mouseFocusedFeature);
+      }
+    });
+
+    map.on('pointerup', function () {
+      if (mouseFocusedFeature) {
+        mouseFocusedFeature.setStyle(null);
+        mouseFocusedFeature = null;
+      }
+    });
+
+    function clearKeyboardFocus() {
+      if (currentFeatureIndex !== -1 && tabbableFeatures[currentFeatureIndex]) {
+        tabbableFeatures[currentFeatureIndex].setStyle(null);
       }
     }
 
-    document.getElementById('zoom-in').addEventListener('click', function () {
-      map.getView().animate({ zoom: map.getView().getZoom() + 1, duration: 250 });
+document.getElementById('map').addEventListener('keydown', function (e) {
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    clearKeyboardFocus();
+    currentFeatureIndex = e.shiftKey
+      ? (currentFeatureIndex - 1 + tabbableFeatures.length) % tabbableFeatures.length
+      : (currentFeatureIndex + 1) % tabbableFeatures.length;
+    const newFeatureToFocus = tabbableFeatures[currentFeatureIndex];
+    applyFocusStyle(newFeatureToFocus); // Only for focus, not selection
+    map.getView().fit(newFeatureToFocus.getGeometry().getExtent(), {
+      duration: 250,
+      maxZoom: map.getView().getZoom(),
+      padding: [100, 100, 100, 100]
+    });
+  } else if (e.key === 'Enter' && currentFeatureIndex !== -1) {
+    e.preventDefault();
+    const feature = tabbableFeatures[currentFeatureIndex];
+    const selectedFeaturesArr = selectClick.getFeatures().getArray();
+    if (selectedFeaturesArr.includes(feature)) {
+      selectClick.getFeatures().remove(feature);
+    } else {
+      selectClick.getFeatures().push(feature);
+    }
+    // Remove focus style after selection/deselection
+    feature.setStyle(null);
+    // The interaction will now apply the correct selection style
+    updateCounter();
+  }
+});
+
+    document.getElementById('map').addEventListener('focusout', function () {
+      clearKeyboardFocus();
+      currentFeatureIndex = -1;
     });
 
-    document.getElementById('zoom-out').addEventListener('click', function () {
-      map.getView().animate({ zoom: map.getView().getZoom() - 1, duration: 250 });
-    });
+    function zoomToAllExtents() {
+      if (mapLayers['all'] && annotationsLayer) {
+        const matchableExtent = mapLayers['all'].getSource().getExtent();
+        const nonMatchableExtent = annotationsLayer.getSource().getExtent();
+        const combinedExtent = ol.extent.extend(matchableExtent, nonMatchableExtent);
+        if (combinedExtent && !ol.extent.isEmpty(combinedExtent)) {
+          map.getView().fit(combinedExtent, { padding: [50, 50, 50, 50], duration: 0, maxZoom: 20 });
+        }
+      }
+    }
 
-    // --- Initialization sequence ---
-    loadAllExtents();
+    document.getElementById('zoom-in').addEventListener('click', () => map.getView().animate({ zoom: map.getView().getZoom() + 1, duration: 250 }));
+    document.getElementById('zoom-out').addEventListener('click', () => map.getView().animate({ zoom: map.getView().getZoom() - 1, duration: 250 }));
 
-    map.once('postrender', function () {
-      baseLayer.setOpacity(0.4);
-      zoomToAllExtents();
-    });
+    setupLayersAndControls();
+    map.once('postrender', () => zoomToAllExtents());
   });
 </script>
 

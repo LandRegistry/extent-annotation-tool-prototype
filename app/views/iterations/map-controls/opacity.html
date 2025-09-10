@@ -153,7 +153,6 @@
 <script src="/public/map/map_styles.js"></script>
 
 <!-- Master Map Vector Layer -->
-<!--------  NB HACK TO FIX THE MASTER MAP SOURCE  -------->
 <script src="/public/map/master_map_vector_layer_fixed.js"></script>
 <script src="/public/map/snap_to_vector_layer.js"></script>
 
@@ -212,8 +211,6 @@
 </script>
 
 <script type="text/javascript">
-    // Add open layers map controls: this is now only the scale line
-    // all other controls are now GDS components
     var controls;
     var center = [];
 
@@ -221,16 +218,12 @@
     let style_count = 3;
 
     MAP_HELPERS.init_controls(map, controls);
-
-    // use this to prepopulate with an extent
-    // or in this case to set the initial map bounds
     $(function () {
         load_previous_data({
             "features": [
                 {
                     "geometry":
                     {
-                        //set the coordinates to center the map
                         "coordinates": [[[532042.65, 181758.8]]],
                         "type": "Polygon"
                     },
