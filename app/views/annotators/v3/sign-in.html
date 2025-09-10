@@ -12,11 +12,11 @@ Unbranded page template – {{ serviceName }} – GOV.UK Prototype Kit
 
 <form class="form" action="/annotators/assignments" method="post">
 
-{% from "govuk/components/input/macro.njk" import govukInput %}
+  {% from "govuk/components/input/macro.njk" import govukInput %}
 
-{{ govukInput({
+  {{ govukInput({
   label: {
-    text: "Email address"
+  text: "Email address"
   },
   classes: "govuk-!-width-one-half",
   id: "email",
@@ -24,18 +24,18 @@ Unbranded page template – {{ serviceName }} – GOV.UK Prototype Kit
   type: "email",
   autocomplete: "email",
   spellcheck: false
-}) }}
+  }) }}
 
-{% from "govuk/components/password-input/macro.njk" import govukPasswordInput %}
+  {% from "govuk/components/password-input/macro.njk" import govukPasswordInput %}
 
-{{ govukPasswordInput({
+  {{ govukPasswordInput({
   label: {
-    text: "Password"
+  text: "Password"
   },
   classes: "govuk-!-width-one-half",
   id: "password-input",
   name: "password"
-}) }}
+  }) }}
 
   {{ govukButton({
   text: "Sign in"

@@ -34,28 +34,7 @@ href: backLinkHref
       <span id="counter">1 of 3</span>
     </h2>
 
-    <div class="style-container">
-      <dl class="govuk-summary-list govuk-summary-list--no-border">
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Edged
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <span id="stroke-description"></span>
-            <span id="stroke-box" class="style-preview-box"></span>
-          </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Fill
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <span id="fill-description"></span>
-            <span id="fill-box" class="style-preview-box"></span>
-          </dd>
-        </div>
-      </dl>
-    </div>
+    {% include "app/includes/annotators/style-box.html" %}
 
     <div>
       <div class="zoom-controls">
@@ -389,7 +368,7 @@ href: backLinkHref
     }
 
     map.once('postrender', function (event) {
-      MAP_CONFIG.base_layer.setOpacity(0.1);
+      MAP_CONFIG.base_layer.setOpacity(0.3);
     });
 
     const totalPages = extents.length;
