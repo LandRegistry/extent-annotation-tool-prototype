@@ -56,7 +56,7 @@ href: backLinkHref
       <input type="hidden" name="completedTextTitle" id="completed-text-title">
 
       <div>
-        <h2 class="govuk-heading-m">Text 1</h2>
+        <h2 class="govuk-heading-m">Paragraph 1</h2>
 
         <div class="entry-container">
           {% include "app/includes/entries/QR84291/inc_QR84291-entry-1.html" %}
@@ -249,63 +249,16 @@ href: backLinkHref
       }
     }
 
-    // START: REWRITTEN FUNCTION TO UPDATE STYLE DESCRIPTION
+    // Style description (TMF attributes)
     function updateStyleDescription() {
-      // Mappings from the style data to the text descriptions you provided
-      const colorMap = {
-        'rgba(214, 144, 103, 0.6)': 'Copperfield',
-        'rgb(102, 51, 0)': 'Nutmeg wood finish',
-        'rgba(87, 82, 76, 1)': 'Grey', // Placeholder, as this was not in your list
-        'rgba(62, 62, 60, 1)': 'Grey'   // Placeholder, as this was not in your list
-      };
-      const hatchStyleMap = {
-        'vertical': 'Wide vertical hatching'
-      };
-
-      const strokeDescEl = document.getElementById('stroke-description');
-      const strokeBoxEl = document.getElementById('stroke-box');
-      const fillDescEl = document.getElementById('fill-description');
-      const fillBoxEl = document.getElementById('fill-box');
-
-      if (!strokeDescEl || !strokeBoxEl || !fillDescEl || !fillBoxEl) return;
-
-      const styleIndex = (count === 0) ? 0 : 1;
-      const styleDef = styleDefinitions[styleIndex];
-
-      // --- Update Stroke Row ---
-      if (styleDef.stroke) {
-        strokeDescEl.textContent = colorMap[styleDef.stroke] || 'none';
-        strokeBoxEl.style.backgroundColor = styleDef.stroke;
-        strokeBoxEl.style.backgroundImage = 'none';
-        strokeBoxEl.style.border = '1px solid #b1b4b6';
-      } else {
-        strokeDescEl.textContent = 'none';
-        strokeBoxEl.style.backgroundColor = 'transparent';
-        strokeBoxEl.style.backgroundImage = 'none';
-        strokeBoxEl.style.border = '1px dashed #b1b4b6';
-      }
-
-      // --- Update Fill Row ---
-      fillBoxEl.style.backgroundColor = 'transparent';
-      fillBoxEl.style.backgroundImage = 'none';
-      fillBoxEl.style.border = '1px solid #b1b4b6';
-
-      if (styleDef.type === 'solid') {
-        fillDescEl.textContent = 'Solid ' + (colorMap[styleDef.fill] || '');
-        fillBoxEl.style.backgroundColor = styleDef.fill;
-      } else { // 'hatch'
-        const hatchText = hatchStyleMap[styleDef.pattern] || '';
-        const colorText = colorMap[styleDef.color] || '';
-        fillDescEl.textContent = `${hatchText} ${colorText}`.trim();
-
-        const hatchData = generatedHatches[styleIndex];
-        if (hatchData) {
-          fillBoxEl.style.backgroundImage = `url(${hatchData.dataURL})`;
-          fillBoxEl.style.backgroundColor = 'white';
-        }
-      }
+      const styleBox = document.getElementById('style-box');
+      const descriptionLabel = document.getElementById('style-description');
+      if (!styleBox || !descriptionLabel) return;
+      const currentDescription = extents[count].features[0].properties.description;
+      styleBox.style.setProperty('background-color', 'rgba(0, 102, 204, 0.4)', 'important');
+      styleBox.style.setProperty('border', '2px solid rgba(0, 102, 204, 1)', 'important');
+      descriptionLabel.textContent = currentDescription;
     }
-    // END: REWRITTEN FUNCTION
 
     function saveAnswerState() {
       const selectedRadio = document.querySelector('input[name="defineRelationship"]:checked');
@@ -445,19 +398,19 @@ href: backLinkHref
     {
       "features": [{
         "geometry": { "coordinates": [[[359547.15, 175151.8], [359542.65, 175148], [359541.887, 175147.353], [359538.05, 175144.1], [359539.878, 175141.062], [359540.05, 175138.824], [359545.359, 175133.834], [359545.832, 175133.303], [359553.889, 175125.601], [359564.64, 175114.519], [359566.4, 175112.15], [359568.254, 175113.768], [359568.355, 175113.856], [359564, 175119], [359563.5, 175119.7], [359549.192, 175136.569], [359548.078, 175137.882], [359543.245, 175143.565], [359543.305, 175143.675], [359544.273, 175144.512], [359548.947, 175148.555], [359554.082, 175152.251], [359555.248, 175153.19], [359554.6, 175153.95], [359554.463, 175153.888], [359554.342, 175153.841], [359554.219, 175153.798], [359554.095, 175153.76], [359553.968, 175153.728], [359553.841, 175153.7], [359547.15, 175151.8]]], "type": "Polygon" },
-        "properties": { "id": 1000 }, "type": "Feature"
+        "properties": { "id": 1000, "description": "Tinted brown" }, "type": "Feature"
       }], "type": "FeatureCollection"
     },
     {
       "features": [{
         "geometry": { "coordinates": [[[359569.55, 175114.9], [359564, 175119], [359568.355, 175113.856], [359569.55, 175114.9]]], "type": "Polygon" },
-        "properties": { "id": 1001 }, "type": "Feature"
+        "properties": { "id": 1001, "description": "Hatched brown" }, "type": "Feature"
       }], "type": "FeatureCollection"
     },
     {
       "features": [{
         "geometry": { "coordinates": [[[359556.67, 175149.372], [359557.95, 175149.95], [359560.2, 175151.75], [359562.05, 175153.2], [359568.05, 175157.85], [359574.2, 175162.6], [359579.2, 175166.5], [359584.458, 175170.563], [359590.2, 175175.0], [359594.75, 175176.9], [359604.2, 175173.5], [359605.7, 175173.45], [359623.35, 175166.75], [359637.7, 175161.35], [359640.4, 175160.3], [359646.324, 175157.501], [359649.5, 175156.0], [359652.25, 175154.35], [359652.4, 175154.3], [359652.6, 175154.15], [359652.8, 175153.95], [359652.95, 175153.9], [359653.15, 175153.65], [359653.55, 175153.25], [359653.8, 175152.5], [359653.95, 175152.25], [359654.15, 175151.6], [359654.2, 175151.25], [359654.35, 175150.75], [359654.4, 175150.4], [359654.4, 175149.8], [359654.5, 175149.1], [359654.4, 175148.8], [359654.3, 175148.65], [359651.15, 175138.65], [359651.0, 175138.3], [359650.9, 175137.95], [359650.7, 175137.4], [359650.55, 175137.0], [359650.4, 175136.7], [359650.3, 175136.4], [359649.95, 175135.9], [359649.75, 175135.5], [359649.5, 175135.2], [359649.3, 175134.8], [359649.05, 175134.6], [359648.95, 175134.3], [359648.8, 175134.0], [359648.6, 175133.8], [359648.2, 175133.0], [359647.95, 175131.8], [359647.9, 175131.5], [359647.8, 175131.0], [359647.7, 175130.3], [359647.6, 175130.0], [359647.6, 175129.65], [359647.5, 175128.95], [359647.4, 175128.6], [359647.4, 175128.25], [359647.2, 175127.5], [359646.8, 175126.3], [359646.0, 175124.25], [359643.15, 175116.224], [359637.942, 175100.03], [359636.704, 175097.691], [359636.279, 175096.888], [359635.6, 175094.6], [359631.772, 175096.037], [359631.539, 175096.118], [359631.31, 175096.209], [359631.084, 175096.309], [359630.863, 175096.418], [359630.646, 175096.537], [359630.435, 175096.664], [359627.15, 175101.5], [359620.55, 175097.7], [359622.907, 175094.833], [359624.75, 175095.95], [359628.55, 175092.75], [359633.2, 175088.85], [359635.332, 175087.088], [359635.5, 175087.3], [359637.05, 175089.25], [359637.346, 175089.623], [359637.6, 175089.5], [359639.8, 175094.1], [359641.479, 175099.677], [359642.521, 175102.751], [359642.9, 175102.7], [359643.7, 175105.1], [359644.2, 175106.6], [359646.1, 175111.7], [359652.0, 175127.9], [359654.0, 175133.75], [359654.1, 175133.7], [359655.05, 175137.1], [359655.42, 175138.33], [359655.6, 175138.9], [359656.34, 175141.417], [359656.015, 175141.751], [359657.4, 175144.95], [359659.35, 175150.5], [359659.5, 175150.9], [359660.35, 175153.423], [359661.4, 175156.4], [359662.15, 175158.45], [359663.05, 175161.1], [359662.135, 175163.027], [359659.774, 175168.0], [359657.039, 175161.167], [359656.068, 175159.952], [359654.628, 175159.613], [359653.125, 175159.788], [359652.454, 175159.866], [359650.182, 175160.743], [359649.506, 175161.005], [359649.0, 175161.2], [359647.156, 175161.907], [359642.35, 175163.75], [359636.4, 175166.0], [359633.7, 175167.0], [359630.248, 175168.335], [359624.0, 175170.75], [359621.35, 175171.8], [359616.2, 175173.7], [359612.2, 175175.15], [359608.4, 175176.5], [359607.9, 175176.75], [359603.2, 175178.25], [359602.71, 175178.43], [359602.7, 175178.4], [359601.7, 175178.8], [359597.2, 175180.25], [359596.15, 175180.65], [359591.8, 175182.4], [359589.95, 175183.15], [359585.0, 175185.1], [359584.0, 175185.5], [359575.27, 175192.021], [359571.75, 175194.65], [359570.707, 175192.863], [359570.331, 175192.219], [359571.137, 175191.686], [359571.462, 175191.471], [359575.547, 175188.769], [359580.761, 175184.344], [359583.754, 175182.289], [359584.548, 175181.477], [359584.932, 175180.326], [359585.124, 175179.367], [359584.356, 175177.64], [359581.966, 175174.977], [359581.583, 175174.569], [359580.452, 175173.654], [359576.093, 175170.126], [359562.049, 175158.712], [359558.934, 175156.158], [359555.248, 175153.19], [359554.082, 175152.251], [359548.947, 175148.555], [359549.486, 175147.964], [359549.707, 175147.722], [359552.05, 175145.155], [359556.67, 175149.372]]], "type": "Polygon" },
-        "properties": { "id": 1002 }, "type": "Feature"
+        "properties": { "id": 1002, "description": "Hatched brown" }, "type": "Feature"
       }], "type": "FeatureCollection"
     }
   ]

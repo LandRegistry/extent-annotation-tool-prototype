@@ -30,7 +30,7 @@ href: backLinkHref
 
   <div class="govuk-grid-column-one-half">
     <h2 class="govuk-heading-m">
-      <span>Shape</span>
+      <span>Shape (polygon or line)</span>
       <span id="counter">1 of 3</span>
     </h2>
 
@@ -71,7 +71,7 @@ href: backLinkHref
       <input type="hidden" name="completedTextTitle" id="completed-text-title">
 
       <div>
-        <h2 class="govuk-heading-m">Text 1</h2>
+        <h2 class="govuk-heading-m">Paragraph 1</h2>
 
         <div class="entry-container">
           {% include "app/includes/entries/BN78354/inc_BN78354-entry-1.html" %}
@@ -129,7 +129,7 @@ href: backLinkHref
       "properties": { "id": "group1" },
       "features": [
         {
-          "type": "Feature", "properties": { "featureType": "shape_polygon" },
+          "type": "Feature", "properties": { "featureType": "shape_polygon", "description": "Edged green" },
           "geometry": {
             "type": "Polygon", "coordinates": [[[
               360255.416,
@@ -302,7 +302,7 @@ href: backLinkHref
       "properties": { "id": "group2" },
       "features": [
         {
-          "type": "Feature", "properties": { "featureType": "shape_polygon" },
+          "type": "Feature", "properties": { "featureType": "shape_polygon",  "description": "Edged green" },
           "geometry": {
             "type": "Polygon", "coordinates": [[[
               360293.301,
@@ -427,13 +427,13 @@ href: backLinkHref
         }
       ]
     },
-    // --- GROUP 3: PLACEHOLDER DATA ---
+    // --- GROUP 3 ---
     {
       "type": "FeatureCollection",
       "properties": { "id": "group3" },
       "features": [
         {
-          "type": "Feature", "properties": { "featureType": "shape_polygon" },
+          "type": "Feature", "properties": { "featureType": "shape_polygon",  "description": "Edged green" },
           "geometry": { "type": "Polygon", "coordinates": [[            [
               360278.75,
               174275.65
@@ -677,15 +677,15 @@ href: backLinkHref
       }
     }
 
+    // Style description (TMF attributes)
     function updateStyleDescription() {
       const styleBox = document.getElementById('style-box');
       const descriptionLabel = document.getElementById('style-description');
       if (!styleBox || !descriptionLabel) return;
-
-      const styleDef = groupStyles[count];
-      styleBox.style.backgroundColor = styleDef.color;
-      styleBox.style.border = `2px solid ${styleDef.color}`;
-      descriptionLabel.textContent = styleDef.description;
+      const currentDescription = extents[count].features[0].properties.description;
+      styleBox.style.setProperty('background-color', 'rgba(0, 102, 204, 0.4)', 'important');
+      styleBox.style.setProperty('border', '2px solid rgba(0, 102, 204, 1)', 'important');
+      descriptionLabel.textContent = currentDescription;
     }
 
     function saveAnswerState() {

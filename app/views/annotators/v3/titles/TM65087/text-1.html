@@ -1,7 +1,7 @@
 {% extends "app/views/layouts/entry-annotation.html" %}
 
 {% set backLinkText = "Back to Task overview" %}
-{% set backLinkHref = "/annotators/v3/titles/TM65087/entries-task-list" %} 
+{% set backLinkHref = "/annotators/v3/titles/TM65087/entries-task-list" %}
 
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
@@ -71,7 +71,7 @@ href: backLinkHref
       <input type="hidden" name="completedTextTitle" id="completed-text-title">
 
       <div>
-        <h2 class="govuk-heading-m">Text 1</h2>
+        <h2 class="govuk-heading-m">Paragraph 1</h2>
 
         <div class="entry-container">
           {% include "app/includes/entries/QR84291/inc_QR84291-entry-1.html" %}
@@ -174,16 +174,16 @@ href: backLinkHref
   });
 
   const inactiveStyle = new ol.style.Style({
-            fill: new ol.style.Fill({ color: 'rgba(100, 100, 100, 0.1)' }),
-            stroke: new ol.style.Stroke({ color: 'rgba(100, 100, 100, 0.2)', width: 2 })
+    fill: new ol.style.Fill({ color: 'rgba(100, 100, 100, 0.1)' }),
+    stroke: new ol.style.Stroke({ color: 'rgba(100, 100, 100, 0.2)', width: 2 })
   });
 
   let extents = [
-    { "features": [{ "geometry": { "coordinates": [[[359886.84, 175969.94], [359879.86, 175975.83], [359876.665, 175978.52], [359879.035, 175974.847], [359880.522, 175972.601], [359884.66, 175966.15], [359886.84, 175969.94]]], "type": "Polygon" }, "properties": { "id": 1000 }, "type": "Feature" }], "type": "FeatureCollection" },
-    { "features": [{ "geometry": { "coordinates": [[[359870.49, 175978.08], [359869.961, 175978.953], [359869.402, 175978.342], [359870.182, 175977.686], [359870.49, 175978.08]]], "type": "Polygon" }, "properties": { "id": 1001 }, "type": "Feature" }], "type": "FeatureCollection" },
-    { "features": [{ "geometry": { "coordinates": [[[359869.311, 175979.722], [359869.645, 175979.442], [359868.807, 175980.737], [359868.035, 175980.144], [359868.958, 175979.367], [359869.311, 175979.722]]], "type": "Polygon" }, "properties": { "id": 1002 }, "type": "Feature" }], "type": "FeatureCollection" },
-    { "features": [{ "geometry": { "coordinates": [[[359880.522, 175972.601], [359879.035, 175974.847], [359879.86, 175975.83], [359876.665, 175978.52], [359873.27, 175981.38], [359871.505, 175982.866], [359868.807, 175980.737], [359869.645, 175979.442], [359870.077, 175979.079], [359869.961, 175978.953], [359870.49, 175978.08], [359877.09, 175972.53], [359884.66, 175966.15], [359880.522, 175972.601]]], "type": "Polygon" }, "properties": { "id": 1003 }, "type": "Feature" }], "type": "FeatureCollection" },
-    { "features": [{ "geometry": { "coordinates": [[[359892.59, 175989.09], [359892.65, 175989.12], [359892.73, 175989.15], [359892.79, 175989.16], [359897.49, 175990.04], [359897.04, 175992.49], [359890.5, 175991.29], [359890.32, 175991.29], [359890.29, 175991.3], [359890.24, 175991.308], [359892.464, 175988.929], [359892.545, 175988.839], [359892.5, 175988.917], [359892.5, 175988.97], [359892.52, 175989.02], [359892.59, 175989.09]]], "type": "Polygon" }, "properties": { "id": 1004 }, "type": "Feature" }], "type": "FeatureCollection" }
+    { "features": [{ "geometry": { "coordinates": [[[359886.84, 175969.94], [359879.86, 175975.83], [359876.665, 175978.52], [359879.035, 175974.847], [359880.522, 175972.601], [359884.66, 175966.15], [359886.84, 175969.94]]], "type": "Polygon" }, "properties": { "id": 1000, "description": "Tinted yellow" }, "type": "Feature" }], "type": "FeatureCollection" },
+    { "features": [{ "geometry": { "coordinates": [[[359870.49, 175978.08], [359869.961, 175978.953], [359869.402, 175978.342], [359870.182, 175977.686], [359870.49, 175978.08]]], "type": "Polygon" }, "properties": { "id": 1001, "description": "Tinted pink" }, "type": "Feature" }], "type": "FeatureCollection" },
+    { "features": [{ "geometry": { "coordinates": [[[359869.311, 175979.722], [359869.645, 175979.442], [359868.807, 175980.737], [359868.035, 175980.144], [359868.958, 175979.367], [359869.311, 175979.722]]], "type": "Polygon" }, "properties": { "id": 1002, "description": "Tinted pink" }, "type": "Feature" }], "type": "FeatureCollection" },
+    { "features": [{ "geometry": { "coordinates": [[[359880.522, 175972.601], [359879.035, 175974.847], [359879.86, 175975.83], [359876.665, 175978.52], [359873.27, 175981.38], [359871.505, 175982.866], [359868.807, 175980.737], [359869.645, 175979.442], [359870.077, 175979.079], [359869.961, 175978.953], [359870.49, 175978.08], [359877.09, 175972.53], [359884.66, 175966.15], [359880.522, 175972.601]]], "type": "Polygon" }, "properties": { "id": 1003, "description": "Hatched blue" }, "type": "Feature" }], "type": "FeatureCollection" },
+    { "features": [{ "geometry": { "coordinates": [[[359892.59, 175989.09], [359892.65, 175989.12], [359892.73, 175989.15], [359892.79, 175989.16], [359897.49, 175990.04], [359897.04, 175992.49], [359890.5, 175991.29], [359890.32, 175991.29], [359890.29, 175991.3], [359890.24, 175991.308], [359892.464, 175988.929], [359892.545, 175988.839], [359892.5, 175988.917], [359892.5, 175988.97], [359892.52, 175989.02], [359892.59, 175989.09]]], "type": "Polygon" }, "properties": { "id": 1004, "description": "Tinted brown" }, "type": "Feature" }], "type": "FeatureCollection" }
   ];
 
   // ===================================================================
@@ -250,25 +250,15 @@ href: backLinkHref
       }
     }
 
+    // Style description (TMF attributes)
     function updateStyleDescription() {
       const styleBox = document.getElementById('style-box');
       const descriptionLabel = document.getElementById('style-description');
       if (!styleBox || !descriptionLabel) return;
-
-      const styleDef = styleDefinitions[count];
-
-      styleBox.style.backgroundImage = 'none';
-      styleBox.style.backgroundColor = 'transparent';
-      styleBox.style.border = '2px solid #b1b4b6';
-      descriptionLabel.textContent = styleDef.description;
-
-      if (styleDef.type === 'solid') {
-        styleBox.style.backgroundColor = styleDef.fill;
-        styleBox.style.border = `2px solid ${styleDef.stroke}`;
-      } else { // 'hatch'
-        styleBox.style.border = `2px solid ${styleDef.stroke}`;
-        styleBox.style.backgroundColor = ol.color.asString(styleDef.stroke); // Use solid color for swatch
-      }
+      const currentDescription = extents[count].features[0].properties.description;
+      styleBox.style.setProperty('background-color', 'rgba(0, 102, 204, 0.4)', 'important');
+      styleBox.style.setProperty('border', '2px solid rgba(0, 102, 204, 1)', 'important');
+      descriptionLabel.textContent = currentDescription;
     }
 
     function saveAnswerState() {
