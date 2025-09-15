@@ -71,7 +71,7 @@ href: backLinkHref
       <input type="hidden" name="completedTextTitle" id="completed-text-title">
 
       <div>
-        <h2 class="govuk-heading-m">Text 1</h2>
+        <h2 class="govuk-heading-m">Paragraph 1</h2>
 
         <div class="entry-container">
           {% include "app/includes/entries/WX41629/inc_WX41629-entry-1.html" %}
@@ -130,7 +130,7 @@ href: backLinkHref
       "properties": { "id": "group1" },
       "features": [
         {
-          "type": "Feature", "properties": { "featureType": "shape_polygon" },
+          "type": "Feature", "properties": { "featureType": "shape_polygon", "description": "Edged green" },
           "geometry": { "type": "Polygon", "coordinates": [[[359879.1, 174455.35], [359877.3, 174455.45], [359874.4, 174455.75], [359870.8, 174456], [359868.8, 174456.15], [359868, 174456.2], [359866.504, 174456.341], [359865.743, 174448.763], [359871.3, 174448.3], [359877.4, 174447.85], [359879.2, 174447.7], [359879.1, 174455.35]]] }
         },
         {
@@ -149,7 +149,7 @@ href: backLinkHref
       "properties": { "id": "group2" },
       "features": [
         {
-          "type": "Feature", "properties": { "featureType": "shape_line" },
+          "type": "Feature", "properties": { "featureType": "shape_line", "description":  "Blue" },
           "geometry": { "type": "LineString", "coordinates": [[359859.414, 174453.545], [359857.626, 174453.733], [359855.744, 174452.416], [359854.238, 174452.698]] }
         },
         {
@@ -284,15 +284,15 @@ href: backLinkHref
       }
     }
 
+    // Style description (TMF attributes)
     function updateStyleDescription() {
       const styleBox = document.getElementById('style-box');
       const descriptionLabel = document.getElementById('style-description');
       if (!styleBox || !descriptionLabel) return;
-
-      const styleDef = groupStyles[count];
-      styleBox.style.backgroundColor = styleDef.color;
-      styleBox.style.border = `2px solid ${styleDef.color}`;
-      descriptionLabel.textContent = styleDef.description;
+      const currentDescription = extents[count].features[0].properties.description;
+      styleBox.style.setProperty('background-color', 'rgba(0, 102, 204, 0.4)', 'important');
+      styleBox.style.setProperty('border', '2px solid rgba(0, 102, 204, 1)', 'important');
+      descriptionLabel.textContent = currentDescription;
     }
 
     function saveAnswerState() {
@@ -402,7 +402,7 @@ href: backLinkHref
     updateStyleDescription();
 
     map.once('postrender', function () {
-      baseLayer.setOpacity(0.1);
+      baseLayer.setOpacity(0.3);
       zoomToCurrentExtent();
     });
   });
