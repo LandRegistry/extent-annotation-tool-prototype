@@ -122,9 +122,9 @@ href: backLinkHref
     { color: 'rgba(0, 51, 255, 1)', description: "Shape 2 Style" }
   ];
 
-  // --- UPDATED: Data for 2 shapes ---
+  // Features
   const extents = [
-    // --- SHAPE 1: FROM USER-PROVIDED DATA ---
+    // --- SHAPE 1 ---
     {
       "type": "FeatureCollection",
       "properties": { "id": "group1" },
@@ -143,13 +143,13 @@ href: backLinkHref
         }
       ]
     },
-    // --- SHAPE 2: FROM USER-PROVIDED DATA (Line and Label only) ---
+    // --- SHAPE 2 (Line and Label only) ---
     {
       "type": "FeatureCollection",
       "properties": { "id": "group2" },
       "features": [
         {
-          "type": "Feature", "properties": { "featureType": "shape_line", "description":  "Blue" },
+          "type": "Feature", "properties": { "featureType": "shape_line", "description": "Blue" },
           "geometry": { "type": "LineString", "coordinates": [[359859.414, 174453.545], [359857.626, 174453.733], [359855.744, 174452.416], [359854.238, 174452.698]] }
         },
         {
@@ -173,17 +173,21 @@ href: backLinkHref
     });
 
     function createActiveStyles(color) {
+      const arrowColor = '#505a5f'; // Only for arrows and labels
       return {
         shapePolygon: new ol.style.Style({
           stroke: new ol.style.Stroke({ color: color, width: 4 })
         }),
         arrowLine: new ol.style.Style({
-          stroke: new ol.style.Stroke({ color: color, width: 4 })
+          stroke: new ol.style.Stroke({ color: arrowColor, width: 4 })
+        }),
+        shapeLine: new ol.style.Style({
+          stroke: new ol.style.Stroke({ color: color, width: 4 }) // Use group color for shape_line
         }),
         label: new ol.style.Style({
           text: new ol.style.Text({
             font: 'bold 32px "Arial", arial, sans-serif',
-            fill: new ol.style.Fill({ color: color }),
+            fill: new ol.style.Fill({ color: arrowColor }),
             stroke: new ol.style.Stroke({ color: 'white', width: 4 }),
             offsetX: 0,
             offsetY: 0,
@@ -208,13 +212,13 @@ href: backLinkHref
         }
         const activeStyles = styleCache[color];
 
-        // UPDATED: Style function now handles 'shape_line' for Shape 2
         switch (featureType) {
           case 'shape_polygon':
             return activeStyles.shapePolygon;
           case 'arrow_line':
+            return activeStyles.arrowLine; // #505a5f for arrows
           case 'shape_line':
-            return activeStyles.arrowLine; // Re-use the same line style
+            return activeStyles.shapeLine; // group color for shape_line
           case 'label':
             const labelStyle = activeStyles.label;
             labelStyle.getText().setText(feature.get('text'));
