@@ -30,7 +30,7 @@ href: backLinkHref
 
   <div class="govuk-grid-column-one-half">
     <h2 class="govuk-heading-m">
-      <span>Shape (polygon or line)</span>
+      <span>Shape</span>
       <span id="counter">1 of 3</span>
     </h2>
 
@@ -302,7 +302,7 @@ href: backLinkHref
       "properties": { "id": "group2" },
       "features": [
         {
-          "type": "Feature", "properties": { "featureType": "shape_polygon",  "description": "Edged green" },
+          "type": "Feature", "properties": { "featureType": "shape_polygon", "description": "Edged green" },
           "geometry": {
             "type": "Polygon", "coordinates": [[[
               360293.301,
@@ -433,8 +433,9 @@ href: backLinkHref
       "properties": { "id": "group3" },
       "features": [
         {
-          "type": "Feature", "properties": { "featureType": "shape_polygon",  "description": "Edged green" },
-          "geometry": { "type": "Polygon", "coordinates": [[            [
+          "type": "Feature", "properties": { "featureType": "shape_polygon", "description": "Edged green" },
+          "geometry": {
+            "type": "Polygon", "coordinates": [[[
               360278.75,
               174275.65
             ],
@@ -494,39 +495,43 @@ href: backLinkHref
               360278.75,
               174275.65
             ]
-]] }
+            ]]
+          }
         },
         {
           "type": "Feature", "properties": { "featureType": "arrow_line" },
-          "geometry": { "type": "LineString", "coordinates": [          [
-            360272.373,
-            174264.222
-          ],
-          [
-            360299.173,
-            174274.253
-          ],
-          [
-            360298.965,
-            174274.807
-          ],
-          [
-            360299.927,
-            174274.535
-          ],
-          [
-            360299.38,
-            174273.699
-          ],
-          [
-            360299.173,
-            174274.253
-          ]
-] }
+          "geometry": {
+            "type": "LineString", "coordinates": [[
+              360272.373,
+              174264.222
+            ],
+            [
+              360299.173,
+              174274.253
+            ],
+            [
+              360298.965,
+              174274.807
+            ],
+            [
+              360299.927,
+              174274.535
+            ],
+            [
+              360299.38,
+              174273.699
+            ],
+            [
+              360299.173,
+              174274.253
+            ]
+            ]
+          }
         },
         {
           "type": "Feature", "properties": { "featureType": "arrow_head" },
-          "geometry": { "type": "Polygon", "coordinates": [[            [
+          "geometry": {
+            "type": "Polygon", "coordinates": [[[
               360299.38,
               174273.699
             ],
@@ -546,7 +551,8 @@ href: backLinkHref
               360299.38,
               174273.699
             ]
-]] }
+            ]]
+          }
         },
         {
           "type": "Feature", "properties": { "featureType": "label", "text": "BL124172" },
@@ -569,23 +575,28 @@ href: backLinkHref
     });
 
     function createActiveStyles(color) {
+      const arrowAndLabelColor = '#505a5f'; // Grey for arrows and labels
       return {
         shapePolygon: new ol.style.Style({
-          stroke: new ol.style.Stroke({ color: color, width: 2.5 })
+          stroke: new ol.style.Stroke({ color: color, width: 4 })
         }),
         arrowLine: new ol.style.Style({
-          stroke: new ol.style.Stroke({ color: color, width: 2.5 })
+          stroke: new ol.style.Stroke({ color: arrowAndLabelColor, width: 4 })
         }),
         arrowHead: new ol.style.Style({
-          stroke: new ol.style.Stroke({ color: color, width: 2.5 })
+          fill: new ol.style.Fill({ color: arrowAndLabelColor }),
+          stroke: new ol.style.Stroke({ color: arrowAndLabelColor, width: 2 })
+        }),
+        shapeLine: new ol.style.Style({
+          stroke: new ol.style.Stroke({ color: color, width: 4 })
         }),
         label: new ol.style.Style({
           text: new ol.style.Text({
-            font: '32px "Arial", arial, sans-serif',
-            fill: new ol.style.Fill({ color: color }),
-            stroke: new ol.style.Stroke({ color: 'white', width: 3 }),
-            offsetX: -50,
-            offsetY: -0,
+            font: 'bold 32px "Arial", arial, sans-serif',
+            fill: new ol.style.Fill({ color: arrowAndLabelColor }),
+            stroke: new ol.style.Stroke({ color: 'white', width: 4 }),
+            offsetX: 0,
+            offsetY: 0,
             textAlign: 'left'
           })
         })
@@ -614,6 +625,8 @@ href: backLinkHref
             return activeStyles.arrowLine;
           case 'arrow_head':
             return activeStyles.arrowHead;
+          case 'shape_line':
+            return activeStyles.shapeLine;
           case 'label':
             const labelStyle = activeStyles.label;
             labelStyle.getText().setText(feature.get('text'));
