@@ -1,7 +1,20 @@
 {% extends "app/views/layouts/your-jobs.html" %}
 
+{% set backLinkText = "Back to before you start" %}
+{% set backLinkHref = "/annotators/v3/start" %}
+
 {% block pageTitle %}
 Assignments – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+
+{{ super() }}
+{{ govukBackLink({
+text: backLinkText,
+href: backLinkHref
+}) }}
+
 {% endblock %}
 
 {% block content %}
@@ -13,6 +26,8 @@ Assignments – {{ serviceName }} – GOV.UK Prototype Kit
       <span class="govuk-caption-l">Welcome</span>
       Your jobs
     </h1>
+    <p class="govuk-body">Jobs assigned to you include a list of tasks that are to do, in progress or done.</p>
+    <p class="govuk-body">The job will be completed when all tasks are done.</p>
     <h2 class="govuk-heading-m">Job 1</h2>
     <ul class="govuk-task-list">
       {% if data['QR84291Status'] != 'complete' %}
@@ -25,7 +40,6 @@ Assignments – {{ serviceName }} – GOV.UK Prototype Kit
         {% include "app/includes/status-tags/inc_QR84291-status.html" %}
       </li>
       {% endif %}
-
       <li class="govuk-task-list__item govuk-task-list__item--with-link">
         <div class="govuk-task-list__name-and-hint">
           <a class="govuk-link govuk-task-list__link" href="/annotators/v3/titles/KP92143/entries-task-list"
@@ -35,7 +49,6 @@ Assignments – {{ serviceName }} – GOV.UK Prototype Kit
         </div>
         {% include "app/includes/status-tags/inc_KP92143-status.html" %}
       </li>
-
       <li class="govuk-task-list__item govuk-task-list__item--with-link">
         <div class="govuk-task-list__name-and-hint">
           <a class="govuk-link govuk-task-list__link" href="/annotators/v3/titles/TM65087/entries-task-list"
@@ -45,7 +58,6 @@ Assignments – {{ serviceName }} – GOV.UK Prototype Kit
         </div>
         {% include "app/includes/status-tags/inc_TM65087-status.html" %}
       </li>
-
       <li class="govuk-task-list__item govuk-task-list__item--with-link">
         <div class="govuk-task-list__name-and-hint">
           <a class="govuk-link govuk-task-list__link" href="/annotators/v3/titles/WX41629/entries-task-list"
@@ -55,7 +67,6 @@ Assignments – {{ serviceName }} – GOV.UK Prototype Kit
         </div>
         {% include "app/includes/status-tags/inc_WX41629-status.html" %}
       </li>
-
       <li class="govuk-task-list__item govuk-task-list__item--with-link">
         <div class="govuk-task-list__name-and-hint">
           <a class="govuk-link govuk-task-list__link" href="/annotators/v3/titles/BN78354/entries-task-list"
@@ -130,11 +141,8 @@ Assignments – {{ serviceName }} – GOV.UK Prototype Kit
         {% include "app/includes/status-tags/inc_YE37261-status.html" %}
       </li>
       -->
-
     </ul>
   </div>
 </div>
-
-
 
 {% endblock %}

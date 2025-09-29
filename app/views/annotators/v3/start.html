@@ -1,0 +1,95 @@
+{% extends "app/views/layouts/hmlr.html" %}
+
+{% block pageTitle %}
+Assignments – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      Before you start
+    </h1>
+    <p class="govuk-body">Use this tool to match geometric shapes on a map with blocks of text.</p>
+    <p class="govuk-body">Your answers will be used to help link different categories of data in the Land Register.</p>
+    <div class="govuk-accordion" data-module="govuk-accordion" id="what-you-need-to-do">
+      <div class="govuk-accordion__section">
+        <div class="govuk-accordion__section-header">
+          <h2 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id="what-you-need-to-do-heading-1">
+              What you need to do
+            </span>
+          </h2>
+        </div>
+        <div id="what-you-need-to-do-content-1" class="govuk-accordion__section-content">
+          <p class="govuk-body">You’ll be assigned one or more jobs.</p>
+          <p class="govuk-body">Each job contains a list of tasks with a reference number, for example AB123456.</p>
+          <p class="govuk-body">Each task contains:</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>a list of texts, for example text 1</li>
+            <li>a series of shapes in a map</li>
+          </ul>
+          <p class="govuk-body">You’ll answer yes or no for all the shapes whether they are included in each text.</p>
+          <p class="govuk-body">When you’ve answered for all the shapes against a text, you can mark the text as done.
+            You can go back and change your answers.</p>
+          <p class="govuk-body">You’ll answer for the same shapes in any other texts in the task.</p>
+          <p class="govuk-body">When all texts in a task are marked as done, you can submit the task. You can’t change
+            your answers after you’ve submitted a task.</p>
+          <p class="govuk-body">When all the tasks in a job are submitted, the job will be complete.</p>
+        </div>
+      </div>
+      <div class="govuk-accordion__section">
+        <div class="govuk-accordion__section-header">
+          <h2 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id="what-you-need-to-do-heading-2">
+              What we mean by matches, styles and shapes
+            </span>
+          </h2>
+        </div>
+        <div id="what-you-need-to-do-content-2" class="govuk-accordion__section-content">
+          <h3 class="govuk-heading-s">Matches</h3>
+          <p class="govuk-body">A shape is included in the text if it includes the style properties. It may also have a
+            label, such as an arrow and number or text.</p>
+          <p class="govuk-body">A text may match more than one shape.</p>
+          <p class="govuk-body">A description of the style is included above the map. This should help understand the
+            style being shown but is not part of your matching decision.</p>
+          <p class="govuk-body">You don’t need to consider other information in the text, such as legal agreements or
+            the type of land or feature.</p>
+          <h3 class="govuk-heading-s">Styles</h3>
+          <p class="govuk-body">The style properties can include:</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>edging, which is the border of a shape</li>
+            <li>tinting, which is the colour of a shape</li>
+            <li>hatching, which is used as a texture for some shapes</li>
+          </ul>
+          <h3 class="govuk-heading-s">Colours</h3>
+          <p class="govuk-body">Colours include:</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>green</li>
+            <li>red</li>
+            <li>blue</li>
+            <li>pink</li>
+            <li>brown</li>
+            <li>mauve</li>
+            <li>yellow</li>
+          </ul>
+          <h3 class="govuk-heading-s">Shapes</h3>
+          <p class="govuk-body">Shapes include:</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>polygons, which usually cover an area of space </li>
+            <li>lines, which can be solid or broken</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="jobs-list.html" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
+      Start now
+      <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19"
+        viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+      </svg>
+    </a>
+  </div>
+
+  {% endblock %}
