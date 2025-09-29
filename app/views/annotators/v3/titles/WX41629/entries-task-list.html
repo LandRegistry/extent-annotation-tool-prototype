@@ -21,11 +21,12 @@ href: backLinkHref
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     {% include "app/includes/alerts/inc_entry-saved.html" %}
-
     <h1 class="govuk-heading-l">Task overview</h1>
-
+    <p class="govuk-body">You’ll see the same shapes for each text, and they can match more than once. Texts can be
+      annotated in any order.</p>
+    <p class="govuk-body">When you’ve marked all the texts as done you can submit the task. You can’t change your
+      answers after you submit it.</p>
     <h2 class="govuk-heading-m">WX41629</h2>
-
     <form action="/annotators/v3/jobs-list?WX416291Status=complete" method="post">
       <ul class="govuk-task-list">
         <li class="govuk-task-list__item govuk-task-list__item--with-link">
@@ -74,7 +75,6 @@ href: backLinkHref
             Done
           </div>
         </li>
-
       </ul>
       <div class="govuk-button-group">
         <button type="submit" class="govuk-button" data-module="govuk-button">
@@ -83,7 +83,5 @@ href: backLinkHref
       </div>
   </div>
   </form>
-
-
 
   {% endblock %}
