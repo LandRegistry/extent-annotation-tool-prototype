@@ -150,7 +150,7 @@ router.get('/admin/check-status/archived-jobs-list-mvp', function (req, res) {
     });
 });
 
-// Success for marking an entry as done
+// Success for marking an entry as completed
 router.post('/annotators/v3/save-answers', function (req, res) {
     const titleNumber = req.body.titleNumber;
     const completedText = req.body.completedTextTitle;

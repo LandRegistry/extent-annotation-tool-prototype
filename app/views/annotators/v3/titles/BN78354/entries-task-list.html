@@ -21,12 +21,12 @@ href: backLinkHref
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     {% include "app/includes/alerts/inc_entry-saved.html" %}
-    <h1 class="govuk-heading-l">Task overview</h1>
+    <h1 class="govuk-heading-m">Task overview</h1>
     <p class="govuk-body">You’ll see the same shapes for each text, and they can match more than once. Texts can be
       annotated in any order.</p>
-    <p class="govuk-body">When you’ve marked all the texts as done you can submit the task. You can’t change your
+    <p class="govuk-body">When you’ve marked all the texts as Completed you can submit the task. You can’t change your
       answers after you submit it. </p>
-    <h2 class="govuk-heading-m">BN78354</h2>
+    <h2 class="govuk-heading-s">BN78354</h2>
     <form action="/annotators/v3/jobs-list?QR84291Status=complete" method="post">
       <ul class="govuk-task-list">
         <li class="govuk-task-list__item govuk-task-list__item--with-link">
@@ -44,7 +44,7 @@ href: backLinkHref
           </div>
           {% elseif data['KP92143A3Status'] == 'complete' %}
           <div class="govuk-task-list__status" id="task-list-1-status">
-            Done
+            Completed
           </div>
           {% else %}
           <div class="govuk-task-list__status" id="task-list-1-status">
@@ -62,7 +62,7 @@ href: backLinkHref
             </a>
           </div>
           <div class="govuk-task-list__status" id="task-list-1-status">
-            Done
+            Completed
           </div>
         </li>
         <li class="govuk-task-list__item govuk-task-list__item--with-link">
@@ -73,7 +73,7 @@ href: backLinkHref
             </a>
           </div>
           <div class="govuk-task-list__status" id="task-list-1-status">
-            Done
+            Completed
           </div>
         </li>
         <li class="govuk-task-list__item govuk-task-list__item--with-link">
@@ -84,7 +84,7 @@ href: backLinkHref
             </a>
           </div>
           <div class="govuk-task-list__status" id="task-list-1-status">
-            Done
+            Completed
           </div>
         </li>
       </ul>

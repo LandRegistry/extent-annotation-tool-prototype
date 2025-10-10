@@ -12,7 +12,7 @@ QR84291 – {{ serviceName }} – GOV.UK Prototype Kit
 
 {% block beforeContent %}
 {{ govukBackLink({
-text: "Back to Task overview",
+text: "Back to task overview",
 href: "/annotators/v2/titles/QR84291/entries-task-list"
 }) }}
 {% endblock %}
@@ -249,7 +249,7 @@ href: "/annotators/v2/titles/QR84291/entries-task-list"
     function updateButtonText() {
       const nextBtn = document.getElementById('nextBtn');
       if (count === extents.length - 1) {
-        nextBtn.textContent = 'Mark text as done';
+        nextBtn.textContent = 'Mark text as completed';
       } else {
         nextBtn.textContent = 'Save and next shape';
       }

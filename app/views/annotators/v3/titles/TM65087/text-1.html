@@ -1,6 +1,6 @@
 {% extends "app/views/layouts/entry-annotation.html" %}
 
-{% set backLinkText = "Back to Task overview" %}
+{% set backLinkText = "Back to task overview" %}
 {% set backLinkHref = "/annotators/v3/titles/TM65087/entries-task-list" %}
 
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
@@ -347,7 +347,7 @@ href: backLinkHref
     function updateNavigationButtons() {
       const nextBtn = document.getElementById('nextBtn');
       const prevBtn = document.getElementById('prevBtn');
-      if (count === totalPages - 1) { nextBtn.textContent = 'Mark text as done'; }
+      if (count === totalPages - 1) { nextBtn.textContent = 'Mark text as completed'; }
       else { nextBtn.textContent = 'Save and next shape'; }
       if (count === 0) { prevBtn.style.display = 'none'; }
       else { prevBtn.style.display = 'inline-block'; }
